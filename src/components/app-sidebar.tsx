@@ -6,24 +6,24 @@ import {
     BookOpen,
     Bot,
     Command,
-    Frame,
     GalleryVerticalEnd,
-    Map,
-    PieChart,
     Settings2,
     SquareTerminal,
 } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
-import { NavProjects } from '@/components/nav-projects';
 import { NavUser } from '@/components/nav-user';
 import {
     Sidebar,
     SidebarContent,
     SidebarFooter,
     SidebarHeader,
+    SidebarMenu,
+    SidebarMenuButton,
+    SidebarMenuItem,
     SidebarRail,
 } from '@/components/ui/sidebar';
+import Image from 'next/image';
 
 // This is sample data.
 const data = {
@@ -136,32 +136,29 @@ const data = {
             ],
         },
     ],
-    projects: [
-        {
-            name: 'Design Engineering',
-            url: '#',
-            icon: Frame,
-        },
-        {
-            name: 'Sales & Marketing',
-            url: '#',
-            icon: PieChart,
-        },
-        {
-            name: 'Travel',
-            url: '#',
-            icon: Map,
-        },
-    ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
         <Sidebar collapsible="icon" {...props}>
-            <SidebarHeader> </SidebarHeader>
+            <SidebarHeader>
+                <SidebarMenu>
+                    <SidebarMenuItem>
+                        <SidebarMenuButton tooltip={'Sendiate'} size={'lg'}>
+                            <Image
+                                src="/images/icon.png"
+                                alt="logo"
+                                width={300}
+                                height={300}
+                                className="h-8 w-8"
+                            />
+                            <span className="text-2xl font-bold">{'Sendiate'}</span>
+                        </SidebarMenuButton>
+                    </SidebarMenuItem>
+                </SidebarMenu>
+            </SidebarHeader>
             <SidebarContent>
                 <NavMain items={data.navMain} />
-                <NavProjects projects={data.projects} />
             </SidebarContent>
             <SidebarFooter>
                 <NavUser user={data.user} />
