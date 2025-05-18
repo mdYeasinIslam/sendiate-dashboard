@@ -1,7 +1,7 @@
 'use client';
 
 import * as React from 'react';
-import { BookOpen, Bot, Settings2, SquareTerminal } from 'lucide-react';
+import { Banknote, LayoutGrid, Package, Truck, UserRound, MessageCircle, Bell, DollarSign, MessageSquare } from 'lucide-react';
 
 import { NavMain } from '@/components/nav-main';
 import {
@@ -20,33 +20,63 @@ import Image from 'next/image';
 const data = {
     navMain: [
         {
-            title: 'Playground',
-            url: '#',
-            icon: SquareTerminal,
+            title: 'Dashboard',
+            url: '/',
+            icon: LayoutGrid,
             isActive: true,
         },
         {
-            title: 'Models',
-            url: '#',
-            icon: Bot,
+            title: 'Sender',
+            url: 'sender',
+            icon: UserRound,
         },
         {
-            title: 'Documentation',
-            url: '#',
-            icon: BookOpen,
+            title: 'Courier',
+            url: 'courier',
+            icon: Package,
         },
         {
-            title: 'Settings',
+            title: 'Vehicle',
+            url: 'vehicle',
+            icon: Truck,
+        },
+        {
+            title: 'Pricing',
+            url: 'pricing',
+            icon: Banknote,
+        },
+        {
+            title: 'Transaction',
+            url: 'transaction',
+            icon: DollarSign,
+        },
+        {
+            title: 'Chat',
             url: '#',
-            icon: Settings2,
+            icon: MessageCircle,
+        },
+        {
+            title: 'Notification',
+            url: '#',
+            icon: Bell,
+        },
+        {
+            title: 'Platform Fee',
+            url: '#',
+            icon: Banknote,
+        },
+        {
+            title: 'Feedback',
+            url: '#',
+            icon: MessageSquare,
         },
     ],
 };
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     return (
-        <Sidebar collapsible="icon" {...props}>
-            <SidebarHeader>
+        <Sidebar collapsible="icon" {...props} className='bg-white'>
+            <SidebarHeader className='bg-white'>
                 <SidebarMenu>
                     <SidebarMenuItem>
                         <SidebarMenuButton tooltip={'Sendiate'} size={'lg'}>
@@ -62,11 +92,11 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                     </SidebarMenuItem>
                 </SidebarMenu>
             </SidebarHeader>
-            <SidebarContent>
+            <SidebarContent className='bg-white'>
                 <NavMain items={data.navMain} />
             </SidebarContent>
-            <SidebarFooter></SidebarFooter>
-            <SidebarRail />
+            <SidebarFooter className='bg-white'></SidebarFooter>
+            <SidebarRail className='' />
         </Sidebar>
     );
 }

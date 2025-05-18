@@ -1,9 +1,16 @@
+import CardSection from '@/components/DashboardComponent/HomePage/CardSection';
+import Charts from '@/components/DashboardComponent/HomePage/Charts';
 import PageWrapper from '@/components/PageWrapper';
+import { Button } from '@/components/ui/button';
 
 export default function Page() {
     return (
-        <h1>
-            <PageWrapper title="Dashboard">Dashboard</PageWrapper>
-        </h1>
+        <section className='bg-[#F8F8F8] h-screen'>
+            <PageWrapper title="Overview" />
+            <CardSection />
+            <Button variant={'outline'}>Shadcdn Btn </Button>
+            <Button variant={'destructive'}>Shadcdn Btn </Button>
+            <Charts/>
+        </section>
     );
 }

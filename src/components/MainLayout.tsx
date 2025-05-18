@@ -8,9 +8,9 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <SidebarProvider>
+        <SidebarProvider className=''>
             <AppSidebar />
-            <SidebarInset>
+            <SidebarInset className=''>
                 <div>{children}</div>
             </SidebarInset>
         </SidebarProvider>
