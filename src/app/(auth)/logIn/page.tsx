@@ -15,7 +15,7 @@ const LoginPage = () => {
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
-        // console.log( email, password);
+        console.log( email, password);
        
     };
 
