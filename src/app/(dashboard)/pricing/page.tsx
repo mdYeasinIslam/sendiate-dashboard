@@ -97,7 +97,7 @@ export default function PricingDashboard() {
   return (
     <div className="bg-[#F8F8F8]">
       <PageWrapper title="Transaction"/>
-          <main className="md:px-5">  
+        <main className="md:px-5">  
               
             <PriceTable initialVehicleRates={initialVehicleRates}/>
         </main>

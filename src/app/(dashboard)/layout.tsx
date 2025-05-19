@@ -26,11 +26,8 @@ export default function DashboardLayout({
               <Button className="bg-white  border" size="icon">
                 <Menu className="h-6 w-6 text-black bg-white" />
             </Button>
-            {/* <div className="block lg:hidden">
-             <PageWrapper title="Overview" />
-            </div> */}
+          
               </SheetTrigger>
-                {/* <span className="sr-only">Toggle navigation menu</span> */}
             <SheetContent side="left" className="w-64 p-0 bg-white">
             <SheetHeader className="sr-only">
                 <SheetTitle>Sidebar</SheetTitle> {/* Hidden from view but accessible */}
