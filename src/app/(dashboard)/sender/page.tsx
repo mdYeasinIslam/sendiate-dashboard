@@ -155,7 +155,7 @@ const Sender = () => {
       <header>
         <PageWrapper title="Sender" />
       </header>
-      <main className='p-5'>
+      <main className=' md:px-5'>
 
         <Table users={users} />
       </main>

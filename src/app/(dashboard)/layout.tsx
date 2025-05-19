@@ -1,3 +1,4 @@
+import PageWrapper from "@/components/PageWrapper";
 import Header from "@/components/shared/Header";
 import Sidebar from "@/components/shared/Sidebar";
 import { Button } from "@/components/ui/button";
@@ -19,20 +20,22 @@ export default function DashboardLayout({
           <Sheet>
             <SheetTrigger
               asChild
-              className="lg:hidden  fixed left-4 top-4 z-50"
+              className="lg:hidden fixed left-4 top-4 z-[50]"
             >
               <Button className="bg-white  border" size="icon">
                 <Menu className="h-6 w-6 text-black bg-white" />
+            </Button>
+            {/* <div className="block lg:hidden">
+             <PageWrapper title="Overview" />
+            </div> */}
+              </SheetTrigger>
                 {/* <span className="sr-only">Toggle navigation menu</span> */}
-              </Button>
-            </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0 bg-white">
             <SheetHeader className="sr-only">
                 <SheetTitle>Sidebar</SheetTitle> {/* Hidden from view but accessible */}
             </SheetHeader>
             <Sidebar />
             </SheetContent>
-
           </Sheet>
 
           {/* Desktop Nav */}
@@ -43,7 +46,7 @@ export default function DashboardLayout({
           {/* Main Content */}
           <div className="lg:pl-64 h-screen overflow-y-hidden">
             {/* <Header /> */}
-            <main className="p-4 border rounded-tl-xl h-full  overflow-y-auto ">
+            <main className=" border  h-full  overflow-y-auto ">
               {children}
             </main>
           </div>

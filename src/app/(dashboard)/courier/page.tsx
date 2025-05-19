@@ -1,163 +1,193 @@
+'use client'
 import PageWrapper from '@/components/PageWrapper'
-import React from 'react'
-import Table from '../sender/component/Table'
+import React, { useState } from 'react'
 import { UserType } from '@/type/usersType';
-const users:UserType[] = [
+import { CourierTable } from '@/components/DashboardComponent/courierPage/Table';
+import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
+import { Pagination } from '@/components/shared/Pagination';
+const users: UserType[] = [
     {
         id: 1,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
         status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 2,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
         status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 3,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
         status: "Block",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 4,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
         status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 5,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
-    
     {
         id: 6,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 7,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 8,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 9,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 10,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 11,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
         status: "Block",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 12,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 13,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 14,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 15,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 16,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 17,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
     {
         id: 18,
-        name: "Sarah Gomez",
+        name: "Abdel Ahmed",
         email: "emma@example.com",
         phone: "+1 234 567 8901",
-        status: "Block",
+        status: "Active",
         avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        courierName: "Abdel Courier",
     },
 ];
 const DasboaredCourierpage = () => {
+     const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
+
+  const { paginatedUsers, totalPages } = usePaginatedUsers(users, currentPage, itemsPerPage);
+
   return (
       <section className='bg-[#F8F8F8]'>
       <header>
         <PageWrapper title="Courier" />
       </header>
-      <main className='p-5'>
+      <main className='md:px-5'>
 
-        <Table users={users}/>
+        <CourierTable users={paginatedUsers}/>
+         <Pagination
+        currentPage={currentPage}
+        totalPages={totalPages}
+        onPageChange={setCurrentPage}
+      />
       </main>
     </section>
   )

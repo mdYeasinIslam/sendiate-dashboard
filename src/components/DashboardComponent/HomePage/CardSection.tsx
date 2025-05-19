@@ -9,7 +9,7 @@ const cards = [
 
 const CardSection = () => {
     return (
-        <div className="w-full  rounded-lg  flex flex-col md:flex-row gap-4 p-4 ">
+        <div className="w-full  rounded-lg  flex flex-col md:flex-row gap-4  px-5 lg:px-0">
             {cards.map((card, idx) => (
                 <div
                     key={card.label}

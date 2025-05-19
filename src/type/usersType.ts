@@ -5,6 +5,7 @@ export type UserType =
         email:string;
         phone:string;
         status:string;
-        avatar:string;
+        avatar: string;
+        courierName?:string
     }
   

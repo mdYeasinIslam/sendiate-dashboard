@@ -5,11 +5,10 @@ import { Button } from '@/components/ui/button';
 
 export default function Page() {
     return (
-        <section className='bg-[#F8F8F8] h-screen'>
+        <section className='bg-[#F8F8F8] h-screen  lg:p-6'>
             <PageWrapper title="Overview" />
             <CardSection />
-            <Button variant={'outline'}>Shadcdn Btn </Button>
-            <Button variant={'destructive'}>Shadcdn Btn </Button>
+           
             <Charts/>
         </section>
     );
