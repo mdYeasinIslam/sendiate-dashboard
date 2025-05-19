@@ -12,7 +12,7 @@ const PAGE_SIZE = 20;
 
 const TransactionTable = ({data}:{data:DateType[]}) => {
     const [page, setPage] = useState(1);
-    const totalPages = Math.ceil(fakeData.length / PAGE_SIZE);
+    const totalPages = Math.ceil(data.length / PAGE_SIZE);
 
     const paginatedData = data.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
@@ -37,7 +37,7 @@ const TransactionTable = ({data}:{data:DateType[]}) => {
                 </tbody>
             </table>
             {/* Pagination */}
-            <div className="flex justify-center items-center mt-6 space-x-2">
+            {/* <div className="flex justify-center items-center mt-6 space-x-2">
                 <button
                     className="px-2 py-1 rounded disabled:text-gray-300"
                     onClick={() => setPage((p) => Math.max(1, p - 1))}
@@ -76,7 +76,7 @@ const TransactionTable = ({data}:{data:DateType[]}) => {
                 >
                     {'>'}
                 </button>
-            </div>
+            </div> */}
         </div>
     );
 };

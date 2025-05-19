@@ -1,11 +1,10 @@
 'use client'
 import PageWrapper from '@/components/PageWrapper'
 import React, { useState } from 'react'
-import Table from '../sender/component/Table';
 import TransactionTable from './component/TransactionTable';
 import { DateType } from '@/type/dateType';
-import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
 import { Pagination } from '@/components/shared/Pagination';
+import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
 const data:DateType[] = [
     {
         id: 1,
@@ -117,10 +116,10 @@ const data:DateType[] = [
     },
 ];
 const TransactionDashboard = () => {
-    //      const [currentPage, setCurrentPage] = useState(1);
-    //   const itemsPerPage = 10;
+         const [currentPage, setCurrentPage] = useState(1);
+      const itemsPerPage = 10;
     
-    //   const { paginatedUsers, totalPages } = usePaginatedUsers(data, currentPage, itemsPerPage);
+      const { paginatedUsers, totalPages } = usePaginatedUsers<DateType>(data, currentPage, itemsPerPage);
     
   return (
      <section className='bg-[#F8F8F8]'>
@@ -128,12 +127,12 @@ const TransactionDashboard = () => {
         <PageWrapper title="Transaction" />
       </header>
       <main className='md:px-5'>
-        <TransactionTable data={data} />
-         {/* <Pagination
+        <TransactionTable data={paginatedUsers} />
+         <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
-              /> */}
+              />
       </main>
     </section>
   )

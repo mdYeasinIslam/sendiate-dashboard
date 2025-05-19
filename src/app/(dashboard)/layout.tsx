@@ -1,5 +1,4 @@
-import PageWrapper from "@/components/PageWrapper";
-import Header from "@/components/shared/Header";
+
 import Sidebar from "@/components/shared/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";

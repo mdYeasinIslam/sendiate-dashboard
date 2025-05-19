@@ -1,12 +1,5 @@
-"use client"
 
 import type React from "react"
-
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Input } from "@/components/ui/input"
-import { Textarea } from "@/components/ui/textarea"
 import PageWrapper from "@/components/PageWrapper"
 import NotificationForm from "@/components/DashboardComponent/notificationForm/NotificationForm"
 

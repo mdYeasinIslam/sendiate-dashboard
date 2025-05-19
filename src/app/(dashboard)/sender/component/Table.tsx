@@ -7,6 +7,7 @@ import {
     TableCell
 } from "@/components/ui/table";
 import { UserType } from "@/type/usersType";
+import Image from "next/image";
 
 import Link from "next/link";
 import React from "react";
@@ -44,9 +45,11 @@ const Table = ({users}:{users:UserType[]}) => {
                             >
                                 <TableCell className="py-3 px-2">01</TableCell>
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
-                                    <img
-                                        src={user.avatar}
+                                    <Image
                                         alt={user.name}
+                                        src={user.avatar}
+                                        width={500}
+                                        height={500}
                                         className="w-6 h-6 rounded-full"
                                     />
                                     {user.name}

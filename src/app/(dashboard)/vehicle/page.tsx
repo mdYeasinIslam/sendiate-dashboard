@@ -86,12 +86,7 @@ const VehicleDashboard = () => {
          </header>
          <main className='md:px-5'>
               <VehicleTable vehicles={vehicles} />
-           {/* <CourierTable users={paginatedUsers}/> */}
-            {/* <Pagination
-           currentPage={currentPage}
-           totalPages={totalPages}
-           onPageChange={setCurrentPage}
-         /> */}
+           
          </main>
        </section>
 
