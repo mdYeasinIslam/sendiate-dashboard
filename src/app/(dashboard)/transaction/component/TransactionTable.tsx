@@ -1,4 +1,5 @@
 'use client'
+import { DateType } from '@/type/dateType';
 import React, { useState } from 'react';
 
 const fakeData = Array.from({ length: 90 }, (_, i) => ({
@@ -9,11 +10,11 @@ const fakeData = Array.from({ length: 90 }, (_, i) => ({
 
 const PAGE_SIZE = 20;
 
-const TransactionTable = () => {
+const TransactionTable = ({data}:{data:DateType[]}) => {
     const [page, setPage] = useState(1);
     const totalPages = Math.ceil(fakeData.length / PAGE_SIZE);
 
-    const paginatedData = fakeData.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
+    const paginatedData = data.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
     return (
         <div className="w-full bg-white rounded-lg shadow-sm p-6">

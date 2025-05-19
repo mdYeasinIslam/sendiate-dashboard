@@ -1,168 +1,142 @@
+'use client'
 import PageWrapper from '@/components/PageWrapper'
-import { UserType } from '@/type/usersType';
-import React from 'react'
+import React, { useState } from 'react'
 import Table from '../sender/component/Table';
 import TransactionTable from './component/TransactionTable';
-const users:UserType[] = [
+import { DateType } from '@/type/dateType';
+import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
+import { Pagination } from '@/components/shared/Pagination';
+const data:DateType[] = [
     {
         id: 1,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Active",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 2,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Active",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 3,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 4,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Active",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 5,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
-    
     {
         id: 6,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 7,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 8,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 9,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 10,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 11,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 12,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 13,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 14,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 15,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 16,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 17,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
     {
         id: 18,
-        name: "Sarah Gomez",
-        email: "emma@example.com",
-        phone: "+1 234 567 8901",
-        status: "Block",
-        avatar: "https://randomuser.me/api/portraits/women/1.jpg",
+        date: "24 Jun 2025",
+        paymentMethod: "Credit Card",
+        courierCharge: "$65.00",
     },
 ];
-const Transaction = () => {
+const TransactionDashboard = () => {
+    //      const [currentPage, setCurrentPage] = useState(1);
+    //   const itemsPerPage = 10;
+    
+    //   const { paginatedUsers, totalPages } = usePaginatedUsers(data, currentPage, itemsPerPage);
+    
   return (
      <section className='bg-[#F8F8F8]'>
       <header>
         <PageWrapper title="Transaction" />
       </header>
-      <main className='p-5'>
-
-              {/* <Table users={users}/> */}
-        <TransactionTable/>
+      <main className='md:px-5'>
+        <TransactionTable data={data} />
+         {/* <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              /> */}
       </main>
     </section>
   )
 }
 
-export default Transaction
+export default TransactionDashboard

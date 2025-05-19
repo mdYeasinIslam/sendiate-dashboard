@@ -16,7 +16,7 @@ const Table = ({users}:{users:UserType[]}) => {
     return (
         <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
             {/* Search */}
-            <div className="mb-4">
+            <div className="mb-4"> 
                 <input
                     type="text"
                     placeholder="Search here"

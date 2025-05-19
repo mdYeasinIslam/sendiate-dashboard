@@ -1,7 +1,10 @@
+'use client'
 import Table from '@/app/(dashboard)/sender/component/Table'
 import PageWrapper from '@/components/PageWrapper'
+import { Pagination } from '@/components/shared/Pagination';
+import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
 import { UserType } from '@/type/usersType';
-import React from 'react'
+import React, { useState } from 'react'
 const users:UserType[] = [
     {
         id: 1,
@@ -150,6 +153,10 @@ const users:UserType[] = [
     },
 ];
 const Sender = () => {
+       const [currentPage, setCurrentPage] = useState(1);
+      const itemsPerPage = 10;
+    
+      const { paginatedUsers, totalPages } = usePaginatedUsers(users, currentPage, itemsPerPage);
   return (
     <section className='bg-[#F8F8F8]'>
       <header>
@@ -157,7 +164,12 @@ const Sender = () => {
       </header>
       <main className=' md:px-5'>
 
-        <Table users={users} />
+        <Table users={paginatedUsers} />
+         <Pagination
+                currentPage={currentPage}
+                totalPages={totalPages}
+                onPageChange={setCurrentPage}
+              />
       </main>
     </section>
   )

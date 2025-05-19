@@ -14,8 +14,15 @@ import Link from "next/link"
 
 export function CourierTable({ users }: { users: UserType[] }) {
   return (
-    <>
-        <UITable>
+      <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
+           <div className="mb-4"> 
+                <input
+                    type="text"
+                    placeholder="Search here"
+                    className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200"
+                />
+            </div>
+        <UITable className="bg-white rounded-lg">
        
         <TableHeader>
                 <TableRow className="text-left border-b text-gray-500 ">
@@ -72,6 +79,6 @@ export function CourierTable({ users }: { users: UserType[] }) {
           </UITable>
 
        
-    </>
+    </section>
   )
 }

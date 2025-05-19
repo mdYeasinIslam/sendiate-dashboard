@@ -1,8 +1,9 @@
 // hooks/usePaginatedUsers.ts
+import { DateType } from "@/type/dateType";
 import { UserType } from "@/type/usersType";
 
 export const usePaginatedUsers = (
-  users: UserType[],
+  users: UserType[] ,
   currentPage: number,
   itemsPerPage: number = 5
 ) => {
