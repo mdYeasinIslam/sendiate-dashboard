@@ -1,5 +1,4 @@
 import CardSection from '@/components/DashboardComponent/HomePage/CardSection';
-import Charts from '@/components/DashboardComponent/HomePage/Charts';
 import { PerformanceChart } from '@/components/DashboardComponent/HomePage/PerformanceChart';
 import PageWrapper from '@/components/PageWrapper';
 
@@ -9,7 +8,6 @@ export default function Page() {
             <PageWrapper title="Overview" />
             <CardSection />
            <PerformanceChart/>
-            {/* <Charts/> */}
         </section>
     );
 }

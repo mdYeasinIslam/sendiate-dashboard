@@ -1,4 +1,3 @@
-import Image from "next/image";
 import { IoIosNotificationsOutline } from "react-icons/io";
 import GetHeaderTitle from "./GetHeaderTitle";
 

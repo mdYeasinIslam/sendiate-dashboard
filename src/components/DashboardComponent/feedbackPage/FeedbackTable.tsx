@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
@@ -14,45 +14,23 @@ import {
 import { MoreVertical, Download, Trash, Edit, Eye, Star } from "lucide-react"
 import { FeedbackEntry } from "@/type/feedbackType"
 
-// type FeedbackEntry = {
-//   id: string
-//   date: string
-//   type: string
-//   name: string
-//   avatar: string
-//   email: string
-//   phone: string
-//   feedback: string
-//   starred?: boolean
-// }
-
-// // Generate fake data
-// const generateFeedbackData = (): FeedbackEntry[] => {
-//   return Array.from({ length: 15 }, (_, i) => ({
-//     id: `feedback-${i + 1}`,
-//     date: "15 June 2025",
-//     type: "Sender",
-//     name: "Sarah Gomez",
-//     avatar: "/placeholder.svg?height=32&width=32",
-//     email: "emma@example.com",
-//     phone: "+1 234 567 8901",
-//     feedback: "The interface is clean and easy to navigate. Love the minimal design!",
-//     starred: i === 2 || i === 5,
-//   }))
-// }
 
 const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackEntry[]}) => {
      const [feedbackData, setFeedbackData] = useState<FeedbackEntry[]>(generateFeedbackData)
-    
-      const handleStarItem = (id: string) => {
+     // Sync with new props if generateFeedbackData changes
+       useEffect(() => {
+          setFeedbackData(generateFeedbackData);
+        }, [generateFeedbackData]);
+
+      const handleStarItem = (id: number) => {
         setFeedbackData((prev) => prev.map((item) => (item.id === id ? { ...item, starred: !item.starred } : item)))
       }
     
-      const handleDeleteItem = (id: string) => {
+      const handleDeleteItem = (id: number) => {
         setFeedbackData((prev) => prev.filter((item) => item.id !== id))
       }
   return (
-      <div className="w-full overflow-auto">
+      <div className="w-full overflow-auto bg-white rounded-lg">
       <table className="w-full border-collapse">
         <thead>
           <tr className="border-b border-gray-200">

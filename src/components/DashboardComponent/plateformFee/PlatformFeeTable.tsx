@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react"
+import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
@@ -17,17 +17,17 @@ type VehiclePricing = {
   currency: string
 }
 
-const initialVehiclePricing: VehiclePricing[] = [
-  { id: "1", vehicleType: "Sedan", priceValue: 1, priceType: "fixed", currency: "USD" },
-  { id: "2", vehicleType: "SUV", priceValue: 1, priceType: "fixed", currency: "USD" },
-  { id: "3", vehicleType: "Pick Up Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "4", vehicleType: "Cargo Van", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "5", vehicleType: "Box Truck (10-14 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "6", vehicleType: "Box Truck (15-20 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "7", vehicleType: "Box Truck (21-25 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "8", vehicleType: "Flatbed Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
-  { id: "9", vehicleType: "Refrigerated Truck (Reefer)", priceValue: 1, priceType: "percentage", currency: "USD" },
-]
+// const initialVehiclePricing: VehiclePricing[] = [
+//   { id: "1", vehicleType: "Sedan", priceValue: 1, priceType: "fixed", currency: "USD" },
+//   { id: "2", vehicleType: "SUV", priceValue: 1, priceType: "fixed", currency: "USD" },
+//   { id: "3", vehicleType: "Pick Up Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "4", vehicleType: "Cargo Van", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "5", vehicleType: "Box Truck (10-14 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "6", vehicleType: "Box Truck (15-20 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "7", vehicleType: "Box Truck (21-25 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "8", vehicleType: "Flatbed Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
+//   { id: "9", vehicleType: "Refrigerated Truck (Reefer)", priceValue: 1, priceType: "percentage", currency: "USD" },
+// ]
 
 export default function PlatformFeeTable({initialVehiclePricing}:{initialVehiclePricing:VehiclePricing[]}) {
   const [vehiclePricing, setVehiclePricing] = useState<VehiclePricing[]>(initialVehiclePricing)
@@ -35,6 +35,10 @@ export default function PlatformFeeTable({initialVehiclePricing}:{initialVehicle
   const [currentVehicle, setCurrentVehicle] = useState<VehiclePricing | null>(null)
   const [editValue, setEditValue] = useState<number>(0)
   const [editType, setEditType] = useState<PriceType>("fixed")
+
+  useEffect(() => {
+    setVehiclePricing(initialVehiclePricing)
+  },[initialVehiclePricing])
 
   const handleEditClick = (vehicle: VehiclePricing) => {
     setCurrentVehicle(vehicle)

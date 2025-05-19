@@ -1,5 +1,5 @@
 export type FeedbackEntry = {
-  id: string
+  id: number
   date: string
   type: string
   name: string

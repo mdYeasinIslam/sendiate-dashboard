@@ -6,7 +6,7 @@ import Image from "next/image";
 const LoginPage = () => {
     const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisibility = () => {
-        console.log(showPassword) 
+        // console.log(showPassword) 
         setShowPassword((prev) => !prev);
     }
 
@@ -15,7 +15,7 @@ const LoginPage = () => {
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
-        console.log( email, password);
+        // console.log( email, password);
        
     };
 

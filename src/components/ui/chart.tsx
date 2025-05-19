@@ -69,7 +69,7 @@ ChartContainer.displayName = "Chart"
 
 const ChartStyle = ({ id, config }: { id: string; config: ChartConfig }) => {
   const colorConfig = Object.entries(config).filter(
-    ([_, config]) => config.theme || config.color
+    ([, config]) => config.theme || config.color
   )
 
   if (!colorConfig.length) {
@@ -102,27 +102,37 @@ ${colorConfig
 
 const ChartTooltip = RechartsPrimitive.Tooltip
 
+
+type ChartTooltipPayload = {
+  name?: string;
+  value?: number | string;
+  color?: string;
+  dataKey?: string;
+  payload?: Record<string, unknown>;
+  [key: string]: unknown;
+};
+
 type ChartTooltipContentProps = {
-  active?: boolean
-  payload?: any[]
-  label?: any
-  labelFormatter?: (label: any, payload: any[]) => React.ReactNode
+  active?: boolean;
+  payload?: ChartTooltipPayload[];
+  label?: string | number;
+  labelFormatter?: (label: string | number, payload: ChartTooltipPayload[]) => React.ReactNode;
   formatter?: (
-    value: any,
-    name: any,
-    item: any,
+    value: number | string,
+    name: string,
+    item: ChartTooltipPayload,
     index: number,
-    payload: any
-  ) => React.ReactNode
-  className?: string
-  labelClassName?: string
-  color?: string
-  hideLabel?: boolean
-  hideIndicator?: boolean
-  indicator?: "line" | "dot" | "dashed"
-  nameKey?: string
-  labelKey?: string
-} & React.ComponentProps<"div">
+    payload: Record<string, unknown>
+  ) => React.ReactNode;
+  className?: string;
+  labelClassName?: string;
+  color?: string;
+  hideLabel?: boolean;
+  hideIndicator?: boolean;
+  indicator?: "line" | "dot" | "dashed";
+  nameKey?: string;
+  labelKey?: string;
+} & React.ComponentProps<"div">;
 
 const ChartTooltipContent = React.forwardRef<HTMLDivElement, ChartTooltipContentProps>(
   (
@@ -159,9 +169,13 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, ChartTooltipContent
           : itemConfig?.label
 
       if (labelFormatter) {
+        const safeValue =
+          typeof value === "string" || typeof value === "number"
+            ? value
+            : "";
         return (
           <div className={cn("font-medium", labelClassName)}>
-            {labelFormatter(value, payload)}
+            {labelFormatter(safeValue, payload)}
           </div>
         )
       }
@@ -200,7 +214,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, ChartTooltipContent
           {payload.map((item, index) => {
             const key = `${nameKey || item.name || item.dataKey || "value"}`
             const itemConfig = getPayloadConfigFromPayload(config, item, key)
-            const indicatorColor = color || item.payload.fill || item.color
+            const indicatorColor = color || (item.payload?.fill) || item.color
 
             return (
               <div
@@ -211,7 +225,7 @@ const ChartTooltipContent = React.forwardRef<HTMLDivElement, ChartTooltipContent
                 )}
               >
                 {formatter && item?.value !== undefined && item.name ? (
-                  formatter(item.value, item.name, item, index, item.payload)
+                  formatter(item.value, item.name, item, index, item.payload ?? {})
                 ) : (
                   <>
                     {itemConfig?.icon ? (

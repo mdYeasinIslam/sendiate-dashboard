@@ -173,7 +173,7 @@ const DasboaredCourierpage = () => {
      const [currentPage, setCurrentPage] = useState(1);
   const itemsPerPage = 10;
 
-  const { paginatedUsers, totalPages } = usePaginatedUsers(users, currentPage, itemsPerPage);
+  const { paginatedUsers, totalPages } = usePaginatedUsers<UserType>(users, currentPage, itemsPerPage);
 
   return (
       <section className='bg-[#F8F8F8]'>

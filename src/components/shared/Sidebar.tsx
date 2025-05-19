@@ -1,6 +1,6 @@
 import Link from "next/link";
 import Image from "next/image";
-import logo from "/images/login/logo.png";
+// import logo from "/images/login/logo.png";
 import { Banknote, LayoutGrid, Package, Truck, UserRound, MessageCircle, Bell, DollarSign, MessageSquare } from 'lucide-react';
 import { Button } from "../ui/button";
 import NavLink from "./NavLink";

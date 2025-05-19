@@ -8,6 +8,7 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { UserType } from "@/type/usersType"
+import Image from "next/image"
 import Link from "next/link"
 
 
@@ -48,9 +49,11 @@ export function CourierTable({ users }: { users: UserType[] }) {
                 <TableCell className="py-3 px-2">{user.phone}</TableCell>
                 <TableCell className="py-3 px-2">{user.email}</TableCell>
                 <TableCell className="py-3 px-2  flex items-center gap-2">
-                    <img
+                    <Image
                         src={user.avatar}
-                        alt={user.name}
+                            alt={user.name}
+                            width={500}
+                            height={500}
                         className="w-6 h-6 rounded-full"
                     />
                         {user.courierName}</TableCell>

@@ -116,13 +116,12 @@ const data:DateType[] = [
     },
 ];
 const TransactionDashboard = () => {
-         const [currentPage, setCurrentPage] = useState(1);
-      const itemsPerPage = 10;
-    
-      const { paginatedUsers, totalPages } = usePaginatedUsers<DateType>(data, currentPage, itemsPerPage);
+    const [currentPage, setCurrentPage] = useState(1);
+    const itemsPerPage = 10;
+    const { paginatedUsers, totalPages } = usePaginatedUsers<DateType>(data, currentPage, itemsPerPage);
     
   return (
-     <section className='bg-[#F8F8F8]'>
+     <section className='bg-[#F8F8F8] h-full'>
       <header>
         <PageWrapper title="Transaction" />
       </header>

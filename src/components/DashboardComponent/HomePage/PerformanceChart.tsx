@@ -1,5 +1,7 @@
 // components/PerformanceChart.tsx
 'use client'
+import { TooltipProps } from "recharts";
+
 import {
   AreaChart,
   Area,
@@ -101,7 +103,8 @@ export const PerformanceChart = () => {
   );
 };
 
-const CustomTooltip = ({ active, payload, label }: any) => {
+
+const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
