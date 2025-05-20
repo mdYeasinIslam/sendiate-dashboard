@@ -43,17 +43,15 @@ const user = {
 
 const page = () => {
     const order = user?.orders[0];
+
     return (
         <>
-            <PageWrapper title='Sender Details'/>
+            <PageWrapper title='Courier Details'/>
             <section className='px-6 '>
                 <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white">
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-6 border-b">
-                        {/* <button className="text-green-600 text-xl rounded-full p-1 hover:bg-gray-100">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                        </button> */}
-                        <Button path='sender'/>
+                        <Button path='courier'/>
                         <span className="font-medium text-lg">{user?.name}</span>
                     </div>
                     {/* User Info and Stats */}
@@ -108,7 +106,7 @@ const page = () => {
                                 <span className="font-medium">{order?.deliveryService?.name}</span>
                             </div>
                             <div className="mb-2">
-                                <div className="text-gray-600 text-sm font-medium">Review Provide:</div>
+                                <div className=" text-md font-semibold">Review Provide:</div>
                                 <div className="flex items-center justify-between gap-2">
                                     <span className="text-gray-700 text-sm">{order?.deliveryService?.reviewProvide?.text}</span>
                                     {/* showing Ratings */}
@@ -120,7 +118,7 @@ const page = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className="text-gray-600 text-sm font-medium">Review Get:</div>
+                                <div className=" text-md font-semibold">Review Get:</div>
                                 <div className="flex items-center justify-between gap-2">
                                     <span className="text-gray-700 text-sm">{order?.deliveryService?.reviewGet?.text}</span>
                                     <span className="flex items-center text-orange-400 text-xs">
