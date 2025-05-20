@@ -10,7 +10,6 @@ interface NavLinkProps {
 
 function NavLink({ href, children, icon }: NavLinkProps) {
   const pathname = usePathname();
-  console.log(href ,pathname)
   return (
     <Link
       href={href}
