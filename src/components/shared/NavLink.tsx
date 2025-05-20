@@ -9,14 +9,13 @@ interface NavLinkProps {
 }
 
 function NavLink({ href, children, icon }: NavLinkProps) {
-    const pathname = usePathname();
-    // console.log(pathname)
+  const pathname = usePathname();
   return (
     <Link
       href={href}
       className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-300 ease-linear text-[16px] font-normal leading-[24px] "
  ${
-   pathname === href
+   pathname === href || pathname.includes(href+'/')
      ? "bg-[#C2F3CD]  text-black rounded font-semibold"
      : " text-[#817F9B] hover:bg-accent hover:text-accent-foreground"
  }`}
