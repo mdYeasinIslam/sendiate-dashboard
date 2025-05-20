@@ -8,8 +8,9 @@ import {
   AlertDialogHeader,
   AlertDialogTitle,
   AlertDialogTrigger,
-} from "@/components/ui/alert-dialog";
-import box from "../../../../public/images/box.png"
+} from "@/components/ui/alert-dialog"
+
+import box from "../../../public/images/box.png"
 import Image from "next/image";
 import { LogOut } from "lucide-react";
 

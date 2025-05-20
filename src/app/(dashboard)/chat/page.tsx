@@ -1,8 +1,8 @@
 "use client";
 
-import ChatList from "@/components/Chat/ChatList";
-import ChatWindow from "@/components/Chat/ChatWindo";
-import MessageInput from "@/components/Chat/MessageInput";
+import ChatList from "@/components/DashboardComponent/Chat/ChatList";
+import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
+import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
 import PageWrapper from "@/components/PageWrapper";
 import { Message, User } from "@/type";
 import { useState } from "react";

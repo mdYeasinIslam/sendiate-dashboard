@@ -2,9 +2,11 @@ import React from 'react'
 import Image from "next/image";
 import PageWrapper from '@/components/PageWrapper';
 import Button from '@/components/shared/Button';
+import DetailsVehicleType from '@/components/DashboardComponent/courierPage/DetailsVehicleType';
+import { User } from '@/type/vehicleType';
 
 
-const user = {
+const user: User = {
     id: 1,
     name: "Sarah Gomez",
     email: "emma@example.com",
@@ -91,7 +93,7 @@ const page = () => {
                             <div className="mb-2  text-sm">Courier Date: <span className="font-medium">{order?.courierDate}</span></div>
                             <div className="mb-2  text-sm">Pick Up Address: <span className="font-medium">{order?.pickUpAddress}</span></div>
                             <div className="mb-2  text-sm">Drop–Off Address: <span className="font-medium">{order?.dropOffAddress}</span></div>
-                            <div className="mb-2  text-sm">Vehicle Type: <span className="font-medium">{order?.vehicleType}</span></div>
+                            <div className="mb-2  text-sm flex items-center gap-4">Vehicle Type: <span className="font-medium">{order?.vehicleType}</span><DetailsVehicleType order={order} /></div>
                             <div className="mb-2  text-sm">Amount: <span className="font-medium">${order?.amount}</span></div>
                             <div className="mb-2  text-sm flex items-center gap-2">
                                 Status: 
