@@ -10,7 +10,6 @@ import {
   AlertDialogTrigger,
 } from "@/components/ui/alert-dialog";
 import box from "../../../../public/images/box.png"
-import { Button } from "@/components/ui/button";
 import Image from "next/image";
 import { LogOut } from "lucide-react";
 
