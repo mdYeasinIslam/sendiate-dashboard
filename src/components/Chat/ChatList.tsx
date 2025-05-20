@@ -1,6 +1,7 @@
 // import { User } from "@/types";
 
 import { User } from "@/type";
+import Image from "next/image";
 
 interface ChatListProps {
   users: User[];
@@ -20,7 +21,12 @@ export default function ChatList({ users, onSelectUser, selectedUserId }: ChatLi
             selectedUserId === user.id ? "bg-gray-100" : "hover:bg-gray-50"
           }`}
         >
-          <img src={user.avatar} className="w-10 h-10 rounded-full" />
+          <Image
+            src={user.avatar}
+            width={500}
+            height={500}
+            alt={user?.name}
+            className="w-10 h-10 rounded-full" />
           <div className="flex-1">
             <p className="font-medium">{user.name}</p>
             <p className="text-sm text-gray-500 truncate">{user.lastMessage}</p>
