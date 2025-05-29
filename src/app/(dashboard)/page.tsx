@@ -6,10 +6,12 @@ import PageWrapper from '@/components/PageWrapper';
 
 export default function Page() {
     return (
-        <section className='bg-[#F8F8F8] h-screen  lg:px-6 space-y-5'>
-            <PageWrapper title="Overview" />
-            <CardSection />
-           <PerformanceChart/>
+        <section className='bg-[#F8F8F8] h-screen  '>
+                <PageWrapper title="Overview" />
+            <div className="lg:px-6 space-y-5">
+                <CardSection />
+                <PerformanceChart/>
+            </div>
         </section>
     );
 }

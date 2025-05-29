@@ -1,13 +1,23 @@
-import React from 'react'
+'use client';
+import React from "react";
+import { useSelector } from "react-redux";
+import { RootState } from "@/redux/store/store";
+import LoadingSpinner from "@/app/loading";
 
-const cards = [
-    { label: "Total Sender", value: "20000" },
-    { label: "Total Courier", value: "5000" },
-    { label: "Total Cash", value: "$6000" },
-    { label: "Platform Fees", value: "$6000" },
-];
 
 const CardSection = () => {
+    
+    const totalData=useSelector((state:RootState)=> state.dashboard);
+    console.log(totalData)
+    // if (!totalData.stats === null || !totalData.stats) {
+    //     return <div><LoadingSpinner/></div>
+    // }
+    const cards = [
+        { label: "Total Sender", value: totalData.stats?.totalSender?.toString() || "0" },
+        { label: "Total Courier", value: totalData.stats?.totalCourier?.toString() || "0" },
+        { label: "Total Cash", value: "$00" },
+        { label: "Platform Fees", value: "00" },
+    ];
     return (
         <div className="w-full  rounded-lg  flex flex-col md:flex-row gap-4  px-5 lg:px-0">
             {cards.map((card, idx) => (

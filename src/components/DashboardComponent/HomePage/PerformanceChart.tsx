@@ -11,61 +11,39 @@ import {
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
-import { useState } from "react";
-import { useGetDashboardStatsQuery, useGetHomePageApiQuery } from "@/redux/services/homePageApis";
+import { useEffect, useState } from "react";
+import { useGetDashboardStatsQuery } from "@/redux/services/homePageApis/homePageApis";
+import { DashboardStatsResponse, PerformanceType } from "@/type/dashChartType";
+import { useDispatch } from "react-redux";
+import { setDashboardStats } from "@/redux/services/dashboard/dashboardSlice";
+import LoadingSpinner from "@/app/loading";
 
-type PerformanceType = {
-  month: string;
-  sender: number;
-  courier: number;
-  fees: number;
-  cancel: number;
-};
-
-const dummyData: { [year: string]: PerformanceType[] } = {
-  "2025": [
-    { month: "Jan", sender: 100, courier: 30, fees: 800, cancel: 10 },
-    { month: "Feb", sender: 200, courier: 40, fees: 1000, cancel: 12 },
-    { month: "Mar", sender: 90, courier: 20, fees: 600, cancel: 5 },
-    { month: "Apr", sender: 70, courier: 10, fees: 400, cancel: 8 },
-    { month: "May", sender: 150, courier: 35, fees: 900, cancel: 15 },
-    { month: "Jun", sender: 160, courier: 33, fees: 920, cancel: 14 },
-    { month: "Jul", sender: 200, courier: 50, fees: 1000, cancel: 20 },
-    { month: "Aug", sender: 180, courier: 48, fees: 980, cancel: 17 },
-    { month: "Sep", sender: 130, courier: 32, fees: 850, cancel: 12 },
-    { month: "Oct", sender: 120, courier: 28, fees: 800, cancel: 11 },
-    { month: "Nov", sender: 110, courier: 25, fees: 780, cancel: 10 },
-    { month: "Dec", sender: 100, courier: 20, fees: 750, cancel: 9 },
-  ],
-  "2024": [
-    { month: "Jan", sender: 80, courier: 20, fees: 600, cancel: 8 },
-    { month: "Feb", sender: 130, courier: 25, fees: 700, cancel: 6 },
-    { month: "Mar", sender: 90, courier: 20, fees: 600, cancel: 5 },
-    { month: "Apr", sender: 70, courier: 10, fees: 400, cancel: 8 },
-    { month: "May", sender: 150, courier: 35, fees: 900, cancel: 15 },
-    { month: "Jun", sender: 160, courier: 33, fees: 920, cancel: 14 },
-    { month: "Jul", sender: 200, courier: 50, fees: 1000, cancel: 20 },
-    { month: "Aug", sender: 180, courier: 48, fees: 980, cancel: 17 },
-    { month: "Sep", sender: 130, courier: 32, fees: 850, cancel: 12 },
-    { month: "Oct", sender: 120, courier: 28, fees: 800, cancel: 11 },
-    { month: "Nov", sender: 110, courier: 25, fees: 780, cancel: 10 },
-    { month: "Dec", sender: 100, courier: 20, fees: 750, cancel: 9 },
-  ],
-};
-
-
-const years = Object.keys(dummyData);
 
 export const PerformanceChart = () => {
-  
+  const dispatch = useDispatch()
+
   const [selectedYear, setSelectedYear] = useState("2025");
-  const {data,error,isLoading} = useGetDashboardStatsQuery(parseInt(selectedYear));
-  console.log(data)
-  const data1 = dummyData[selectedYear];
-  // const { data, error, isLoading } = useGetHomePageApiQuery();
-  if (isLoading) return <div>loading....</div>
+
+
+  const { data, error, isLoading } = useGetDashboardStatsQuery(parseInt(selectedYear)) as { data?: DashboardStatsResponse; error?: unknown; isLoading: boolean };
+ 
+
+  const chatData = data?.data?.performanceData as PerformanceType[] 
+  useEffect(() => {
+    if (data?.data) {
+      const { performanceData, totalSender, totalCourier, year } = data.data;
+      // Provide default values if any are undefined
+      dispatch(setDashboardStats({
+        performanceData: performanceData ?? [],
+        totalSender: totalSender ?? 0,
+        totalCourier: totalCourier ?? 0,
+        year: year ?? Number(selectedYear),
+      }));
+    }
+  },[data, dispatch, selectedYear])
+  if (isLoading) return <div><LoadingSpinner/></div>
   if (error) return <div>An Error is occur</div>
-  // console.log(data)
+
   return (
     <div className="w-full p-4 rounded-lg shadow bg-white">
       <div className="flex items-center justify-between mb-4">
@@ -75,7 +53,7 @@ export const PerformanceChart = () => {
           value={selectedYear}
           onChange={(e) => setSelectedYear(e.target.value)}
         >
-          {years.map((year) => (
+          {['2024', '2025'].map((year) => (
             <option key={year} value={year}>{year}</option>
           ))}
         </select>
@@ -84,7 +62,7 @@ export const PerformanceChart = () => {
       <div className="w-full h-[600px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={data1}
+            data={chatData}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <defs>
@@ -121,7 +99,7 @@ const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>)
         <p>Sender: {data.sender}</p>
         <p>Courier: {data.courier}</p>
         <p>Fees: ${data.fees}</p>
-        <p>Cancel: {data.cancel}</p>
+        <p>Total: {data.total}</p>
       </div>
     );
   }

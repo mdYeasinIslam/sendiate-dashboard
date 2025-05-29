@@ -9,10 +9,9 @@ export const homePageApis = createApi({
         prepareHeaders: (headers) => {
 
         if (typeof window !== 'undefined') {
-           const rawToken = localStorage.getItem('token');
-        const token = rawToken?.trim();
+            const rawToken = localStorage.getItem('token');
+            const token = rawToken?.trim();
             if (token && token !== 'undefined' && token !== 'null') {
-                console.log('Token found:', token);
                 headers.set('Authorization', `${token}`);
             }
         }
