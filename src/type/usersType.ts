@@ -8,4 +8,16 @@ export type UserType =
         avatar: string;
         courierName?:string
     }
-  
+export type SenderType = {
+    id: string;
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+    role: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    _count: {
+        parcelsSent: number;
+    };
+}

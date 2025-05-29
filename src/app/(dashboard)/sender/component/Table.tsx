@@ -6,14 +6,15 @@ import {
     TableBody,
     TableCell
 } from "@/components/ui/table";
-import { UserType } from "@/type/usersType";
+import { SenderType } from "@/type/usersType";
 import Image from "next/image";
 
 import Link from "next/link";
 import React from "react";
+import logo from '../../../../../public/images/vehicle.png'
 
-
-const Table = ({users}:{users:UserType[]}) => {
+const Table = ({ senders }: { senders: SenderType[] }) => {
+    console.log(senders)
     return (
         <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
             {/* Search */}
@@ -38,37 +39,37 @@ const Table = ({users}:{users:UserType[]}) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {users.map((user, idx) => (
+                        {senders.map((sender, idx) => (
                             <TableRow
-                                key={user.id + idx}
+                                key={sender.id + idx}
                                 className="  hover:bg-gray-50"
                             >
                                 <TableCell className="py-3 px-2">01</TableCell>
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
                                     <Image
-                                        alt={user.name}
-                                        src={user.avatar}
+                                        alt={sender.fullName}
+                                        src={logo}
                                         width={500}
                                         height={500}
                                         className="w-6 h-6 rounded-full"
                                     />
-                                    {user.name}
+                                    {sender.fullName}
                                 </TableCell>
-                                <TableCell className="py-3 px-2">{user.email}</TableCell>
-                                <TableCell className="py-3 px-2">{user.phone}</TableCell>
+                                <TableCell className="py-3 px-2">{sender.email}</TableCell>
+                                <TableCell className="py-3 px-2">{sender.phoneNumber}</TableCell>
                                 <TableCell className="py-3 px-2">
                                     <span
                                         className={`px-3 py-1 rounded-full text-xs font-medium ${
-                                            user.status === "Active"
+                                            sender.status === "ACTIVE"
                                                 ? "bg-green-100 text-green-600"
                                                 : "bg-red-100 text-red-500"
                                         }`}
                                     >
-                                        {user.status}
+                                        {sender.status}
                                     </span>
                                 </TableCell>
                                 <TableCell className="py-3 px-2">
-                                    <Link href={`/sender/${user.id}`}>
+                                    <Link href={`/sender/${sender.id}`}>
                                     <button className="bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
                                         View Details
                                     </button>

@@ -2,13 +2,12 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { RootState } from "@/redux/store/store";
-import LoadingSpinner from "@/app/loading";
 
 
 const CardSection = () => {
     
     const totalData=useSelector((state:RootState)=> state.dashboard);
-    console.log(totalData)
+  
     // if (!totalData.stats === null || !totalData.stats) {
     //     return <div><LoadingSpinner/></div>
     // }

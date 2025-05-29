@@ -1,21 +1,25 @@
-import  dashboardReducer  from '@/redux/services/dashboard/dashboardSlice';
+import dashboardReducer from '@/redux/services/slicer/dashboard/dashboardSlice';
 import  { configureStore} from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { authApi } from '../services/auth/authApi'
 import authSlice from '../services/auth/authSlice'
-import { homePageApis } from '../services/homePageApis/homePageApis'
+import { homePageApis } from '../services/Apis/homePageApis/homePageApis'
+import { senderPageApi } from '../services/Apis/senderPage/senderPageApi';
 
 export const store = configureStore({
     reducer: {
         [homePageApis.reducerPath]: homePageApis.reducer,
-       
+        [senderPageApi.reducerPath]: senderPageApi.reducer,
+
         [authApi.reducerPath]: authApi.reducer,
-        auth: authSlice.reducer ,
-          dashboard: dashboardReducer,
+
+        
+        auth: authSlice.reducer,
+        dashboard: dashboardReducer,
     },
 
     middleware: (GetDefaultMiddleware) => 
-        GetDefaultMiddleware().concat(homePageApis.middleware,authApi.middleware)
+        GetDefaultMiddleware().concat(homePageApis.middleware,authApi.middleware, senderPageApi.middleware)
     
 })
 setupListeners(store.dispatch)

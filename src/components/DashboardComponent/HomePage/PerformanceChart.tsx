@@ -12,15 +12,15 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useEffect, useState } from "react";
-import { useGetDashboardStatsQuery } from "@/redux/services/homePageApis/homePageApis";
+import { useGetDashboardStatsQuery } from "@/redux/services/Apis/homePageApis/homePageApis";
 import { DashboardStatsResponse, PerformanceType } from "@/type/dashChartType";
-import { useDispatch } from "react-redux";
-import { setDashboardStats } from "@/redux/services/dashboard/dashboardSlice";
+import { setDashboardStats } from "@/redux/services/slicer/dashboard/dashboardSlice";
 import LoadingSpinner from "@/app/loading";
+import { useAppDispatch } from "@/redux/hooks";
 
 
 export const PerformanceChart = () => {
-  const dispatch = useDispatch()
+  const dispatch = useAppDispatch()
 
   const [selectedYear, setSelectedYear] = useState("2025");
 
