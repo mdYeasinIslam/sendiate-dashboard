@@ -2,21 +2,57 @@
 import React, { FormEvent, useState } from "react";
 import { Eye, EyeOff } from "lucide-react";
 import Image from "next/image";
+import { useAppDispatch } from "@/redux/hooks";
+import { useLoginUserMutation } from "@/redux/services/auth/authApi";
+import { setToken } from "@/redux/services/auth/authSlice";
+import {  useRouter } from "next/navigation";
+import { toast } from "sonner";
 
 const LoginPage = () => {
+    // Importing the useAppDispatch hook to dispatch actions
+    const dispatch = useAppDispatch()
+    // Using the loginUser mutation from authApi
+    const [loginUser,] = useLoginUserMutation()
+     const router = useRouter();
+    // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisibility = () => {
-        // console.log(showPassword) 
         setShowPassword((prev) => !prev);
     }
 
+    
     const handleSubmit = (e: FormEvent<HTMLFormElement | undefined>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
         const password = formData.get("password");
-        console.log( email, password);
-       
+        console.log(email, password);
+        
+       try {
+            if(!email || !password) {
+               return toast.error("Email and password are required");
+           }
+            // Dispatching the loginUser mutation with email and password
+            loginUser({ email, password })
+                .unwrap()
+                .then((response) => {
+                    console.log("Login successful:", response);
+                    if (response?.success) { 
+                        localStorage.setItem("token", response?.data?.token);
+                        toast.success(response?.message);
+                        dispatch(setToken(response?.data?.token));
+                       
+                        router.push('/');
+                    } 
+                })
+                .catch((error) => {
+                    console.error("Login failed:", error);
+                    toast.error(error?.data?.message || "Login failed");
+                });
+           
+       } catch (error) {
+        console.error("Login failed:", error);
+       }
     };
 
     return (

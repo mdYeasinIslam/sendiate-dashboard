@@ -1,3 +1,5 @@
+
+import React from "react";
 import CardSection from '@/components/DashboardComponent/HomePage/CardSection';
 import { PerformanceChart } from '@/components/DashboardComponent/HomePage/PerformanceChart';
 import PageWrapper from '@/components/PageWrapper';

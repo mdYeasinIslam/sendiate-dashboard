@@ -1,17 +1,30 @@
+'use client'
 
+import type React from "react"; // Import React
+import { useEffect } from "react";
 import Sidebar from "@/components/shared/Sidebar";
 import { Button } from "@/components/ui/button";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
-import { Menu } from "lucide-react";
 
-import type React from "react"; // Import React
+import { Menu } from "lucide-react";
 
 export default function DashboardLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    // Check if the token is present in localStorage
+    if (!token) {
+      // If no token is found, redirect to the login page
+      if (typeof window !== "undefined") {
+        // redirect("/logIn");
+        window.location.href = "/logIn";
+      }
+    }
+  }, []);
+
   return (
  
       <main>
@@ -24,7 +37,7 @@ export default function DashboardLayout({
             >
               <Button className="bg-white  border" size="icon">
                 <Menu className="h-6 w-6 text-black bg-white" />
-            </Button>
+               </Button>
           
               </SheetTrigger>
             <SheetContent side="left" className="w-64 p-0 bg-white">
@@ -43,8 +56,11 @@ export default function DashboardLayout({
           {/* Main Content */}
           <div className="lg:pl-64 h-screen overflow-y-hidden">
             {/* <Header /> */}
-            <main className=" border  h-full  overflow-y-auto ">
+          <main className=" border  h-full  overflow-y-auto ">
+           
+
               {children}
+            
             </main>
           </div>
         </div>

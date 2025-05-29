@@ -47,7 +47,7 @@ const page = () => {
     const order = user?.orders[0];
 
     return (
-        <>
+        <div className='hidden md:flex'>
             <PageWrapper title='Courier Details'/>
             <section className='px-6 '>
                 <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white">
@@ -88,7 +88,7 @@ const page = () => {
                     {/* Order and Review Details */}
                     <div className="flex flex-col md:flex-row gap-8 mt-6">
                         {/* Order Details */}
-                        <div className="flex-1 text-black">
+                        <div className="flex-1  text-black">
                             <div className="mb-2  text-sm">Order Number: <span className="font-medium">{order?.orderNumber}</span></div>
                             <div className="mb-2  text-sm">Courier Date: <span className="font-medium">{order?.courierDate}</span></div>
                             <div className="mb-2  text-sm">Pick Up Address: <span className="font-medium">{order?.pickUpAddress}</span></div>
@@ -134,7 +134,7 @@ const page = () => {
                     </div>
                 </div>
             </section>
-        </>
+        </div>
     );
 };
 

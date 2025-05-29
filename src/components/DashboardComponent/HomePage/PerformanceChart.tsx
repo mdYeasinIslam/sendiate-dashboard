@@ -1,4 +1,4 @@
-// components/PerformanceChart.tsx
+
 'use client'
 import { TooltipProps } from "recharts";
 
@@ -12,6 +12,7 @@ import {
   ResponsiveContainer,
 } from "recharts";
 import { useState } from "react";
+import { useGetDashboardStatsQuery, useGetHomePageApiQuery } from "@/redux/services/homePageApis";
 
 type PerformanceType = {
   month: string;
@@ -52,12 +53,19 @@ const dummyData: { [year: string]: PerformanceType[] } = {
   ],
 };
 
+
 const years = Object.keys(dummyData);
 
 export const PerformanceChart = () => {
+  
   const [selectedYear, setSelectedYear] = useState("2025");
-  const data = dummyData[selectedYear];
-
+  const {data,error,isLoading} = useGetDashboardStatsQuery(parseInt(selectedYear));
+  console.log(data)
+  const data1 = dummyData[selectedYear];
+  // const { data, error, isLoading } = useGetHomePageApiQuery();
+  if (isLoading) return <div>loading....</div>
+  if (error) return <div>An Error is occur</div>
+  // console.log(data)
   return (
     <div className="w-full p-4 rounded-lg shadow bg-white">
       <div className="flex items-center justify-between mb-4">
@@ -76,7 +84,7 @@ export const PerformanceChart = () => {
       <div className="w-full h-[600px]">
         <ResponsiveContainer width="100%" height="100%">
           <AreaChart
-            data={data}
+            data={data1}
             margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
           >
             <defs>

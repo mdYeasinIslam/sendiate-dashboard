@@ -1,3 +1,5 @@
+'use client';
+import React from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,8 +15,23 @@ import {
 import box from "../../../public/images/box.png"
 import Image from "next/image";
 import { LogOut } from "lucide-react";
+import { useAppDispatch } from "@/redux/hooks";
+import { logout } from "@/redux/services/auth/authSlice";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 const page = () => {
+  const dispatch = useAppDispatch()
+  const router =useRouter()
+  const signOutHandler = () => {
+    console.log("signOutHandler called");
+    dispatch(logout())
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem("token");
+      toast.success("You have been logged out successfully");
+      router.push('/logIn');
+    }
+}
   return (
     <AlertDialog>
       <AlertDialogTrigger>
@@ -42,7 +59,7 @@ const page = () => {
           <AlertDialogCancel className="px-12 py-5 rounded-sm bg-[#C2F3CD]">
             No
           </AlertDialogCancel>
-          <AlertDialogAction className="px-12 py-5 bg-[#36C556] rounded-sm text-black ">
+          <AlertDialogAction onClick={signOutHandler} className="px-12 py-5 bg-[#36C556] rounded-sm text-black ">
             Yes
           </AlertDialogAction>
         </AlertDialogFooter>
