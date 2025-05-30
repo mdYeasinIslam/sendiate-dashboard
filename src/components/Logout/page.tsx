@@ -20,7 +20,7 @@ import { logout } from "@/redux/services/auth/authSlice";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
-const page = () => {
+const Page = () => {
   const dispatch = useAppDispatch()
   const router =useRouter()
   const signOutHandler = () => {
@@ -68,4 +68,4 @@ const page = () => {
   );
 };
 
-export default page;
+export default Page;

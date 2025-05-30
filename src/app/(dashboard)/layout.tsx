@@ -20,7 +20,7 @@ export default function DashboardLayout({
       // If no token is found, redirect to the login page
       if (typeof window !== "undefined") {
         // redirect("/logIn");
-        window.location.href = "/logIn";
+         window.location.href = "/logIn";
       }
     }
   }, []);

@@ -2,11 +2,12 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
-export const homePageApis = createApi({
-    reducerPath: 'homePageApis',
+
+export const courierPageApi = createApi({
+    reducerPath: 'courierPageApi',
     baseQuery: fetchBaseQuery({
         // baseUrl: 'https://patrkamh.onrender.com/api/v1',
-         baseUrl: 'http://10.0.30.91:5001/api/v1',
+        baseUrl: 'http://10.0.30.91:5001/api/v1',
         prepareHeaders: (headers) => {
 
         if (typeof window !== 'undefined') {
@@ -18,13 +19,17 @@ export const homePageApis = createApi({
         }
         return headers;
         }, }),
-    endpoints: (build) => ({
-        getHomePageApi: build.query<unknown, void>({ query: () => `posts` }),
+        endpoints: (build) => ({
 
-        getDashboardStats: build.query<unknown, number>({
-            query: (year) => `/dashboard/stats?year=${year}`
-        })
-    })
+            getCourierStats: build.query<unknown, void>({
+                query: () => `/users/couriers`
+            }),
+            
+            getCourierById: build.query<unknown, string>({
+                query: (id) => `/users/couriers/${id}`
+            }),
+
+         })
 })
 
-export const { useGetHomePageApiQuery,useGetDashboardStatsQuery } = homePageApis;
+export const { useGetCourierStatsQuery,useGetCourierByIdQuery } = courierPageApi;

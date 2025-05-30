@@ -6,12 +6,24 @@ import {
     TableBody,
     TableCell
 } from "@/components/ui/table";
-import { SenderType } from "@/type/usersType";
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
+import { SenderType } from "@/type/SenderPagesType";
 import Image from "next/image";
 
 import Link from "next/link";
 import React from "react";
-import logo from '../../../../../public/images/vehicle.png'
+
+// Use the image URL directly as a string
+const logo = 'https://i.pravatar.cc/150?img=1';
+import { Button } from "@/components/ui/button";
+import {  Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
 
 const Table = ({ senders }: { senders: SenderType[] }) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
@@ -47,6 +59,27 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                             <TableHead className="py-3 px-2 font-normal">Phone</TableHead>
                             <TableHead className="py-3 px-2 font-normal">Status</TableHead>
                             <TableHead className="py-3 px-2 font-normal"></TableHead>
+                            <TableHead className="py-3 px-2 font-normal text-right">
+                                {/* <DropdownMenu>
+                                <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                    <MoreVertical className="h-4 w-4" />
+                                </Button>
+                                </DropdownMenuTrigger>
+                                <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem>
+                                    <Download className="mr-2 h-4 w-4" />
+                                    <span>Export</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Trash className="mr-2 h-4 w-4" />
+                                    <span>Delete All</span>
+                                </DropdownMenuItem>
+                                </DropdownMenuContent>
+                            </DropdownMenu> */}
+                            </TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -94,6 +127,38 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                         View Details
                                     </button>
                                     </Link>
+                                </TableCell>
+                                <TableCell className="py-3 px-2 text-right">
+                                    <DropdownMenu>
+                                        <DropdownMenuTrigger asChild>
+                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                                <MoreVertical className="h-4 w-4" />
+                                            </Button>
+                                        </DropdownMenuTrigger>
+                                        <DropdownMenuContent align="end">
+                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem >
+                                                {/* <DropdownMenuItem onClick={() => handleStarItem(entry.id)}> */}
+                                                <Star className={`mr-2 h-4 w-4`} />
+                                                {/* <span>{entry.starred ? "Unstar" : "Star"}</span> */}
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Eye className="mr-2 h-4 w-4" />
+                                                <span>View Details</span>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuItem>
+                                                <Edit className="mr-2 h-4 w-4" />
+                                                <span>Edit</span>
+                                            </DropdownMenuItem>
+                                            <DropdownMenuSeparator />
+                                            <DropdownMenuItem className="text-red-600">
+                                                {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
+                                                <Trash className="mr-2 h-4 w-4" />
+                                                <span>Delete</span>
+                                            </DropdownMenuItem>
+                                        </DropdownMenuContent>
+                                    </DropdownMenu>
                                 </TableCell>
                             </TableRow>
                         ))}

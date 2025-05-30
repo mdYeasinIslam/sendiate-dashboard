@@ -1,6 +1,6 @@
 // import { User, Message } from "@/types";
 
-import { Message, User } from "@/type";
+import { Message, User } from "@/type/chatPage";
 import Image from "next/image";
 
 interface ChatWindowProps {

@@ -1,5 +1,5 @@
 // redux/services/dashboard/dashboardSlice.ts
-import { PerformanceType } from '@/type/dashChartType';
+import { PerformanceType } from '@/type/homePageTypes';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 
 interface DashboardStatsResponse {

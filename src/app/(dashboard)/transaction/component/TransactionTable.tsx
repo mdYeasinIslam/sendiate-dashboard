@@ -1,4 +1,4 @@
-import { DateType } from '@/type/dateType';
+import { DateType } from '@/type/transactionPageTypes';
 import React from 'react';
 
 

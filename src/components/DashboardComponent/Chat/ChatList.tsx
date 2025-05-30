@@ -1,6 +1,6 @@
 // import { User } from "@/types";
 
-import { User } from "@/type";
+import { User } from "@/type/chatPage";
 import Image from "next/image";
 
 interface ChatListProps {

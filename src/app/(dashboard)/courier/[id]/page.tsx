@@ -45,28 +45,36 @@ const user: User = {
 
 const page = () => {
     const order = user?.orders[0];
-
+    
     return (
-        <div className='hidden md:flex'>
+        <div className=''>
             <PageWrapper title='Courier Details'/>
             <section className='px-6 '>
                 <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white">
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-6 border-b">
-                        <Button path='courier'/>
-                        <span className="font-medium text-lg">{user?.name}</span>
+                        <Button path='/courier'/>
+                        <span className="font-medium text-lg">{user?.name?.split(' ')[0] || user?.name} Courier</span>
                     </div>
                     {/* User Info and Stats */}
-                    <div className="flex flex-col md:flex-row md:justify-between gap-8 border-b pb-6">
-                        <div className="flex-1 flex gap-4 items-start">
-                            <Image src={user?.avatar} alt={user?.name} width={48} height={48} className="rounded-full object-cover" />
+                    <div className="flex flex-col md:flex-row md:justify-between items-center gap-8 border-b pb-6">
+                        <div className="flex-1 flex flex-col-reverse gap-2 items-start font-bold">
+                            <figure className='flex items-center gap-2'>
+                                <Image
+                                    src={user?.avatar}
+                                    alt={user?.name}
+                                    width={48}
+                                    height={48}
+                                    className="w-6 h-6 rounded-full object-cover" />
+                                <figcaption className="font-semibold text-xl">{user?.name?.split(' ')[0] || user?.name} Courier</figcaption>
+                            </figure>
                             <div>
-                                <div className="font-semibold">{user?.name}</div>
-                                <div className="text-gray-600 text-sm">{user?.email}</div>
-                                <div className="text-gray-600 text-sm">{user?.phone}</div>
+                                <div className="font-semibold text-lg">{user?.name} </div>
+                                <div className="text-gray-600 text-lg">{user?.phone}</div>
+                                <div className="text-gray-600 text-lg">{user?.email}</div>
                             </div>
                         </div>
-                        <div className="flex-1  text-black font-semibold">
+                        <div className="flex-1  text-black font-semibold text-lg">
                             <div>
                                 <div className="">Total Request:<span className="font-semibold">{user?.totalRequest}</span>
                             </div>
@@ -86,20 +94,20 @@ const page = () => {
                         </div>
                     </div>
                     {/* Order and Review Details */}
-                    <div className="flex flex-col md:flex-row gap-8 mt-6">
+                    <div className="flex flex-col md:flex-row gap-8 mt-6 text-lg">
                         {/* Order Details */}
                         <div className="flex-1  text-black">
-                            <div className="mb-2  text-sm">Order Number: <span className="font-medium">{order?.orderNumber}</span></div>
-                            <div className="mb-2  text-sm">Courier Date: <span className="font-medium">{order?.courierDate}</span></div>
-                            <div className="mb-2  text-sm">Pick Up Address: <span className="font-medium">{order?.pickUpAddress}</span></div>
-                            <div className="mb-2  text-sm">Drop–Off Address: <span className="font-medium">{order?.dropOffAddress}</span></div>
-                            <div className="mb-2  text-sm flex items-center gap-4">Vehicle Type: <span className="font-medium">{order?.vehicleType}</span><DetailsVehicleType order={order} /></div>
-                            <div className="mb-2  text-sm">Amount: <span className="font-medium">${order?.amount}</span></div>
-                            <div className="mb-2  text-sm flex items-center gap-2">
+                            <div className="mb-2  ">Order Number: <span className="font-medium">{order?.orderNumber}</span></div>
+                            <div className="mb-2  ">Courier Date: <span className="font-medium">{order?.courierDate}</span></div>
+                            <div className="mb-2  ">Pick Up Address: <span className="font-medium">{order?.pickUpAddress}</span></div>
+                            <div className="mb-2  ">Drop–Off Address: <span className="font-medium">{order?.dropOffAddress}</span></div>
+                            <div className="mb-2   flex items-center gap-4">Vehicle Type: <span className="font-medium">{order?.vehicleType}</span><DetailsVehicleType order={order} /></div>
+                            <div className="mb-2  ">Amount: <span className="font-medium">${order?.amount}</span></div>
+                            <div className="mb-2   flex items-center gap-2">
                                 Status: 
                                 <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-medium">{order?.status}</span>
                             </div>
-                            <div className="mb-2  text-sm">Payment Type: <span className="font-medium">{order?.paymentType}</span></div>
+                            <div className="mb-2  ">Payment Type: <span className="font-medium">{order?.paymentType}</span></div>
                         </div>
                         {/* Review Details */}
                         <div className="flex-1">
@@ -108,9 +116,9 @@ const page = () => {
                                 <span className="font-medium">{order?.deliveryService?.name}</span>
                             </div>
                             <div className="mb-2">
-                                <div className=" text-md font-semibold">Review Provide:</div>
+                                <div className=" font-semibold">Review Provide:</div>
                                 <div className="flex items-center justify-between gap-2">
-                                    <span className="text-gray-700 text-sm">{order?.deliveryService?.reviewProvide?.text}</span>
+                                    <span className="text-sm text-gray-700 ">{order?.deliveryService?.reviewProvide?.text}</span>
                                     {/* showing Ratings */}
                                     <span className="flex items-center text-orange-400 text-xs">
                                         {Array(order?.deliveryService?.reviewProvide?.rating).fill(0).map((_, i) => (
@@ -120,7 +128,7 @@ const page = () => {
                                 </div>
                             </div>
                             <div>
-                                <div className=" text-md font-semibold">Review Get:</div>
+                                <div className="  font-semibold">Review Get:</div>
                                 <div className="flex items-center justify-between gap-2">
                                     <span className="text-gray-700 text-sm">{order?.deliveryService?.reviewGet?.text}</span>
                                     <span className="flex items-center text-orange-400 text-xs">

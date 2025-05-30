@@ -64,7 +64,7 @@ const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackEntr
           </tr>
         </thead>
         <tbody>
-          {feedbackData.map((entry) => (
+          {feedbackData?.map((entry) => (
             <tr key={entry.id} className="border-b border-gray-100 hover:bg-gray-50">
               <td className="py-3 px-4 text-sm text-gray-600">{entry.date}</td>
               <td className="py-3 px-4 text-sm text-gray-600">{entry.type}</td>

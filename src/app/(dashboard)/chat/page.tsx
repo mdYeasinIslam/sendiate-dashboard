@@ -4,7 +4,7 @@ import ChatList from "@/components/DashboardComponent/Chat/ChatList";
 import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
 import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
 import PageWrapper from "@/components/PageWrapper";
-import { Message, User } from "@/type";
+import { Message, User } from "@/type/chatPage";
 import { useState } from "react";
 
 

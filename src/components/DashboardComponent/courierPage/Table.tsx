@@ -7,13 +7,24 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { UserType } from "@/type/usersType"
+import {
+    DropdownMenu,
+    DropdownMenuContent,
+    DropdownMenuItem,
+    DropdownMenuLabel,
+    DropdownMenuSeparator,
+    DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu"
 import Image from "next/image"
 import Link from "next/link"
+import { Button } from "@/components/ui/button"
+import { Download, Edit, Eye, MoreVertical, Star, Trash } from "lucide-react"
+import { CourierUserType } from "@/type/courierPageTypes"
+// Use the image URL directly as a string
+const logo = 'https://i.pravatar.cc/150?img=1';
 
 
-
-export function CourierTable({ users }: { users: UserType[] }) {
+export function CourierTable({ users }: { users: CourierUserType[] }) {
   return (
       <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
            <div className="mb-4"> 
@@ -32,8 +43,30 @@ export function CourierTable({ users }: { users: UserType[] }) {
                     <TableHead className="py-3 px-2 font-normal">Phone</TableHead>
                     <TableHead className="py-3 px-2 font-normal">Email</TableHead>
                     <TableHead className="py-3 px-2 font-normal">Courier Name</TableHead>
-                    <TableHead className="py-3 px-2 font-normal">Status</TableHead>
-                    <TableHead className="py-3 px-2 font-normal"></TableHead>
+                      <TableHead className="py-3 px-2 font-normal">Status</TableHead>
+                      <TableHead className="py-3 px-2 font-normal"></TableHead>
+
+                      <TableHead className="py-3 px-2 font-normal text-right">
+                          <DropdownMenu>
+                              <DropdownMenuTrigger asChild>
+                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                      <MoreVertical className="h-4 w-4" />
+                                  </Button>
+                              </DropdownMenuTrigger>
+                              <DropdownMenuContent align="end">
+                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                  <DropdownMenuSeparator />
+                                  <DropdownMenuItem>
+                                      <Download className="mr-2 h-4 w-4" />
+                                      <span>Export</span>
+                                  </DropdownMenuItem>
+                                  <DropdownMenuItem>
+                                      <Trash className="mr-2 h-4 w-4" />
+                                      <span>Delete All</span>
+                                  </DropdownMenuItem>
+                              </DropdownMenuContent>
+                          </DropdownMenu>
+                      </TableHead>
                 </TableRow>
             </TableHeader>
         <TableBody>
@@ -44,23 +77,23 @@ export function CourierTable({ users }: { users: UserType[] }) {
             >
                 <TableCell className="py-3 px-2">01</TableCell>
                 <TableCell className="py-3 px-2">
-                    {user.name}
+                        {user.fullName}
                 </TableCell>
-                <TableCell className="py-3 px-2">{user.phone}</TableCell>
+                    <TableCell className="py-3 px-2">{user.phoneNumber}</TableCell>
                 <TableCell className="py-3 px-2">{user.email}</TableCell>
                 <TableCell className="py-3 px-2  flex items-center gap-2">
                     <Image
-                        src={user.avatar}
-                            alt={user.name}
+                            src={logo}
+                            alt={user.fullName}
                             width={500}
                             height={500}
                         className="w-6 h-6 rounded-full"
                     />
-                        {user.courierName}</TableCell>
+                        {user?.fullName?.split(' ')[0] || user?.fullName} Courier</TableCell>
                 <TableCell className="py-3 px-2">
                     <span
                         className={`px-3 py-1 rounded-full text-xs font-medium ${
-                            user.status === "Active"
+                                user.status === "ACTIVE"
                                 ? "bg-green-100 text-green-600"
                                 : "bg-red-100 text-red-500"
                         }`}
@@ -75,6 +108,39 @@ export function CourierTable({ users }: { users: UserType[] }) {
                     </button>
                     </Link>
                 </TableCell>
+                    <TableCell className="py-3 px-2 text-right">
+                        <DropdownMenu>
+                            <DropdownMenuTrigger asChild>
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                    <MoreVertical className="h-4 w-4" />
+                                </Button>
+                            </DropdownMenuTrigger>
+                            <DropdownMenuContent align="end">
+                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem >
+                                    {/* <DropdownMenuItem onClick={() => handleStarItem(entry.id)}> */}
+                                    <Star className={`mr-2 h-4 w-4`} />
+                                    {/* <span>{entry.starred ? "Unstar" : "Star"}</span> */}
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Eye className="mr-2 h-4 w-4" />
+                                    <span>View Details</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuItem>
+                                    <Edit className="mr-2 h-4 w-4" />
+                                    <span>Edit</span>
+                                </DropdownMenuItem>
+                                <DropdownMenuSeparator />
+                                <DropdownMenuItem className="text-red-600">
+                                    {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
+                                    <Trash className="mr-2 h-4 w-4" />
+                                    <span>Delete</span>
+                                </DropdownMenuItem>
+                            </DropdownMenuContent>
+                        </DropdownMenu>
+                    </TableCell>
+
             </TableRow>
             ))}
         </TableBody>

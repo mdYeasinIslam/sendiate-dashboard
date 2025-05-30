@@ -235,14 +235,14 @@ export default function FeedbackDashboard() {
       const [currentPage, setCurrentPage] = useState(1);
        const itemsPerPage = 10;
      
-       const { paginatedUsers, totalPages } = usePaginatedUsers<FeedbackEntry>(generateFeedbackData, currentPage, itemsPerPage);
+       const { paginatedData, totalPages } = usePaginatedUsers<FeedbackEntry>(generateFeedbackData, currentPage, itemsPerPage);
      
 
   return (
       <main className="bg-[#F8F8F8]">
           <PageWrapper title="Feedback"/>
         <section className=" md:px-6">
-            <FeedbackTable generateFeedbackData={paginatedUsers } />
+            <FeedbackTable generateFeedbackData={paginatedData } />
               <Pagination
                   currentPage={currentPage}
                   totalPages={totalPages}

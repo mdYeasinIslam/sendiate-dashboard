@@ -5,12 +5,13 @@ import { authApi } from '../services/auth/authApi'
 import authSlice from '../services/auth/authSlice'
 import { homePageApis } from '../services/Apis/homePageApis/homePageApis'
 import { senderPageApi } from '../services/Apis/senderPage/senderPageApi';
+import { courierPageApi } from '../services/Apis/courierApi/courierPageApi';
 
 export const store = configureStore({
     reducer: {
         [homePageApis.reducerPath]: homePageApis.reducer,
         [senderPageApi.reducerPath]: senderPageApi.reducer,
-
+        [courierPageApi.reducerPath]:courierPageApi.reducer,
         [authApi.reducerPath]: authApi.reducer,
 
         
@@ -19,7 +20,12 @@ export const store = configureStore({
     },
 
     middleware: (GetDefaultMiddleware) => 
-        GetDefaultMiddleware().concat(homePageApis.middleware,authApi.middleware, senderPageApi.middleware)
+        GetDefaultMiddleware().concat(
+            homePageApis.middleware,
+            authApi.middleware,
+            senderPageApi.middleware,
+            courierPageApi.middleware
+        )
     
 })
 setupListeners(store.dispatch)
