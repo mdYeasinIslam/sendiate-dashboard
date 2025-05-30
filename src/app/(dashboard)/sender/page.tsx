@@ -162,7 +162,7 @@ type SenderStatsResponse = {
 const Sender = () => {
     // const dispatch = useAppDispatch()
     const { data, error, isLoading } = useGetSenderStatsQuery() as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
-    console.log(data?.data)
+    // console.log(data?.data)
     const tableData = data?.data || [];
 
     const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);

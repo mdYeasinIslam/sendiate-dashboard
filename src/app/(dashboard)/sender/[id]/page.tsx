@@ -1,8 +1,14 @@
+'use client'
 import React from 'react'
 import Image from "next/image";
 import PageWrapper from '@/components/PageWrapper';
 import Button from '@/components/shared/Button';
+import { useGetSenderByIdQuery } from '@/redux/services/Apis/senderPage/senderPageApi';
+import { SenderType } from '@/type/usersType';
+import { useParams } from 'next/navigation';
+import LoadingSpinner from '@/app/loading';
 
+import logo from '../../../../../public/images/vehicle.png'
 
 const user = {
     id: 1,
@@ -40,9 +46,19 @@ const user = {
         },
     ],
 };
-
+type SenderDetails = {
+    data: SenderType
+};
 const page = () => {
+    const param = useParams()
+    const id = param.id as string;
     const order = user?.orders[0];
+    const { data, error, isLoading } = useGetSenderByIdQuery(id) as { data?: SenderDetails, error?: unknown, isLoading: boolean };
+    const senderData = data?.data as SenderType;
+    console.log(senderData)
+
+    if (isLoading) return <div><LoadingSpinner/></div>
+    if (error) return <div>An Error occurred</div>
     return (
         <>
             <PageWrapper title='Sender Details'/>
@@ -53,34 +69,34 @@ const page = () => {
                         {/* <button className="text-green-600 text-xl rounded-full p-1 hover:bg-gray-100">
                             <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
                         </button> */}
-                        <Button path='sender'/>
-                        <span className="font-medium text-lg">{user?.name}</span>
+                       <Button path='/sender'/>
+                        <span className="font-medium text-lg">{senderData?.fullName}</span>
                     </div>
                     {/* User Info and Stats */}
                     <div className="flex flex-col md:flex-row md:justify-between gap-8 border-b pb-6">
                         <div className="flex-1 flex gap-4 items-start">
-                            <Image src={user?.avatar} alt={user?.name} width={48} height={48} className="rounded-full object-cover" />
+                            <Image src={logo} alt={senderData?.fullName} width={48} height={48} className="rounded-full object-cover" />
                             <div>
-                                <div className="font-semibold">{user?.name}</div>
-                                <div className="text-gray-600 text-sm">{user?.email}</div>
-                                <div className="text-gray-600 text-sm">{user?.phone}</div>
+                                <div className="font-semibold">{senderData?.fullName}</div>
+                                <div className="text-gray-600 text-sm">{senderData?.email}</div>
+                                <div className="text-gray-600 text-sm">{senderData?.phoneNumber}</div>
                             </div>
                         </div>
                         <div className="flex-1  text-black font-semibold">
                             <div>
-                                <div className="">Total Request:<span className="font-semibold">{user?.totalRequest}</span>
+                                <div className="">Total Request:<span className="font-semibold">{senderData?.stats?.totalRequests}</span>
                             </div>
                             </div>
                             <div>
-                                <div className="">Total Amount Paid:<span className="font-semibold">${user?.totalAmountPaid}</span></div>
+                                <div className="">Total Amount Paid:<span className="font-semibold">${senderData?.stats?.totalAmountPaid}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Get:<span className="font-semibold">{user?.reviewGet}</span></div>
+                                <div className="">Review Get:<span className="font-semibold">{senderData?.stats?.ratingsReceived}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Provide: <span className="font-semibold">{user?.reviewProvide}</span></div>
+                                <div className="">Review Provide: <span className="font-semibold">{senderData?.stats?.ratingsGiven}</span></div>
                             
                             </div>
                         </div>

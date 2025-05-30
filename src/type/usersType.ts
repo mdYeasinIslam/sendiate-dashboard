@@ -20,4 +20,11 @@ export type SenderType = {
     _count: {
         parcelsSent: number;
     };
+    stats?: {
+        averageRatingReceived: number;
+        ratingsGiven: number;
+        ratingsReceived: number;
+        totalAmountPaid: number;
+        totalRequests: number;
+    };
 }

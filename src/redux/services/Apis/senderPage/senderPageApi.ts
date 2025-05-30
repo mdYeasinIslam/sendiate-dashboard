@@ -1,5 +1,6 @@
 'use client';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { get } from 'http';
 
 
 export const senderPageApi = createApi({
@@ -21,8 +22,13 @@ export const senderPageApi = createApi({
 
         getSenderStats: build.query<unknown, void>({
             query: () => `/users/senders`
-        })
+        }),
+        
+        getSenderById: build.query<unknown, string>({
+            query: (id) => `/users/senders/${id}`
+        }),
+
     })
 })
 
-export const { useGetSenderStatsQuery } = senderPageApi;
+export const { useGetSenderStatsQuery,useGetSenderByIdQuery } = senderPageApi;
