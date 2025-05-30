@@ -14,14 +14,25 @@ import React from "react";
 import logo from '../../../../../public/images/vehicle.png'
 
 const Table = ({ senders }: { senders: SenderType[] }) => {
-    console.log(senders)
+    const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
+    
+    const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const searchTerm = e.target.value.toLowerCase();
+        const filtered = senders.filter((sender) =>
+            sender.fullName.toLowerCase().includes(searchTerm) ||
+            sender.email.toLowerCase().includes(searchTerm) ||
+            (sender.phoneNumber && sender.phoneNumber.toLowerCase().includes(searchTerm))
+        );
+        setFilterSenders(filtered);
+    };
     return (
-        <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
+        <section className="bg-white w-full rounded-xl shadow p-3 lg:p-6">
             {/* Search */}
             <div className="mb-4"> 
                 <input
                     type="text"
                     placeholder="Search here"
+                    onChange={onChangeSearch}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200"
                 />
             </div>
@@ -39,7 +50,16 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        {senders.map((sender, idx) => (
+                        {
+                            filterSenders.length === 0 && (
+                                <TableRow>
+                                    <TableCell colSpan={6} className="font-semibold text-xl text-center py-4">
+                                        No senders found
+                                    </TableCell>
+                                </TableRow>
+                            )
+                        }
+                        {filterSenders.map((sender, idx) => (
                             <TableRow
                                 key={sender.id + idx}
                                 className="  hover:bg-gray-50"
@@ -56,7 +76,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                     {sender.fullName}
                                 </TableCell>
                                 <TableCell className="py-3 px-2">{sender.email}</TableCell>
-                                <TableCell className="py-3 px-2">{sender.phoneNumber}</TableCell>
+                                <TableCell className="py-3 px-2">{sender.phoneNumber || 'Null'}</TableCell>
                                 <TableCell className="py-3 px-2">
                                     <span
                                         className={`px-3 py-1 rounded-full text-xs font-medium ${

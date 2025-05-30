@@ -1,5 +1,6 @@
 'use client'
 import Table from '@/app/(dashboard)/sender/component/Table'
+import LoadingSpinner from '@/app/loading';
 import PageWrapper from '@/components/PageWrapper'
 import { Pagination } from '@/components/shared/Pagination';
 import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
@@ -162,10 +163,15 @@ const Sender = () => {
     // const dispatch = useAppDispatch()
     const { data, error, isLoading } = useGetSenderStatsQuery() as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
     console.log(data?.data)
-    const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = 10;
+    const tableData = data?.data || [];
+
+    const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);
+    const itemsPerPage = data?.meta?.limit || 10;
     
-    const { paginatedUsers, totalPages } = usePaginatedUsers(users, currentPage, itemsPerPage);
+    const { paginatedData, totalPages } = usePaginatedUsers(tableData, currentPage, itemsPerPage);
+
+    if (isLoading) return <div><LoadingSpinner/></div>;
+    if (error) return <div>An error occurred while fetching data.</div>;
   return (
     <section className='bg-[#F8F8F8]'>
       <header>
@@ -173,7 +179,7 @@ const Sender = () => {
       </header>
       <main className=' md:px-5'>
 
-        <Table senders={data?.data ?? []} />
+        <Table senders={paginatedData} />
          <Pagination
                 currentPage={currentPage}
                 totalPages={totalPages}
