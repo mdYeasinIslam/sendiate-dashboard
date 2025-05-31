@@ -7,7 +7,7 @@ import { usePaginatedUsers } from '@/hooks/pagination/usePaginatedUsers';
 import { useGetSenderStatsQuery } from '@/redux/services/Apis/senderPage/senderPageApi';
 import { SenderType } from '@/type/SenderPagesType';
 import React, { useState } from 'react'
-// const users:UserType[] = [
+
 //     {
 //         id: 1,
 //         name: "Sarah Gomez",

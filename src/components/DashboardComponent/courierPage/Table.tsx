@@ -18,13 +18,13 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Download, Edit, Eye, MoreVertical, Star, Trash } from "lucide-react"
-import { CourierUserType } from "@/type/courierPageTypes"
+import {  Edit, Eye, MoreVertical, Star, Trash } from "lucide-react"
+import { CourierUserDetails } from "@/type/courierPageTypes"
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 
 
-export function CourierTable({ users }: { users: CourierUserType[] }) {
+export function CourierTable({ users }: { users: CourierUserDetails[] }) {
   return (
       <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
            <div className="mb-4"> 
@@ -47,35 +47,17 @@ export function CourierTable({ users }: { users: CourierUserType[] }) {
                       <TableHead className="py-3 px-2 font-normal"></TableHead>
 
                       <TableHead className="py-3 px-2 font-normal text-right">
-                          <DropdownMenu>
-                              <DropdownMenuTrigger asChild>
-                                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
-                                      <MoreVertical className="h-4 w-4" />
-                                  </Button>
-                              </DropdownMenuTrigger>
-                              <DropdownMenuContent align="end">
-                                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                  <DropdownMenuSeparator />
-                                  <DropdownMenuItem>
-                                      <Download className="mr-2 h-4 w-4" />
-                                      <span>Export</span>
-                                  </DropdownMenuItem>
-                                  <DropdownMenuItem>
-                                      <Trash className="mr-2 h-4 w-4" />
-                                      <span>Delete All</span>
-                                  </DropdownMenuItem>
-                              </DropdownMenuContent>
-                          </DropdownMenu>
+                         
                       </TableHead>
                 </TableRow>
             </TableHeader>
         <TableBody>
             {users.map((user,idx) => (
             <TableRow
-                key={user.id + idx}
+                key={ idx}
                 className="hover:bg-gray-50"
             >
-                <TableCell className="py-3 px-2">01</TableCell>
+                    <TableCell className="py-3 px-2">{ idx}</TableCell>
                 <TableCell className="py-3 px-2">
                         {user.fullName}
                 </TableCell>

@@ -97,7 +97,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                 key={sender.id + idx}
                                 className="  hover:bg-gray-50"
                             >
-                                <TableCell className="py-3 px-2">01</TableCell>
+                                <TableCell className="py-3 px-2">{idx}</TableCell>
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
                                     <Image
                                         alt={sender.fullName}

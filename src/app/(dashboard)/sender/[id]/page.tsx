@@ -12,42 +12,6 @@ import { useParams } from 'next/navigation';
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 
-// const user = {
-//     id: 1,
-//     name: "Sarah Gomez",
-//     email: "emma@example.com",
-//     phone: "+1 234 567 8901",
-//     status: "Active",
-//     avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-//     totalRequest: 50,
-//     totalAmountPaid: 2000,
-//     reviewGet: 40,
-//     reviewProvide: 45,
-//     orders: [
-//         {
-//             orderNumber: "U08756685CE",
-//             courierDate: "15 June 2025",
-//             pickUpAddress: "1234 Elm St",
-//             dropOffAddress: "5678 Oak St",
-//             vehicleType: "SUV",
-//             amount: 30,
-//             status: "Delivered",
-//             paymentType: "Cash payment",
-//             deliveryService: {
-//                 name: "Abel’s Delivery Service",
-//                 avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-//                 reviewProvide: {
-//                     text: "Thank you for the smooth delivery!",
-//                     rating: 3,
-//                 },
-//                 reviewGet: {
-//                     text: "Clear instructions and quick communication. Everything was ready on time.",
-//                     rating: 5,
-//                 },
-//             },
-//         },
-//     ],
-// };
 type SenderDetails = {
     data: SenderDetailsType
 };
@@ -59,10 +23,11 @@ const Page = () => {
     const { data, error, isLoading } = useGetSenderByIdQuery(id) as { data?: SenderDetails, error?: unknown, isLoading: boolean };
     const senderData = data?.data as SenderDetailsType;
     const orderData = senderData?.parcelsSent
-    console.log(senderData)
+    // console.log(senderData)
 
     if (isLoading) return <div><LoadingSpinner/></div>
     if (error) return <div>An Error occurred</div>
+    
     return (
         <>
             <PageWrapper title='Sender Details'/>
@@ -81,7 +46,7 @@ const Page = () => {
                         <div className="flex-1 flex flex-col  items-start text-lg">
                             <figure className='flex items-center gap-2'>
                                 <Image
-                                    src={logo}
+                                    src={senderData?.profileImage || logo}
                                     alt={senderData?.fullName}
                                     width={48} height={48}
                                     className="w-6 h-6 rounded-full object-cover" />
@@ -115,9 +80,17 @@ const Page = () => {
                     </div>
 
                     {/* Order and Review Details */}
+
                     <div className="grid grid-cols-1 justify-between text-lg">
-                        {
-                            orderData?.map((order, idx) => <OrderDetails key={idx} details={order}/>)
+                        {orderData?.length === 0 ? 
+                        
+                        <div className="text-center text-gray-500 mt-6">No orders details found for this sender.</div>
+                            :
+                            <>
+                                {
+                                    orderData?.map((order, idx) => <OrderDetails key={idx} details={order}  from='SenderPage'/>)
+                                }
+                            </>
                         }
                        
                     </div>

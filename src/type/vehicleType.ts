@@ -1,11 +1,24 @@
 export type VehicleType = {
-  id: string
-  serialNo: string
-  image: string
-  type: string
-  details: string
-  notes?: string
-}
+    id: string;
+    name: string;
+    description: string;
+    image: string;
+    minBasePrice: number;
+    maxBasePrice: number;
+    minPricePerKm: number;
+    maxPricePerKm: number;
+    fee: number;
+    feeType: 'PERCENTAGE' | 'FIXED';
+    userId: string;
+    createdAt: string;
+    updatedAt: string;
+    user: {
+        id: string;
+        fullName: string;
+        email: string;
+        profileImage: string;
+    };
+};
 
 
 

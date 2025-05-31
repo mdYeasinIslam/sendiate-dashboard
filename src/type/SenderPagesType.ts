@@ -50,6 +50,15 @@ export type SenderDetailsType = {
     };
 }
 
+// Sender (user) Details
+export type SenderInfo = {
+    id: string;
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+    profileImage: string | null;
+} | null;
+
 export type OrderAndReviewDetails = {
     id: string;
     orderId: string;
@@ -76,11 +85,6 @@ export type OrderAndReviewDetails = {
     courierRating: number;
     senderReview: string;
     courierReview: string;
-    courier: {
-        id: string;
-        fullName: string;
-        email: string;
-        phoneNumber: string;
-        profileImage: string;
-    };
+    courier?: SenderInfo;
+    sender?: SenderInfo;
 };

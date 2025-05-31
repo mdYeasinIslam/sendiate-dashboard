@@ -2,7 +2,7 @@ import { OrderAndReviewDetails } from '@/type/SenderPagesType'
 import Image from 'next/image'
 import React from 'react'
 
-const OrderDetails = ({ details }: { details: OrderAndReviewDetails }) => {
+const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from: string }) => {
 
     const checkStat = details?.status === 'DELIVERED';
     return (
@@ -42,7 +42,10 @@ const OrderDetails = ({ details }: { details: OrderAndReviewDetails }) => {
                         alt={'Reviwer image'}
                         width={28} height={28}
                         className="w-7 h-7 rounded-full object-cover" />
-                    <span className="font-medium">{details?.courier?.fullName}</span>
+                        {
+                        from === 'SenderPage' ? <span className="font-medium">{details?.sender?.fullName}</span> :  <span className="font-medium">{details?.courier?.fullName}</span>
+                        }
+                   
                 </div>
                 {
                     checkStat ? <>
@@ -50,15 +53,20 @@ const OrderDetails = ({ details }: { details: OrderAndReviewDetails }) => {
                                 <div className="text-gray-600  font-medium">Review Provide:</div>
                                 {
                                     details?.senderReview && details?.senderReview?.length > 0 ? (
-                                            <div className="flex items-center justify-between gap-2">
-                                    <span className="text-gray-700 text-sm">{details?.senderReview}</span>
-                                    {/* showing Ratings */}
-                                    <span className="flex items-center text-orange-400 text-xs">
-                                        {Array(details?.senderRating).fill(0).map((_, i) => (
-                                            <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
-                                        ))}
-                                    </span>
-                                </div>
+                                        <div className="flex items-center justify-between gap-2">
+
+                                            <span className="text-gray-700 text-sm">{details?.senderReview}</span>
+                                            {/* showing Ratings */}
+                                            <p className='flex items-center gap-1'>
+
+                                                <span className="flex items-center text-orange-400 text-xs">
+                                                    {Array(details?.senderRating).fill(0).map((_, i) => (
+                                                        <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
+                                                    ))}
+                                            </span>
+                                            <span className='font-semibold text-sm'>{details?.senderRating}</span>
+                                            </p>
+                                         </div>
                                     ) : (
                                         <div className="text-gray-500 text-sm">No review provided</div>
                                     )
@@ -69,14 +77,18 @@ const OrderDetails = ({ details }: { details: OrderAndReviewDetails }) => {
                                 <div className="text-gray-600 text-lg font-medium">Review Get:</div>
                                 {
                                     details?.courierReview && details?.courierReview.length > 0 ? (
-                                            <div className="flex items-center justify-between gap-2">
-                                    <span className="text-gray-700 text-sm">{details?.courierReview}</span>
-                                    <span className="flex items-center text-orange-400 text-xs">
-                                        {Array(details?.courierRating).fill(0).map((_, i) => (
-                                            <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
-                                        ))}
-                                    </span>
-                                </div>
+                                        <div className="flex items-center justify-between gap-2">
+                                            <span className="text-gray-700 text-sm">{details?.courierReview}</span>
+                                            <p className='flex items-center gap-1'>
+
+                                                <span className="flex items-center text-orange-400 text-xs">
+                                                    {Array(details?.courierRating).fill(0).map((_, i) => (
+                                                        <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
+                                                    ))}
+                                                </span>
+                                                 <span className='font-semibold text-sm'>{details?.courierRating}</span>
+                                            </p>
+                                        </div>
                                     ) : (
                                         <div className="text-gray-500 text-sm">No review provided</div>
                                     )

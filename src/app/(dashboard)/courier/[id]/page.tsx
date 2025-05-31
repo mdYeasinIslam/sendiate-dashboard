@@ -1,12 +1,20 @@
+'use client'
 import React from 'react'
 import Image from "next/image";
 import PageWrapper from '@/components/PageWrapper';
 import Button from '@/components/shared/Button';
 import DetailsVehicleType from '@/components/DashboardComponent/courierPage/DetailsVehicleType';
 import { User } from '@/type/vehicleType';
+import { useParams } from 'next/navigation';
+import { useGetCourierByIdQuery } from '@/redux/services/Apis/courierApi/courierPageApi';
+import { CourierUserDetails } from '@/type/courierPageTypes';
+import LoadingSpinner from '@/app/loading';
+import OrderDetails from '@/components/shared/order_and_reviewDetails/OrderDetails';
 
+// Use the image URL directly as a string
+const logo = 'https://i.pravatar.cc/150?img=1';
 
-const user: User = {
+const user: User = { 
     id: 1,
     name: "Sarah Gomez",
     email: "emma@example.com",
@@ -42,10 +50,28 @@ const user: User = {
         },
     ],
 };
-
-const page = () => {
-    const order = user?.orders[0];
+type CourierDetails = {
+    data: CourierUserDetails
+};
+const Page = () => {
+    const param = useParams()
+    const id = param.id as string;
     
+    // const order = user?.orders[0];
+    
+     const { data, error, isLoading } = useGetCourierByIdQuery(id) as { data?: CourierDetails, error?: unknown, isLoading: boolean };
+        const courierData = data?.data as CourierUserDetails;
+    const orderData = courierData?.parcelsDelivered
+    console.log(courierData)
+    const stats = courierData?.stats || {
+        totalRequest: 0,
+        totalAmountPaid: 0,
+        reviewGet: 0,
+        reviewProvide: 0
+    };
+    if (isLoading) return <div><LoadingSpinner /></div>
+    if (error) return <div>An Error occurred</div>
+    if (!courierData) return <div>No data found</div>;
     return (
         <div className=''>
             <PageWrapper title='Courier Details'/>
@@ -54,91 +80,59 @@ const page = () => {
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-6 border-b">
                         <Button path='/courier'/>
-                        <span className="font-medium text-lg">{user?.name?.split(' ')[0] || user?.name} Courier</span>
+                        <span className="font-medium text-lg">{courierData?.fullName?.split(' ')[0] || courierData?.fullName} Courier</span>
                     </div>
                     {/* User Info and Stats */}
                     <div className="flex flex-col md:flex-row md:justify-between items-center gap-8 border-b pb-6">
                         <div className="flex-1 flex flex-col-reverse gap-2 items-start font-bold">
                             <figure className='flex items-center gap-2'>
                                 <Image
-                                    src={user?.avatar}
-                                    alt={user?.name}
+                                    src={courierData?.profileImage || logo}
+                                    alt={courierData?.fullName}
                                     width={48}
                                     height={48}
                                     className="w-6 h-6 rounded-full object-cover" />
-                                <figcaption className="font-semibold text-xl">{user?.name?.split(' ')[0] || user?.name} Courier</figcaption>
+                                <figcaption className="font-semibold text-xl">{courierData?.fullName?.split(' ')[0] || courierData?.fullName} Courier</figcaption>
                             </figure>
                             <div>
-                                <div className="font-semibold text-lg">{user?.name} </div>
-                                <div className="text-gray-600 text-lg">{user?.phone}</div>
-                                <div className="text-gray-600 text-lg">{user?.email}</div>
+                                <div className="font-semibold text-lg">{courierData?.fullName} </div>
+                                <div className="text-gray-600 text-lg">{courierData?.phoneNumber}</div>
+                                <div className="text-gray-600 text-lg">{courierData?.email}</div>
                             </div>
                         </div>
                         <div className="flex-1  text-black font-semibold text-lg">
                             <div>
-                                <div className="">Total Request:<span className="font-semibold">{user?.totalRequest}</span>
+                                <div className="">Total Request:<span className="font-semibold">{stats?.averageRatingReceived}</span>
                             </div>
                             </div>
                             <div>
-                                <div className="">Total Amount Paid:<span className="font-semibold">${user?.totalAmountPaid}</span></div>
+                                <div className="">Total Amount Paid:<span className="font-semibold">${stats?.totalEarnings}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Get:<span className="font-semibold">{user?.reviewGet}</span></div>
+                                <div className="">Review Get:<span className="font-semibold">{stats?.ratingsReceived}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Provide: <span className="font-semibold">{user?.reviewProvide}</span></div>
+                                <div className="">Review Provide: <span className="font-semibold">{stats?.ratingsGiven}</span></div>
                             
                             </div>
                         </div>
                     </div>
                     {/* Order and Review Details */}
-                    <div className="flex flex-col md:flex-row gap-8 mt-6 text-lg">
-                        {/* Order Details */}
-                        <div className="flex-1  text-black">
-                            <div className="mb-2  ">Order Number: <span className="font-medium">{order?.orderNumber}</span></div>
-                            <div className="mb-2  ">Courier Date: <span className="font-medium">{order?.courierDate}</span></div>
-                            <div className="mb-2  ">Pick Up Address: <span className="font-medium">{order?.pickUpAddress}</span></div>
-                            <div className="mb-2  ">Drop–Off Address: <span className="font-medium">{order?.dropOffAddress}</span></div>
-                            <div className="mb-2   flex items-center gap-4">Vehicle Type: <span className="font-medium">{order?.vehicleType}</span><DetailsVehicleType order={order} /></div>
-                            <div className="mb-2  ">Amount: <span className="font-medium">${order?.amount}</span></div>
-                            <div className="mb-2   flex items-center gap-2">
-                                Status: 
-                                <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs font-medium">{order?.status}</span>
-                            </div>
-                            <div className="mb-2  ">Payment Type: <span className="font-medium">{order?.paymentType}</span></div>
-                        </div>
-                        {/* Review Details */}
-                        <div className="flex-1">
-                            <div className="flex items-center gap-2 mb-2">
-                                <Image src={order?.deliveryService?.avatar} alt={order?.deliveryService?.name} width={28} height={28} className="rounded-full object-cover" />
-                                <span className="font-medium">{order?.deliveryService?.name}</span>
-                            </div>
-                            <div className="mb-2">
-                                <div className=" font-semibold">Review Provide:</div>
-                                <div className="flex items-center justify-between gap-2">
-                                    <span className="text-sm text-gray-700 ">{order?.deliveryService?.reviewProvide?.text}</span>
-                                    {/* showing Ratings */}
-                                    <span className="flex items-center text-orange-400 text-xs">
-                                        {Array(order?.deliveryService?.reviewProvide?.rating).fill(0).map((_, i) => (
-                                            <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
-                                        ))}
-                                    </span>
-                                </div>
-                            </div>
-                            <div>
-                                <div className="  font-semibold">Review Get:</div>
-                                <div className="flex items-center justify-between gap-2">
-                                    <span className="text-gray-700 text-sm">{order?.deliveryService?.reviewGet?.text}</span>
-                                    <span className="flex items-center text-orange-400 text-xs">
-                                        {Array(order?.deliveryService?.reviewGet?.rating).fill(0).map((_, i) => (
-                                            <svg key={i} width="16" height="16" fill="currentColor" className="inline" viewBox="0 0 20 20"><path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.286 3.967a1 1 0 00.95.69h4.175c.969 0 1.371 1.24.588 1.81l-3.38 2.455a1 1 0 00-.364 1.118l1.287 3.966c.3.922-.755 1.688-1.54 1.118l-3.38-2.454a1 1 0 00-1.175 0l-3.38 2.454c-.784.57-1.838-.196-1.54-1.118l1.287-3.966a1 1 0 00-.364-1.118L2.05 9.394c-.783-.57-.38-1.81.588-1.81h4.175a1 1 0 00.95-.69l1.286-3.967z"/></svg>
-                                        ))}
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
+                    
+                   <div className="grid grid-cols-1 justify-between text-lg">
+                        {orderData?.length === 0 ? 
+                        
+                        <div className="text-center text-gray-500 mt-6">No orders details found for this sender.</div>
+                            :
+                            <>
+                                {
+                                    orderData?.map((order, idx) => <OrderDetails key={idx} details={order} from='CourierPage'/>)
+                                }
+                            </>
+                        }
+                       
                     </div>
                 </div>
             </section>
@@ -146,4 +140,4 @@ const page = () => {
     );
 };
 
-export default page;
+export default Page;

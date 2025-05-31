@@ -5,7 +5,7 @@ import Image from "next/image"
 import { VehicleType } from "@/type/vehicleType"
 
 export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
-
+    console.log(vehicles)
   return (
        <div className="w-full ">
 
@@ -22,21 +22,21 @@ export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
             key={vehicle.id}
             className={`grid grid-cols-5 p-4 border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
           >
-            <div className="px-2 flex items-center text-sm">{vehicle.serialNo}</div>
+            <div className="px-2 flex items-center text-sm">{index}</div>
             <div className="px-2">
               <div className="w-20 h-14 relative">
                 <Image
-                  src={ "/images/vehicle.png"}
-                  alt={vehicle.type}
+                  src={ vehicle?.image || "/images/vehicle.png"}
+                  alt={vehicle.name}
                   fill
                   className="object-contain"
                 />
               </div>
             </div>
-            <div className="px-2 flex items-center text-sm font-medium">{vehicle.type}</div>
+            <div className="px-2 flex items-center text-sm font-medium">{vehicle?.name}</div>
             <div className="px-2 col-span-2 text-sm text-gray-600">
-              <p className="leading-relaxed">{vehicle.details}</p>
-              {vehicle.notes && <p className="mt-1 italic text-gray-500">{vehicle.notes}</p>}
+              <p className="leading-relaxed">{vehicle?.description}</p>
+              {/* {vehicle.notes && <p className="mt-1 italic text-gray-500">{vehicle.notes}</p>} */}
             </div>
           </div>
         ))}
