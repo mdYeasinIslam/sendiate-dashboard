@@ -14,14 +14,13 @@ type VehicleStatsResponse = {
 const PriceTable = () => {
     
     const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
-    
+  
     const vehiclesPriceData = data?.data || [];
-          // console.log(vehiclesPriceData)
-    
-    // const [vehiclePricing, setVehiclePricing] = useState<VehicleFeeType[]>(vehiclesPriceData || []);
-
      const [vehiclePrice, setVehiclePrice] = useState<VehicleFeeType[]>(vehiclesPriceData || []);
-      const [editingRate, setEditingRate] = useState<string | null>(null)
+     const [editingRate, setEditingRate] = useState<string | null>(null)
+  
+
+
   useEffect(() => {
     if (vehiclesPriceData.length && JSON.stringify(vehiclePrice) !== JSON.stringify(vehiclesPriceData)) {
       setVehiclePrice(vehiclesPriceData)
