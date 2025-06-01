@@ -7,7 +7,10 @@ export const courierPageApi = createApi({
     reducerPath: 'courierPageApi',
     baseQuery: fetchBaseQuery({
         // baseUrl: 'https://patrkamh.onrender.com/api/v1',
-        baseUrl: 'http://10.0.30.91:5001/api/v1',
+        // baseUrl: 'http://10.0.30.91:5001/api/v1',
+            
+        baseUrl:`${process.env.NEXT_PUBLIC_API_URL_LOCAL}`,
+
         prepareHeaders: (headers) => {
 
         if (typeof window !== 'undefined') {
