@@ -1,8 +1,7 @@
 'use client'
 import { Button } from '@/components/ui/button'
-import { useGetVehicleByIdQuery, useUpdateVehicleMutation } from '@/redux/services/Apis/vehicleApi/vehiclePageApi'
 import { VehicleFeeType } from '@/type/platformPageTypes'
-import React, { use } from 'react'
+import React from 'react'
 
 type Prop = {
     vehicle: VehicleFeeType
@@ -14,7 +13,6 @@ type Prop = {
 }
 
 const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, handleSaveEdit }: Prop) => {
-  const [feeType, setFeeType] = React.useState(vehicle?.feeType)
   const [vehicleFee, setVehicleFee] = React.useState(vehicle?.fee)
   
   const onChangeInput = async (vehicleFee: string) => {

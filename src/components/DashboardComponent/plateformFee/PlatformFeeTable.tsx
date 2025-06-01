@@ -1,13 +1,12 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Button } from "@/components/ui/button"
-import { useGetVehicleByIdQuery, useGetVehiclePageApiQuery, useUpdateVehicleMutation } from "@/redux/services/Apis/vehicleApi/vehiclePageApi"
+import {  useGetVehiclePageApiQuery, useUpdateVehicleMutation } from "@/redux/services/Apis/vehicleApi/vehiclePageApi"
 import { VehicleFeeType } from "@/type/platformPageTypes"
 import LoadingSpinner from "@/app/loading"
 import EachPlateformFee from "./EachPlateformFee"
 import { toast } from "sonner"
-0
+
 
  // define type from vehiclePageApi
 type VehicleStatsResponse = {
