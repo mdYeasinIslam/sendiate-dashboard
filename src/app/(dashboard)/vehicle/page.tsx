@@ -81,7 +81,7 @@ import React from 'react'
 //             "Temperature-sensitive goods like frozen food, pharmaceuticals, flowers, or perishable foods. Maintains cold-chain during transit.",
 //     },
 // ]
-
+ 
 type VehicleStatsResponse = {
     meta?: { page: number, limit: number, total: number, totalPage: number };
     data: VehicleType[]

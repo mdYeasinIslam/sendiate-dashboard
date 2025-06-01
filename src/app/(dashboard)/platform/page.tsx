@@ -8,7 +8,7 @@ type VehiclePricing = {
   vehicleType: string
   priceValue: number
   priceType: PriceType
-  currency: string
+  currency: string 
 }
 
 const initialVehiclePricing: VehiclePricing[] = [
@@ -30,7 +30,7 @@ export default function Platform() {
     <main>
       <PageWrapper title="Platform Fee"/>
       <section className="md:px-6">
-        <PlatformFeeTable initialVehiclePricing={initialVehiclePricing} />
+        <PlatformFeeTable  />
       </section>
    </main>
   )

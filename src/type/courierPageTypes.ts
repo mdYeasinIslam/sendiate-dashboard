@@ -1,12 +1,63 @@
-import { OrderAndReviewDetails } from "./SenderPagesType";
+import { OrderAndReviewDetails, SenderInfo } from "./SenderPagesType";
 
 export type VehicleInfo = {
     color: string;
-    makeYar: string; // Consider renaming to 'makeYear' if it's a typo
+    makeYar: string; 
     model: string;
     plateNumber: string;
     type: string;
     year: string;
+};
+
+
+export type ParcelDelivery = {
+    id: string;
+    orderId: string;
+    deliveryTime: string | null;
+    status: string;
+    reqStatus: string;
+    pickupInfo: {
+        name: string;
+        address: string;
+        phone: string;
+        apartment: string;
+    };
+    receiverInfo: {
+        name: string;
+        address: string;
+        phone: string;
+        apartment: string;
+    };
+    vehicleType: string;
+    price: number;
+    paymentMethod: string;
+    createdAt: string;
+    senderRating: number;
+    courierRating: number;
+    senderReview: string;
+    courierReview: string;
+    sender: SenderInfo;
+};
+
+export type CourierUserDetails = {
+    id: string;
+    fullName: string;
+    email: string;
+    phoneNumber: string;
+    role: "Courier";
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    vehicleInfo: VehicleInfo;
+    profileImage: string;
+    parcelsDelivered: OrderAndReviewDetails[];
+    stats: {
+        totalDeliveries: number;
+        totalEarnings: number;
+        ratingsGiven: number;
+        ratingsReceived: number;
+        averageRatingReceived: number;
+    };
 };
 
 // export type CourierUserType = {
@@ -101,60 +152,10 @@ export type VehicleInfo = {
 //     updatedAt: string;
 // };
 
-export type SenderInfo = {
-    id: string;
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    profileImage: string | null;
-} | null;
-
-export type ParcelDelivery = {
-    id: string;
-    orderId: string;
-    deliveryTime: string | null;
-    status: string;
-    reqStatus: string;
-    pickupInfo: {
-        name: string;
-        address: string;
-        phone: string;
-        apartment: string;
-    };
-    receiverInfo: {
-        name: string;
-        address: string;
-        phone: string;
-        apartment: string;
-    };
-    vehicleType: string;
-    price: number;
-    paymentMethod: string;
-    createdAt: string;
-    senderRating: number;
-    courierRating: number;
-    senderReview: string;
-    courierReview: string;
-    sender: SenderInfo;
-};
-
-export type CourierUserDetails = {
-    id: string;
-    fullName: string;
-    email: string;
-    phoneNumber: string;
-    role: "Courier";
-    status: string;
-    createdAt: string;
-    updatedAt: string;
-    vehicleInfo: VehicleInfo;
-    profileImage: string;
-    parcelsDelivered: OrderAndReviewDetails[];
-    stats: {
-        totalDeliveries: number;
-        totalEarnings: number;
-        ratingsGiven: number;
-        ratingsReceived: number;
-        averageRatingReceived: number;
-    };
-};
+// export type SenderInfo = {
+//     id: string;
+//     fullName: string;
+//     email: string;
+//     phoneNumber: string;
+//     profileImage: string | null;
+// } | null;

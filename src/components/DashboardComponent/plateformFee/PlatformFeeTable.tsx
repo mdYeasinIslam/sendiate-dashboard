@@ -2,169 +2,82 @@
 
 import { useEffect, useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogFooter } from "@/components/ui/dialog"
-import { Input } from "@/components/ui/input"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Label } from "@/components/ui/label"
+import { useGetVehicleByIdQuery, useGetVehiclePageApiQuery, useUpdateVehicleMutation } from "@/redux/services/Apis/vehicleApi/vehiclePageApi"
+import { VehicleFeeType } from "@/type/platformPageTypes"
+import LoadingSpinner from "@/app/loading"
+import EachPlateformFee from "./EachPlateformFee"
+0
 
-type PriceType = "fixed" | "percentage"
+ // define type from vehiclePageApi
+type VehicleStatsResponse = {
+    meta?: { page: number, limit: number, total: number, totalPage: number };
+    data: VehicleFeeType[]
+};
 
-type VehiclePricing = {
-  id: string
-  vehicleType: string
-  priceValue: number
-  priceType: PriceType
-  currency: string
-}
+export default function PlatformFeeTable() {
+  const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+    const [updateVehicle] = useUpdateVehicleMutation()
 
-// const initialVehiclePricing: VehiclePricing[] = [
-//   { id: "1", vehicleType: "Sedan", priceValue: 1, priceType: "fixed", currency: "USD" },
-//   { id: "2", vehicleType: "SUV", priceValue: 1, priceType: "fixed", currency: "USD" },
-//   { id: "3", vehicleType: "Pick Up Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "4", vehicleType: "Cargo Van", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "5", vehicleType: "Box Truck (10-14 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "6", vehicleType: "Box Truck (15-20 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "7", vehicleType: "Box Truck (21-25 ft)", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "8", vehicleType: "Flatbed Truck", priceValue: 1, priceType: "percentage", currency: "USD" },
-//   { id: "9", vehicleType: "Refrigerated Truck (Reefer)", priceValue: 1, priceType: "percentage", currency: "USD" },
-// ]
+      const platformFeeData = data?.data || [];
+      // console.log(platformFeeData)
 
-export default function PlatformFeeTable({initialVehiclePricing}:{initialVehiclePricing:VehiclePricing[]}) {
-  const [vehiclePricing, setVehiclePricing] = useState<VehiclePricing[]>(initialVehiclePricing)
-  const [isEditDialogOpen, setIsEditDialogOpen] = useState(false)
-  const [currentVehicle, setCurrentVehicle] = useState<VehiclePricing | null>(null)
-  const [editValue, setEditValue] = useState<number>(0)
-  const [editType, setEditType] = useState<PriceType>("fixed")
-
+  const [vehiclePricing, setVehiclePricing] = useState<VehicleFeeType[]>(platformFeeData || []);
+  const [isEditOpen, setIsEditOpen] = useState(false)
+  const [editItem, setEditItem] = useState<string>('')
   useEffect(() => {
-    setVehiclePricing(initialVehiclePricing)
-  },[initialVehiclePricing])
-
-  const handleEditClick = (vehicle: VehiclePricing) => {
-    setCurrentVehicle(vehicle)
-    setEditValue(vehicle.priceValue)
-    setEditType(vehicle.priceType)
-    setIsEditDialogOpen(true)
-  }
-
-  const handleSaveEdit = () => {
-    if (!currentVehicle) return
-
-    const updatedPricing = vehiclePricing.map((vehicle) => {
-      if (vehicle.id === currentVehicle.id) {
-        return {
-          ...vehicle,
-          priceValue: editValue,
-          priceType: editType,
-        }
-      }
-      return vehicle
-    })
-
-    setVehiclePricing(updatedPricing)
-    setIsEditDialogOpen(false)
-    setCurrentVehicle(null)
-  }
-
-  const formatPrice = (vehicle: VehiclePricing) => {
-    if (vehicle.priceType === "fixed") {
-      return `$${vehicle.priceValue}`
-    } else {
-      return `${vehicle.priceValue}%`
+    if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
+      setVehiclePricing(platformFeeData)
     }
+  },[platformFeeData])
+  
+  // console.log(vehiclePricing)
+
+  const handleEditClick = (vehicle: VehicleFeeType) => {
+    setEditItem(vehicle.id)
+    setIsEditOpen(true)
   }
 
+  const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number) => {
+    setIsEditOpen(false)
+    // console.log(vehicleFee)
+    const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:param.feeType } })
+    console.log(res)
+  }
+
+  if(isLoading) {
+    return <div className="text-center py-10"><LoadingSpinner/></div>  
+  }
+  if (error) {
+    return <div className="text-center py-10 text-red-500">Error loading vehicle data</div>
+  }
+  if (!platformFeeData || platformFeeData.length === 0) {
+    return <div className="text-center py-10">No vehicle data available</div>
+  }
   return (
     <div className="bg-white rounded-lg border border-gray-200 overflow-hidden">
-      <div className="overflow-x-auto">
-        <table className="w-full">
+      <div className="overflow-x-auto px-1 md:px-5">
+        <table className="w-full ">
           <thead>
             <tr className="border-b border-gray-200">
-              <th className="text-left py-3 px-4 font-semibold text-gray-700">Vehicle Type</th>
-              <th className="text-left py-3 px-4 font-semibold text-gray-700">Price</th>
-              <th className="text-right py-3 px-4 font-semibold text-gray-700">Action</th>
+              <th className="text-left py-3 font-semibold text-gray-700">Vehicle Type</th>
+              <th className="text-left py-3 font-semibold text-gray-700">Price</th>
+              <th className="text-right py-3 font-semibold text-gray-700">Action</th>
             </tr>
           </thead>
-          <tbody>
-            {vehiclePricing.map((vehicle) => (
-              <tr key={vehicle.id} className="border-b border-gray-100 hover:bg-gray-50">
-                <td className="py-3 px-4 text-gray-800">{vehicle.vehicleType}</td>
-                <td className="py-3 px-4">
-                  <div className="flex items-center space-x-2">
-                    <div className="bg-gray-200 px-3 py-1 rounded text-gray-800 font-medium">
-                      {formatPrice(vehicle)}
-                    </div>
-                    <div className="bg-gray-200 px-2 py-1 rounded text-gray-600 text-sm">{vehicle.currency}</div>
-                  </div>
-                </td>
-                <td className="py-3 px-4 text-right">
-                  <Button
-                    onClick={() => handleEditClick(vehicle)}
-                    className="bg-green-500 hover:bg-green-600 text-white px-6"
-                  >
-                    Edit
-                  </Button>
-                </td>
-              </tr>
-            ))}
+          <tbody className="">
+            {platformFeeData.map((vehicle) => (
+              <EachPlateformFee
+                key={vehicle.id}
+                vehicle={vehicle}
+                isEditOpen={isEditOpen}
+                editItem={editItem}
+                handleEditClick={handleEditClick}
+                handleSaveEdit={handleSaveEdit}
+
+            />))}
           </tbody>
         </table>
       </div>
-
-      <Dialog open={isEditDialogOpen} onOpenChange={setIsEditDialogOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle>Edit Vehicle Pricing</DialogTitle>
-          </DialogHeader>
-          <div className="grid gap-4 py-4">
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="vehicle-type" className="text-right">
-                Vehicle
-              </Label>
-              <div className="col-span-3 font-medium">{currentVehicle?.vehicleType}</div>
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="price-type" className="text-right">
-                Price Type
-              </Label>
-              <Select
-                value={editType}
-                onValueChange={(value) => setEditType(value as PriceType)}
-              >
-                <SelectTrigger id="price-type" className="col-span-3">
-                  <SelectValue placeholder="Select price type" />
-                </SelectTrigger>
-                <SelectContent>
-                  <SelectItem value="fixed">Fixed Amount ($)</SelectItem>
-                  <SelectItem value="percentage">Percentage (%)</SelectItem>
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="grid grid-cols-4 items-center gap-4">
-              <Label htmlFor="price-value" className="text-right">
-                Value
-              </Label>
-              <Input
-                id="price-value"
-                type="number"
-                value={editValue}
-                onChange={(e) => setEditValue(Number(e.target.value))}
-                className="col-span-3"
-                min={0}
-                step={editType === "percentage" ? 0.1 : 1}
-              />
-            </div>
-          </div>
-          <DialogFooter>
-            <Button variant="outline" onClick={() => setIsEditDialogOpen(false)}>
-              Cancel
-            </Button>
-            <Button onClick={handleSaveEdit} className="bg-green-500 hover:bg-green-600 text-white">
-              Save Changes
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </div>
   )
 }
