@@ -6,6 +6,7 @@ import { useGetVehicleByIdQuery, useGetVehiclePageApiQuery, useUpdateVehicleMuta
 import { VehicleFeeType } from "@/type/platformPageTypes"
 import LoadingSpinner from "@/app/loading"
 import EachPlateformFee from "./EachPlateformFee"
+import { toast } from "sonner"
 0
 
  // define type from vehiclePageApi
@@ -30,7 +31,6 @@ export default function PlatformFeeTable() {
     }
   },[platformFeeData])
   
-  // console.log(vehiclePricing)
 
   const handleEditClick = (vehicle: VehicleFeeType) => {
     setEditItem(vehicle.id)
@@ -39,9 +39,10 @@ export default function PlatformFeeTable() {
 
   const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number) => {
     setIsEditOpen(false)
-    // console.log(vehicleFee)
     const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:param.feeType } })
-    console.log(res)
+    if (res?.data?.success) {
+      toast.success("Vehicle fee updated successfully")
+    }
   }
 
   if(isLoading) {

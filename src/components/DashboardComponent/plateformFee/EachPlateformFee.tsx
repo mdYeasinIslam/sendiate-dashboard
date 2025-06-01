@@ -18,11 +18,9 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
   const [vehicleFee, setVehicleFee] = React.useState(vehicle?.fee)
   
   const onChangeInput = async (vehicleFee: string) => {
-    console.log(vehicleFee)
     setVehicleFee(Number(vehicleFee))
 
   }
-  // console.log(vehicleFee)
 
     return (
       <tr key={vehicle.id} className=" border-b border-gray-100 hover:bg-gray-50 ">
@@ -42,7 +40,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                             type="text"
                             name='vehicleFee'
                             onChange={(e)=> onChangeInput(e?.target?.value)}
-                            className={` pl-8 pr-0 py-2 w-[70px] rounded-md  text-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${isEditOpen && editItem=== vehicle.id ? 'bg-gwhite border-1 border-black' : 'bg-gray-300'} `}
+                            className={` pl-5 pr-0 py-2 w-[70px] rounded-md  text-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${isEditOpen && editItem=== vehicle.id ? 'bg-gwhite border-1 border-black' : 'bg-gray-300'} `}
                             readOnly={isEditOpen && editItem=== vehicle.id ? false : true}
                             defaultValue={vehicle?.fee}
                           />
