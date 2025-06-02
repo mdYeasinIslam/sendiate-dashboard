@@ -1,7 +1,6 @@
 
 import PriceTable from "@/components/DashboardComponent/PricingPage/PriceTable"
 import PageWrapper from "@/components/PageWrapper"
-import { VehicleRate } from "@/type/priceType"
 
 
 

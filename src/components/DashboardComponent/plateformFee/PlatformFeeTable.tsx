@@ -18,12 +18,14 @@ export default function PlatformFeeTable() {
   const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
     const [updateVehicle] = useUpdateVehicleMutation()
 
-      const platformFeeData = data?.data || [];
-      // console.log(platformFeeData)
-
+  const platformFeeData = data?.data || [];
+  
+// Set vehicle price to the component state so that we can monitor it
   const [vehiclePricing, setVehiclePricing] = useState<VehicleFeeType[]>(platformFeeData || []);
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [editItem, setEditItem] = useState<string>('')
+
+  // monitor if platformFeeData is update then re-render the component
   useEffect(() => {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
       setVehiclePricing(platformFeeData)
@@ -35,9 +37,12 @@ export default function PlatformFeeTable() {
     setEditItem(vehicle.id)
     setIsEditOpen(true)
   }
-
+// Handle updated vehicle fee save to the database
   const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number) => {
     setIsEditOpen(false)
+    if (param?.fee === vehicleFee) {
+      return 0
+    }
     const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:param.feeType } })
     if (res?.data?.success) {
       toast.success("Vehicle fee updated successfully")
@@ -73,6 +78,7 @@ export default function PlatformFeeTable() {
                 editItem={editItem}
                 handleEditClick={handleEditClick}
                 handleSaveEdit={handleSaveEdit}
+                page="PlatformFeePage"
 
             />))}
           </tbody>
