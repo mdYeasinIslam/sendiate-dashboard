@@ -95,6 +95,7 @@ export default function ChatPage() {
       timestamp: Date.now(),
     };
     setMessages([...messages, newMessage]);
+
   };
 
 
