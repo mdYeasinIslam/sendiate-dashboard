@@ -30,7 +30,7 @@ export default function PlatformFeeTable() {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
       setVehiclePricing(platformFeeData)
     }
-  },[platformFeeData,reRender])
+  },[platformFeeData])
   
 
   const handleEditClick = (vehicle: VehicleFeeType) => {
@@ -45,7 +45,6 @@ export default function PlatformFeeTable() {
       return 0
     }
     const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:feeType } })
-    console.log(res)
     if (res?.data?.success) {
       // setReRender(!reRender)
       setTimeout(() => {

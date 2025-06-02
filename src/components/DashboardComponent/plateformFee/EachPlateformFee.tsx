@@ -97,7 +97,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                       <input
                         type="text"
                         name="vehicleFee"
-                        defaultValue={ vehicle?.fee}
+                        defaultValue={ isEditOpen ? vehicleFee : vehicle?.fee}
                         onChange={(e) => onChangeInput(e.target.value,vehicle?.feeType)}
                         className={`
                           ${feeType === "FIXED" && vehicle?.fee >100? "pl-8" : "pl-3"} 
