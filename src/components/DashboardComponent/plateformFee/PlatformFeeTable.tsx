@@ -15,8 +15,8 @@ type VehicleStatsResponse = {
 };
 
 export default function PlatformFeeTable() {
-  const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
-    const [updateVehicle] = useUpdateVehicleMutation()
+  const { data, error, isLoading} = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+  const [updateVehicle] = useUpdateVehicleMutation()
 
   const platformFeeData = data?.data || [];
   
@@ -24,13 +24,13 @@ export default function PlatformFeeTable() {
   const [vehiclePricing, setVehiclePricing] = useState<VehicleFeeType[]>(platformFeeData || []);
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [editItem, setEditItem] = useState<string>('')
-
+  const [reRender,setReRender]=useState(false)
   // monitor if platformFeeData is update then re-render the component
   useEffect(() => {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
       setVehiclePricing(platformFeeData)
     }
-  },[platformFeeData])
+  },[platformFeeData,reRender])
   
 
   const handleEditClick = (vehicle: VehicleFeeType) => {
@@ -38,13 +38,22 @@ export default function PlatformFeeTable() {
     setIsEditOpen(true)
   }
 // Handle updated vehicle fee save to the database
-  const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number) => {
+  const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number,feeType:"PERCENTAGE" | "FIXED") => {
     setIsEditOpen(false)
-    if (param?.fee === vehicleFee) {
+    console.log(feeType,vehicleFee)
+    if (param?.fee === vehicleFee && param?.feeType === feeType) {
       return 0
     }
-    const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:param.feeType } })
+    const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:feeType } })
+    console.log(res)
     if (res?.data?.success) {
+      // setReRender(!reRender)
+      setTimeout(() => {
+        setReRender(prev => !prev)
+        if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
+          setVehiclePricing(platformFeeData)
+        }
+      }, 100);
       toast.success("Vehicle fee updated successfully")
     }
   }
