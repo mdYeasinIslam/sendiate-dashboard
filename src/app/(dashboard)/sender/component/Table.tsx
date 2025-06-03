@@ -24,24 +24,46 @@ import React from "react";
 const logo = 'https://i.pravatar.cc/150?img=1';
 import { Button } from "@/components/ui/button";
 import { Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
-import { useUpdateCourierStatusMutation } from "@/redux/services/Apis/courierApi/courierPageApi";
 
+type Prop = {
+    senders: SenderType[]
+    handleUpdateStatus: (id: string, status: string,sender:SenderType) =>void
+}
 
-
-const Table = ({ senders }: { senders: SenderType[] }) => {
+const Table = ({ senders,handleUpdateStatus }: Prop) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
-    const [updateSenderStatus] = useUpdateCourierStatusMutation()
-    const [editStatus, setEditStatus] = React.useState('')
+  
     
     React.useEffect(() => {
         setFilterSenders(senders);
     }, [senders]);
 
 
-    const handleUpdateStatus = (status:string) => {
-        console.log(status)
+    // const handleUpdateStatus = async(id:string,status:string) => {
+    //     console.log(status)
+    //     const getItem = senders?.find(sender => sender.id === id)
         
-    }
+    //     if (getItem?.status === status) {
+    //         return 0;
+    //     }
+    //     const res = await updateSenderStatus({ id, body: { status } })
+       
+    //     if (res?.data?.success) {
+    //         window.location.reload();
+            
+    //         console.log(senders)
+            
+    //         setTimeout(() => {
+    //               setReRender(prev => !prev)
+                  
+    //               if (getItem?.status !== status) {
+    //                   console.log('enter ')
+    //                   setFilterSenders(senders)
+    //               }
+    //           }, 100);
+    //           toast.success("Sender status updated successfully")
+    //         }
+    // }
 
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase();
@@ -136,14 +158,14 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                             <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
                                             
-                                            <DropdownMenuItem onClick={()=>handleUpdateStatus('ACTIVE')}>
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'ACTIVE',sender)}>
                                                 <span className="hover:text-green-600">ACTIVE</span>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <span onClick={()=>handleUpdateStatus('INACTIVE')} className="hover:text-gray-600">INACTIVE</span>
+                                                <span onClick={()=>handleUpdateStatus(sender?.id,'INACTIVE',sender)} className="hover:text-gray-600">INACTIVE</span>
                                             </DropdownMenuItem>
                                           
-                                            <DropdownMenuItem onClick={()=>handleUpdateStatus('BLOCKED')} className="hover:text-red-600">
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'BLOCKED',sender)} className="hover:text-red-600">
                                                 {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
                                                 
                                                 <span>BLOCKED</span>

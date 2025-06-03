@@ -40,7 +40,6 @@ export default function PlatformFeeTable() {
 // Handle updated vehicle fee save to the database
   const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number,feeType:"PERCENTAGE" | "FIXED") => {
     setIsEditOpen(false)
-    console.log(feeType,vehicleFee)
     if (param?.fee === vehicleFee && param?.feeType === feeType) {
       return 0
     }
