@@ -27,7 +27,7 @@ const PriceTable = () => {
     if (vehiclesPriceData.length && JSON.stringify(vehiclePrice) !== JSON.stringify(vehiclesPriceData)) {
       setVehiclePrice(vehiclesPriceData)
     }
-  }, [vehiclesPriceData])
+  }, [vehiclesPriceData,vehiclePrice])
   
       // const handleChangeRate = (id: string) => {
       //   // In a real application, this would open a modal or form to edit the rates

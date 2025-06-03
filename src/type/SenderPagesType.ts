@@ -4,6 +4,7 @@ export type SenderType = {
     fullName: string;
     email: string;
     phoneNumber: string;
+    profileImage:string
     role: string;
     status: string;
     createdAt: string;

@@ -1,38 +1,59 @@
-'use client';
-import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
-
+"use client";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 
 export const senderPageApi = createApi({
-    reducerPath: 'senderPageApi',
-    baseQuery: fetchBaseQuery({
-        baseUrl: 'https://patrkamh.onrender.com/api/v1',
-        //  baseUrl: 'http://10.0.30.91:5001/api/v1',
-        // baseUrl:`${process.env.NEXT_PUBLIC_API_URL_LOCAL}`,
-
-        prepareHeaders: (headers) => {
-            
-        if (typeof window !== 'undefined') {
-            const rawToken = localStorage.getItem('token');
-            const token = rawToken?.trim();
-            if (token && token !== 'undefined' && token !== 'null') {
-                headers.set('Authorization', `${token}`);
-            }
+  reducerPath: "senderPageApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://patrkamh.onrender.com/api/v1",
+    prepareHeaders: (headers) => {
+      if (typeof window !== "undefined") {
+        const rawToken = localStorage.getItem("token");
+        const token = rawToken?.trim();
+        if (token && token !== "undefined" && token !== "null") {
+          headers.set("Authorization", `${token}`);
         }
-        return headers;
+      }
+      return headers;
+    },
+  }),
+
+  // ✅ Use tagTypes that match your resource (e.g., "Sender" not "Courier")
+  tagTypes: ["Sender"],
+
+  endpoints: (build) => ({
+    getSenderStats: build.query<unknown, { page: number; limit: number }>({
+      query: ({ page, limit }) => ({
+        url: `/users/senders`,
+        params: {
+          page: String(page),
+          limit: String(limit),
         },
+      }),
+      providesTags: ["Sender"],
     }),
-    
-        endpoints: (build) => ({
 
-            getSenderStats: build.query<unknown, void>({
-                query: () => `/users/senders`
-            }),
-            
-            getSenderById: build.query<unknown, string>({
-                query: (id) => `/users/senders/${id}`
-            }),
+    getSenderById: build.query<unknown, string>({
+      query: (id) => `/users/senders/${id}`,
+      providesTags: ["Sender"],
+    }),
 
-    })
-})
+    updateSenderStatus: build.mutation<
+      unknown,
+      { id: string; body: Record<string, unknown> }
+    >({
+      query: ({ id, body }) => ({
+        url: `/users/${id}/status`,
+        method: "PATCH",
+        body,
+      }),
+      invalidatesTags: ["Sender"],
+    }),
+  }),
+});
 
-export const { useGetSenderStatsQuery,useGetSenderByIdQuery } = senderPageApi;
+// ✅ Export all hooks you need
+export const {
+  useGetSenderStatsQuery,
+  useGetSenderByIdQuery,
+  useUpdateSenderStatusMutation,
+} = senderPageApi;

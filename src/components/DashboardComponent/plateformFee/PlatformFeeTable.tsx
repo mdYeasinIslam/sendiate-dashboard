@@ -14,7 +14,7 @@ type VehicleStatsResponse = {
     data: VehicleFeeType[]
 };
 
-export default function PlatformFeeTable() {
+export default function PlatformFeeTable() { 
   const { data, error, isLoading} = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
   const [updateVehicle] = useUpdateVehicleMutation()
 
@@ -30,7 +30,7 @@ export default function PlatformFeeTable() {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
       setVehiclePricing(platformFeeData)
     }
-  },[platformFeeData,reRender])
+  },[platformFeeData,reRender,vehiclePricing])
   
 
   const handleEditClick = (vehicle: VehicleFeeType) => {
@@ -40,7 +40,6 @@ export default function PlatformFeeTable() {
 // Handle updated vehicle fee save to the database
   const handleSaveEdit = async (param: VehicleFeeType, vehicleFee: number,feeType:"PERCENTAGE" | "FIXED") => {
     setIsEditOpen(false)
-    console.log(feeType,vehicleFee)
     if (param?.fee === vehicleFee && param?.feeType === feeType) {
       return 0
     }

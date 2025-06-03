@@ -21,18 +21,20 @@ export const transactionApi = createApi({
 
     endpoints: (build) => ({
 
-        getTransactionStats: build.query<unknown,{paymentMethod:string,isCourierFeeRelease:boolean,isPlatformFeeRelease:boolean}>({
-            query: ({ paymentMethod, isCourierFeeRelease, isPlatformFeeRelease }) => ({
+        getTransactionStats: build.query<unknown, { page: number, limit: number,paymentMethod:string}>({
+            query: ({page,limit,paymentMethod}) => ({
                 url: `/payments/transactions`,
                 params: { 
+                    page: String(page),
+                    limit:String(limit),
                     paymentMethod, 
-                    isCourierFeeRelease: String(isCourierFeeRelease), 
-                    isPlatformFeeRelease: String(isPlatformFeeRelease) 
+                    // isCourierFeeRelease: String(isCourierFeeRelease), 
+                    // isPlatformFeeRelease: String(isPlatformFeeRelease) 
                 }
             })
         }),
 
     })
 })
-
+ 
 export const { useGetTransactionStatsQuery } = transactionApi;
