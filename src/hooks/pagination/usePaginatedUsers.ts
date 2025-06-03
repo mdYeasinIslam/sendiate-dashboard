@@ -7,9 +7,9 @@ export const usePaginatedUsers = <T>(
 ) => {
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = currentPage * itemsPerPage;
-  const paginatedData = data.slice(startIndex, endIndex);
+  const paginatedData = data?.slice(startIndex, endIndex);
 
-  const totalPages = Math.ceil(data.length / itemsPerPage);
+  const totalPages = Math?.ceil(data?.length / itemsPerPage);
 
   return { paginatedData, totalPages };
 };

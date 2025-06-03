@@ -2,8 +2,8 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 
-export const feedbackPageApi = createApi({
-    reducerPath: 'feedbackPageApi',
+export const transactionApi = createApi({
+    reducerPath: 'transactionApi',
     baseQuery: fetchBaseQuery({
         baseUrl: `${process.env.NEXT_PUBLIC_API_URL}`,
 
@@ -21,18 +21,18 @@ export const feedbackPageApi = createApi({
 
     endpoints: (build) => ({
 
-        getFeedbackStats: build.query<unknown, { userRole: string }>({
-            query: ({ userRole }) => ({
-                url: `/feedback/all`,
-                params: { userRole }
+        getTransactionStats: build.query<unknown,{paymentMethod:string,isCourierFeeRelease:boolean,isPlatformFeeRelease:boolean}>({
+            query: ({ paymentMethod, isCourierFeeRelease, isPlatformFeeRelease }) => ({
+                url: `/payments/transactions`,
+                params: { 
+                    paymentMethod, 
+                    isCourierFeeRelease: String(isCourierFeeRelease), 
+                    isPlatformFeeRelease: String(isPlatformFeeRelease) 
+                }
             })
-        }),
-
-        getFeedbackById: build.query<unknown, string>({
-            query: (id) => `/users/senders/${id}`
         }),
 
     })
 })
 
-export const { useGetFeedbackStatsQuery,useGetFeedbackByIdQuery } = feedbackPageApi;
+export const { useGetTransactionStatsQuery } = transactionApi;

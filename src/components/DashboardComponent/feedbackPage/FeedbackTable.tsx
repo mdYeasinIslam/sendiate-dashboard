@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreVertical, Download, Trash } from "lucide-react"
+import { MoreVertical, Download, Trash, SlidersHorizontal } from "lucide-react"
 import { FeedbackType } from "@/type/homePageTypes"
 import Image from "next/image"
 // Use the image URL directly as a string
@@ -45,19 +45,20 @@ const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackType
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
-                    <MoreVertical className="h-4 w-4" />
+                    {/* <MoreVertical className="h-4 w-4" /> */}
+                    <SlidersHorizontal  className="h-6 w-6 text-green-700" />
                   </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent align="end">
-                  <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                  <DropdownMenuLabel>Role</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem>
-                    <Download className="mr-2 h-4 w-4" />
-                    <span>Export</span>
+                  <DropdownMenuItem className="">
+                    {/* <Download className="mr-2 h-4 w-4" /> */}
+                    <span>Sender</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem>
-                    <Trash className="mr-2 h-4 w-4" />
-                    <span>Delete All</span>
+                  <DropdownMenuItem  className="">
+                    {/* <Trash className="mr-2 h-4 w-4" /> */}
+                    <span>Receiver</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>

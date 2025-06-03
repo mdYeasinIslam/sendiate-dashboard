@@ -8,6 +8,7 @@ import { senderPageApi } from '../services/Apis/senderPage/senderPageApi';
 import { courierPageApi } from '../services/Apis/courierApi/courierPageApi';
 import { vehiclePageApi } from '../services/Apis/vehicleApi/vehiclePageApi';
 import { feedbackPageApi } from '../services/Apis/feedbackPageAPis/feedbackPageApi';
+import { transactionApi } from '../services/Apis/transactionApi/transactionApi';
 
 export const store = configureStore({
     reducer: {
@@ -16,7 +17,8 @@ export const store = configureStore({
         [senderPageApi.reducerPath]: senderPageApi.reducer,
         [courierPageApi.reducerPath]: courierPageApi.reducer,
         [vehiclePageApi.reducerPath]: vehiclePageApi.reducer,
-        [feedbackPageApi.reducerPath]:feedbackPageApi.reducer,
+        [feedbackPageApi.reducerPath]: feedbackPageApi.reducer,
+        [transactionApi.reducerPath]: transactionApi.reducer,
 
         
         auth: authSlice.reducer,
@@ -30,7 +32,8 @@ export const store = configureStore({
             senderPageApi.middleware,
             courierPageApi.middleware,
             vehiclePageApi.middleware,
-            feedbackPageApi.middleware
+            feedbackPageApi.middleware,
+            transactionApi.middleware
 
         )
     

@@ -16,13 +16,13 @@ type FeedbackStatsResponse = {
 };
 export default function FeedbackDashboard() {
 const {data, error, isLoading} = useGetFeedbackStatsQuery({ userRole: "Sender" }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
-console.log(data?.data)
-            const feedbackData = data?.data || [];
+// console.log(data?.data)
+      const feedbackData = data?.data || [];
 
       const [currentPage, setCurrentPage] = useState(1);
-       const itemsPerPage = 10;
+      const itemsPerPage = 10;
      
-       const { paginatedData, totalPages } = usePaginatedUsers<FeedbackType>(feedbackData, currentPage, itemsPerPage);
+      const { paginatedData, totalPages } = usePaginatedUsers<FeedbackType>(feedbackData, currentPage, itemsPerPage);
      
    if (isLoading) return <div><LoadingSpinner/></div>;
     if (error) return <div>An error occurred while fetching data.</div>;
