@@ -4,7 +4,8 @@ type PaginationProps = {
   setPageForPagination: React.Dispatch<React.SetStateAction<number>>
 };
 
-export function Pagination({ currentPage, totalPages,setPageForPagination}: PaginationProps) {
+export function Pagination({ currentPage, totalPages, setPageForPagination }: PaginationProps) {
+  console.log(totalPages)
   return (
     <div className="flex justify-center items-center gap-2 mt-6">
       <button

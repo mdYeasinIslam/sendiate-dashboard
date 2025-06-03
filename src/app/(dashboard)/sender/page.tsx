@@ -28,7 +28,7 @@ const Sender = () => {
       if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
         setTableData(senderData);
       }
-    }, [senderData,reRender]);
+    }, [reRender,tableData]);
     
    const handleUpdateStatus = async(id:string,status:string,sender:SenderType) => {
         console.log(status)

@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreVertical, Download, Trash, SlidersHorizontal } from "lucide-react"
+import {  SlidersHorizontal } from "lucide-react"
 import { FeedbackType } from "@/type/homePageTypes"
 import Image from "next/image"
 // Use the image URL directly as a string

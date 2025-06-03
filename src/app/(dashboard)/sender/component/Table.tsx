@@ -23,7 +23,7 @@ import React from "react";
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 import { Button } from "@/components/ui/button";
-import { Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
+import {  MoreVertical} from "lucide-react";
 
 type Prop = {
     senders: SenderType[]

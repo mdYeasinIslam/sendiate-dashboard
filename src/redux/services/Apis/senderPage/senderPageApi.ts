@@ -39,7 +39,7 @@ export const senderPageApi = createApi({
 
     updateSenderStatus: build.mutation<
       unknown,
-      { id: string; body: Record<string, any> }
+      { id: string; body: Record<string, unknown> }
     >({
       query: ({ id, body }) => ({
         url: `/users/${id}/status`,

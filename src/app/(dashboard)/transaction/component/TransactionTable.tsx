@@ -15,11 +15,9 @@ import { SlidersHorizontal } from 'lucide-react';
 type Prop = {
     transactionData: TransactionType[]
     setPaymentMethod: React.Dispatch<React.SetStateAction<string>>
-    setIsCourierFeeRelease: React.Dispatch<React.SetStateAction<boolean>>
-    setIsPlatformFeeRelease: React.Dispatch<React.SetStateAction<boolean>>
 }
 
-const TransactionTable = ({ transactionData, setPaymentMethod, setIsCourierFeeRelease, setIsPlatformFeeRelease }: Prop) => {
+const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
 
     return (
         <div className="w-full bg-white rounded-lg shadow-sm p-6">

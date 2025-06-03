@@ -14,7 +14,7 @@ export type TransactionType = {
     stripePlatformFeeTransferId: string | null;
     stripeCourierTransferId: string | null;
     refundId: string | null;
-    metadata: any | null;
+    metadata: unknown | null;
     isHold: boolean;
     holdReleaseDate: string | null;
     paymentDate: string;
