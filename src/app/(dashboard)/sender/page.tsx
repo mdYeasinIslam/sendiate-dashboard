@@ -28,7 +28,7 @@ const Sender = () => {
       if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
         setTableData(senderData);
       }
-    }, [reRender,tableData]);
+    }, [senderData,reRender,tableData]);
     
    const handleUpdateStatus = async(id:string,status:string,sender:SenderType) => {
         console.log(status)
@@ -42,17 +42,17 @@ const Sender = () => {
         if (res?.data?.success) {
             window.location.reload();
             
-            
-            setTimeout(() => {
                   setReRender(prev => !prev)
+            
+            // setTimeout(() => {
                   
-                if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
-                      console.log('enter ')
-                      setTableData(senderData)
-                  }
-              }, 100);
-              toast.success("Sender status updated successfully")
+            //     if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
+            //           console.log('enter ')
+            //           setTableData(senderData)
+            //       }
+            //   }, 100);
             }
+            toast.success("Sender status updated successfully")
     }
   
   

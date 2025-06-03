@@ -32,38 +32,12 @@ type Prop = {
 
 const Table = ({ senders,handleUpdateStatus }: Prop) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
-  
+  console.log(senders)
     
     React.useEffect(() => {
         setFilterSenders(senders);
     }, [senders]);
 
-
-    // const handleUpdateStatus = async(id:string,status:string) => {
-    //     console.log(status)
-    //     const getItem = senders?.find(sender => sender.id === id)
-        
-    //     if (getItem?.status === status) {
-    //         return 0;
-    //     }
-    //     const res = await updateSenderStatus({ id, body: { status } })
-       
-    //     if (res?.data?.success) {
-    //         window.location.reload();
-            
-    //         console.log(senders)
-            
-    //         setTimeout(() => {
-    //               setReRender(prev => !prev)
-                  
-    //               if (getItem?.status !== status) {
-    //                   console.log('enter ')
-    //                   setFilterSenders(senders)
-    //               }
-    //           }, 100);
-    //           toast.success("Sender status updated successfully")
-    //         }
-    // }
 
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase();
