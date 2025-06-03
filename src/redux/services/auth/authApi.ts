@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 export const authApi = createApi({
     reducerPath: 'authApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: 'https://patrkamh.onrender.com/api/v1/'
+        baseUrl: 'https://patrkamh.onrender.com/api/v1'
         // baseUrl: 'http://10.0.30.91:5001/api/v1',
         // baseUrl:`${process.env.NEXT_PUBLIC_API_URL}`,
         // baseUrl:`${process.env.NEXT_PUBLIC_API_URL_LOCAL}`,
@@ -11,14 +11,14 @@ export const authApi = createApi({
     endpoints: (builder) => ({
         registerUser: builder.mutation({
             query: (userData) => ({
-                url: 'auth/register',
+                url: '/auth/register',
                 method: 'POST',
                 body: userData,
             }),
         }),
         loginUser: builder.mutation({
             query: (loginData) => ({
-                url: 'auth/login',
+                url: '/auth/login',
                 method: 'POST',
                 body: loginData,
             })

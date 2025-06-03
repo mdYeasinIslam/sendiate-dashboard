@@ -12,7 +12,7 @@ const LoginPage = () => {
     // Importing the useAppDispatch hook to dispatch actions
     const dispatch = useAppDispatch()
     // Using the loginUser mutation from authApi
-    const [loginUser,] = useLoginUserMutation()
+    const [loginUser] = useLoginUserMutation()
      const router = useRouter();
     // State to manage password visibility
     const [showPassword, setShowPassword] = useState(false);
@@ -46,12 +46,12 @@ const LoginPage = () => {
                     } 
                 })
                 .catch((error) => {
-                    console.error("Login failed:", error);
-                    toast.error(error?.data?.message || "Login failed");
+                    console.error("Login failed inside:", error);
+                    toast.error(error?.data?.message +'inside' || "Login failed inside");
                 });
            
        } catch (error) {
-        console.error("Login failed:", error);
+        console.error("Login failed outside:", error);
        }
     };
 
