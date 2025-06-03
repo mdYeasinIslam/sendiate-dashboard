@@ -27,7 +27,12 @@ import {  Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
 
 const Table = ({ senders }: { senders: SenderType[] }) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
-    
+
+    React.useEffect(() => {
+        setFilterSenders(senders);
+    }, [senders]);
+
+    console.log(filterSenders)
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase();
         const filtered = senders.filter((sender) =>
@@ -84,7 +89,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                     </TableHeader>
                     <TableBody>
                         {
-                            filterSenders.length === 0 && (
+                            filterSenders?.length === 0 && (
                                 <TableRow>
                                     <TableCell colSpan={6} className="font-semibold text-xl text-center py-4">
                                         No senders found

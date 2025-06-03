@@ -1,5 +1,6 @@
 'use client';
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
+import { url } from 'inspector';
 
 
 export const senderPageApi = createApi({
@@ -24,10 +25,18 @@ export const senderPageApi = createApi({
     
         endpoints: (build) => ({
 
-            getSenderStats: build.query<unknown, void>({
-                query: () => `/users/senders`
+            getSenderStats: build.query<unknown, {page:number,limit:number}>({
+                query: ({ page, limit }) => ({
+                    
+                    url: `/users/senders`,
+                    params: {
+                        page: String(page),
+                        limit:String(limit)
+                    }
+                        
+                })
             }),
-            
+             
             getSenderById: build.query<unknown, string>({
                 query: (id) => `/users/senders/${id}`
             }),

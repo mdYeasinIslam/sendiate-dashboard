@@ -135,7 +135,7 @@ const TransactionDashboard = () => {
         // console.log(data?.data)
         const transactionData = data?.data || [];
         // console.log(transactionData)
-        console.log(transactionData)
+        
 
     const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);
     const itemsPerPage = data?.meta?.limit || 10;
