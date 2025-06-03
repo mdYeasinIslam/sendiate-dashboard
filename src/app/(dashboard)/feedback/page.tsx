@@ -3,7 +3,9 @@ import FeedbackTable from "@/components/DashboardComponent/feedbackPage/Feedback
 import PageWrapper from "@/components/PageWrapper"
 import { Pagination } from "@/components/shared/Pagination"
 import { usePaginatedUsers } from "@/hooks/pagination/usePaginatedUsers"
+import { useGetFeedbackStatsQuery } from "@/redux/services/Apis/feedbackPageAPis/feedbackPageApi"
 import { FeedbackEntry } from "@/type/feedbackType"
+import { FeedbackType } from "@/type/homePageTypes"
 import { useState } from "react"
 
 
@@ -17,7 +19,7 @@ const generateFeedbackData: FeedbackEntry[] = [
         avatar: "/placeholder.svg?height=32&width=32",
         email: "sarah.gomez@example.com",
         phone: "+1 234 567 8901",
-        feedback: "The interface is clean and easy to navigate. Love the minimal design!",
+        feedback: "The interface is clean and easy to navigate. Love the minimal design! fdssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssssss",
         starred: true
     },
     {
@@ -230,18 +232,25 @@ const generateFeedbackData: FeedbackEntry[] = [
         starred: false
     }
 ];
-
+type FeedbackStatsResponse = {
+    meta?: { page: number, limit: number, total: number, totalPage: number };
+    data: FeedbackType[]
+};
 export default function FeedbackDashboard() {
+const {data, error, isLoading} = useGetFeedbackStatsQuery({ userRole: "Sender" }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
+console.log(data?.data)
+            const feedbackData = data?.data || [];
+
       const [currentPage, setCurrentPage] = useState(1);
        const itemsPerPage = 10;
      
-       const { paginatedData, totalPages } = usePaginatedUsers<FeedbackEntry>(generateFeedbackData, currentPage, itemsPerPage);
+       const { paginatedData, totalPages } = usePaginatedUsers<FeedbackType>(feedbackData, currentPage, itemsPerPage);
      
 
   return (
-      <main className="bg-[#F8F8F8]">
+      <main className="bg-[#F8F8F8] min-h-screen">
           <PageWrapper title="Feedback"/>
-        <section className=" md:px-6">
+        <section className=" md:px-6 ">
             <FeedbackTable generateFeedbackData={paginatedData } />
               <Pagination
                   currentPage={currentPage}

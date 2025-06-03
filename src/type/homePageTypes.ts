@@ -12,4 +12,20 @@ export type DashboardStatsResponse = {
         totalCourier?: number;
         year?: number;
     };
+};
+  
+  export type FeedbackType = {
+    id: string;
+    subject: string;
+    comments: string;
+    status: string;
+    createdAt: string;
+    updatedAt: string;
+    userId: string;
+    user: {
+      id: string;
+      fullName: string;
+      email: string;
+      role: string;
+    };
   };
