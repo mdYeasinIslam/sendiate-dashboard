@@ -19,7 +19,7 @@ import LoadingSpinner from "@/app/loading";
 import { useAppDispatch } from "@/redux/hooks";
 
 
-export const PerformanceChart = () => {
+export const PerformanceChart = () => { 
   const dispatch = useAppDispatch()
 
   const [selectedYear, setSelectedYear] = useState("2025");
@@ -31,12 +31,14 @@ export const PerformanceChart = () => {
   const chatData = data?.data?.performanceData as PerformanceType[] 
   useEffect(() => {
     if (data?.data) {
-      const { performanceData, totalSender, totalCourier, year } = data.data;
+      const { performanceData, totalSender, totalCourier,totalCash,totalFee, year } = data?.data;
       // Provide default values if any are undefined
       dispatch(setDashboardStats({
         performanceData: performanceData ?? [],
         totalSender: totalSender ?? 0,
         totalCourier: totalCourier ?? 0,
+        totalCash: totalCash ?? 0,
+        totalFee:totalFee??0,
         year: year ?? Number(selectedYear),
       }));
     }

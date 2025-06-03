@@ -14,8 +14,8 @@ const CardSection = () => {
     const cards = [
         { label: "Total Sender", value: totalData.stats?.totalSender?.toString() || "0" },
         { label: "Total Courier", value: totalData.stats?.totalCourier?.toString() || "0" },
-        { label: "Total Cash", value: "$00" },
-        { label: "Platform Fees", value: "00" },
+        { label: "Total Cash", value: totalData?.stats?.totalCash.toFixed(3) },
+        { label: "Platform Fees", value: totalData?.stats?.totalFee },
     ];
     return (
         <div className="w-full  rounded-lg  flex flex-col md:flex-row gap-4  px-5 lg:px-0">

@@ -6,12 +6,16 @@ export type PerformanceType = {
   total: number;
 };
 export type DashboardStatsResponse = {
-    data?: {
-        performanceData?: PerformanceType[];
-        totalSender?: number;
-        totalCourier?: number;
-        year?: number;
-    };
+  data?: {
+    performanceData?: PerformanceType[];
+    totalSender?: number;
+    totalCourier?: number;
+    totalCash?: number,
+    totalFee?: number,
+    year?: number;
+  };
+  meta?: { page: number, limit: number, total: number, totalPage: number };
+
 };
   
   export type FeedbackType = {

@@ -5,6 +5,8 @@ import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 interface DashboardStatsResponse {
   totalSender: number;
   totalCourier: number;
+  totalCash: number;
+  totalFee?: number,
   year: number;
   performanceData: PerformanceType[];
 }
