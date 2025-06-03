@@ -1,11 +1,10 @@
 type PaginationProps = {
   currentPage: number;
   totalPages: number;
-  onPageChange: (page: number) => void;
   setPageForPagination: React.Dispatch<React.SetStateAction<number>>
 };
 
-export function Pagination({ currentPage, totalPages, onPageChange,setPageForPagination}: PaginationProps) {
+export function Pagination({ currentPage, totalPages,setPageForPagination}: PaginationProps) {
   return (
     <div className="flex justify-center items-center gap-2 mt-6">
       <button

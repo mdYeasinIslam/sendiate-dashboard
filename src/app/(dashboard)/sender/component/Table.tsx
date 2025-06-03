@@ -23,16 +23,26 @@ import React from "react";
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 import { Button } from "@/components/ui/button";
-import {  Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
+import { Edit, Eye, MoreVertical, Star, Trash } from "lucide-react";
+import { useUpdateCourierStatusMutation } from "@/redux/services/Apis/courierApi/courierPageApi";
+
+
 
 const Table = ({ senders }: { senders: SenderType[] }) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
-
+    const [updateSenderStatus] = useUpdateCourierStatusMutation()
+    const [editStatus, setEditStatus] = React.useState('')
+    
     React.useEffect(() => {
         setFilterSenders(senders);
     }, [senders]);
 
-    console.log(filterSenders)
+
+    const handleUpdateStatus = (status:string) => {
+        console.log(status)
+        
+    }
+
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase();
         const filtered = senders.filter((sender) =>
@@ -42,6 +52,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
         );
         setFilterSenders(filtered);
     };
+
     return (
         <section className="bg-white w-full rounded-xl shadow p-3 lg:p-6">
             {/* Search */}
@@ -63,28 +74,8 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                             <TableHead className="py-3 px-2 font-normal">Email</TableHead>
                             <TableHead className="py-3 px-2 font-normal">Phone</TableHead>
                             <TableHead className="py-3 px-2 font-normal">Status</TableHead>
-                            <TableHead className="py-3 px-2 font-normal"></TableHead>
-                            <TableHead className="py-3 px-2 font-normal text-right">
-                                {/* <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
-                                    <MoreVertical className="h-4 w-4" />
-                                </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem>
-                                    <Download className="mr-2 h-4 w-4" />
-                                    <span>Export</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Trash className="mr-2 h-4 w-4" />
-                                    <span>Delete All</span>
-                                </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu> */}
-                            </TableHead>
+                            <TableHead className="py-3 px-2 font-normal">Details</TableHead>
+                            <TableHead className="py-3 px-2 font-normal text-right">Action</TableHead>
                         </TableRow>
                     </TableHeader>
                     <TableBody>
@@ -97,6 +88,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                 </TableRow>
                             )
                         }
+                       
                         {filterSenders.map((sender, idx) => (
                             <TableRow
                                 key={sender.id + idx}
@@ -106,7 +98,7 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
                                     <Image
                                         alt={sender.fullName}
-                                        src={logo}
+                                        src={sender?.profileImage?sender?.profileImage: logo}
                                         width={500}
                                         height={500}
                                         className="w-6 h-6 rounded-full"
@@ -140,27 +132,21 @@ const Table = ({ senders }: { senders: SenderType[] }) => {
                                                 <MoreVertical className="h-4 w-4" />
                                             </Button>
                                         </DropdownMenuTrigger>
-                                        <DropdownMenuContent align="end">
-                                            <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                                        <DropdownMenuContent align="end" className="font-semibold">
+                                            <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
-                                            <DropdownMenuItem >
-                                                {/* <DropdownMenuItem onClick={() => handleStarItem(entry.id)}> */}
-                                                <Star className={`mr-2 h-4 w-4`} />
-                                                {/* <span>{entry.starred ? "Unstar" : "Star"}</span> */}
+                                            
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus('ACTIVE')}>
+                                                <span className="hover:text-green-600">ACTIVE</span>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <Eye className="mr-2 h-4 w-4" />
-                                                <span>View Details</span>
+                                                <span onClick={()=>handleUpdateStatus('INACTIVE')} className="hover:text-gray-600">INACTIVE</span>
                                             </DropdownMenuItem>
-                                            <DropdownMenuItem>
-                                                <Edit className="mr-2 h-4 w-4" />
-                                                <span>Edit</span>
-                                            </DropdownMenuItem>
-                                            <DropdownMenuSeparator />
-                                            <DropdownMenuItem className="text-red-600">
+                                          
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus('BLOCKED')} className="hover:text-red-600">
                                                 {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
-                                                <Trash className="mr-2 h-4 w-4" />
-                                                <span>Delete</span>
+                                                
+                                                <span>BLOCKED</span>
                                             </DropdownMenuItem>
                                         </DropdownMenuContent>
                                     </DropdownMenu>

@@ -24,15 +24,29 @@ export const courierPageApi = createApi({
         }, }),
         endpoints: (build) => ({
 
-            getCourierStats: build.query<unknown, void>({
-                query: () => `/users/couriers`
+            getCourierStats: build.query<unknown, {page:number,limit:number}>({
+                query: ({ page, limit }) => ({
+                    
+                    url: `/users/couriers`,
+                    params: {
+                        page: String(page),
+                        limit:String(limit)
+                    }
+                })
             }),
             
             getCourierById: build.query<unknown, string>({
                 query: (id) => `/users/couriers/${id}`
             }),
+        updateCourierStatus: build.mutation ({
+            query: ({id,body}) => ({
+                url: `/users/${id}/status`,
+                method: 'PATCH',
+                body
+                })
+            })
 
          })
 })
 
-export const { useGetCourierStatsQuery,useGetCourierByIdQuery } = courierPageApi;
+export const { useGetCourierStatsQuery,useGetCourierByIdQuery,useUpdateCourierStatusMutation } = courierPageApi;

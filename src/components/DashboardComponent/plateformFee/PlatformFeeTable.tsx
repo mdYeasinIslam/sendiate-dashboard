@@ -14,7 +14,7 @@ type VehicleStatsResponse = {
     data: VehicleFeeType[]
 };
 
-export default function PlatformFeeTable() {
+export default function PlatformFeeTable() { 
   const { data, error, isLoading} = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
   const [updateVehicle] = useUpdateVehicleMutation()
 

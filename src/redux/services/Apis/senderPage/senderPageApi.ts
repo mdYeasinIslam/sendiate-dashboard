@@ -40,6 +40,13 @@ export const senderPageApi = createApi({
             getSenderById: build.query<unknown, string>({
                 query: (id) => `/users/senders/${id}`
             }),
+            updateSenderStatus: build.mutation({
+                query: ({ id, body }) => ({
+                    url:`/users/${id}/status`,
+                    method: "PATCH",
+                    body
+                })
+            })
 
     })
 })

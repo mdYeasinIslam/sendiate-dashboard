@@ -15,10 +15,18 @@ type SenderStatsResponse = {
 };
 
 const DasboaredCourierpage = () => {
+      const [pageForPagination,setPageForPagination] =useState(1)
+  
     // Fetching courier stats
-    const { data, error, isLoading } = useGetCourierStatsQuery() as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
-    const tableData = data?.data || [];
-  console.log(tableData)
+    const { data, error, isLoading } = useGetCourierStatsQuery({page:pageForPagination,limit:10}) as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
+  
+      const [tableData, setTableData] = useState<CourierUserDetails[]>(data?.data || []);
+  
+      React.useEffect(() => {
+        if (data?.data) {
+          setTableData(data.data);
+        }
+      }, [data?.data]);
     // Pagination state
     const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);
     const itemsPerPage = data?.meta?.limit || 10;
@@ -35,11 +43,11 @@ const DasboaredCourierpage = () => {
       </header>
       <main className='md:px-5'>
 
-        <CourierTable users={paginatedData} />
+        <CourierTable users={tableData} />
         <Pagination
-        currentPage={currentPage}
-        totalPages={totalPages}
-        onPageChange={setCurrentPage}
+        currentPage={pageForPagination}
+        totalPages={data?.meta?.totalPage || 1}
+          setPageForPagination={setPageForPagination}
       />
       </main>
     </section>
