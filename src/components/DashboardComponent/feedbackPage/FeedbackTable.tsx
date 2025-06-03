@@ -1,7 +1,6 @@
 "use client"
 
 import { useEffect, useState } from "react"
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar"
 import { Button } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -11,8 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { MoreVertical, Download, Trash, Edit, Eye, Star } from "lucide-react"
-import { FeedbackEntry } from "@/type/feedbackType"
+import { MoreVertical, Download, Trash } from "lucide-react"
 import { FeedbackType } from "@/type/homePageTypes"
 import Image from "next/image"
 // Use the image URL directly as a string

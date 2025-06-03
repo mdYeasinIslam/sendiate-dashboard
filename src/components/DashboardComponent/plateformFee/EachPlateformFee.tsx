@@ -26,6 +26,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
   //PlatformFee page
   const onChangeInput = async (vehicleFee: string,feeType:string) => {
     setVehicleFee(Number(vehicleFee))
+    console.log(feeType)
 
   }
     return (
@@ -98,7 +99,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                         type="text"
                         name="vehicleFee"
                         defaultValue={ isEditOpen ? vehicleFee : vehicle?.fee}
-                        onChange={(e) => onChangeInput(e.target.value,vehicle?.feeType)}
+                        onChange={(e) => onChangeInput(e.target.value, vehicle?.feeType)}
                         className={`
                           ${feeType === "FIXED" && vehicle?.fee >100? "pl-8" : "pl-3"} 
                           ${feeType === "PERCENTAGE" &&vehicle?.fee >=10 ? "pr-6" : "pr-3"}

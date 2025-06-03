@@ -1,8 +1,6 @@
 'use client'
 import React, { useEffect, useState } from 'react'
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
-import { VehicleRate } from '@/type/priceType'
+import { Table, TableBody, TableHead, TableHeader, TableRow } from "@/components/ui/table"
 import { useGetVehiclePageApiQuery, useUpdateVehicleMutation } from '@/redux/services/Apis/vehicleApi/vehiclePageApi'
 import { VehicleFeeType } from '@/type/platformPageTypes'
 import LoadingSpinner from '@/app/loading'
@@ -20,7 +18,7 @@ const PriceTable = () => {
   
     const vehiclesPriceData = data?.data || [];
     const [vehiclePrice, setVehiclePrice] = useState<VehicleFeeType[]>(vehiclesPriceData || []);
-    const [editingRate, setEditingRate] = useState<string | null>(null)
+    // const [editingRate, setEditingRate] = useState<string | null>(null)
     const [isEditOpen, setIsEditOpen] = useState(false)
     const [editItem, setEditItem] = useState<string>('')
 
@@ -31,15 +29,15 @@ const PriceTable = () => {
     }
   }, [vehiclesPriceData])
   
-      const handleChangeRate = (id: string) => {
-        // In a real application, this would open a modal or form to edit the rates
-        setEditingRate(id === editingRate ? null : id)
-        console.log(`Changing rates for vehicle ID: ${id}`)
-      }
+      // const handleChangeRate = (id: string) => {
+      //   // In a real application, this would open a modal or form to edit the rates
+      //   setEditingRate(id === editingRate ? null : id)
+      //   console.log(`Changing rates for vehicle ID: ${id}`)
+      // }
     
-      const formatCurrency = (amount: number) => {
-        return `$${amount.toFixed(2).replace(/\.00$/, "")}`
-      }
+      // const formatCurrency = (amount: number) => {
+      //   return `$${amount.toFixed(2).replace(/\.00$/, "")}`
+      // }
   
   
   //copy from platfrom tabel
@@ -80,7 +78,7 @@ const PriceTable = () => {
           <TableBody>
           {vehiclePrice?.map((vehicle, index) => (
             <EachPlateformFee
-             key={vehicle.id}
+             key={index}
                 vehicle={vehicle}
                 isEditOpen={isEditOpen}
                 editItem={editItem}

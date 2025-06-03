@@ -30,7 +30,7 @@ export default function PlatformFeeTable() {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
       setVehiclePricing(platformFeeData)
     }
-  },[platformFeeData])
+  },[platformFeeData,reRender])
   
 
   const handleEditClick = (vehicle: VehicleFeeType) => {
