@@ -1,10 +1,10 @@
 "use client";
 
+import LoadingSpinner from "@/app/loading";
 import ChatList from "@/components/DashboardComponent/Chat/ChatList";
 import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
 import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
 import { Message, User } from "@/type/chatPage";
-import { Loader } from "lucide-react";
 import { useState, useEffect, useRef, useCallback } from "react";
 
 interface WebSocketMessage {
@@ -253,14 +253,14 @@ const ChatPage = () => {
   if (loading) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader />
+        <LoadingSpinner />
       </div>
     );
   }
   if (users.length === 0) {
     return (
       <div className="flex items-center justify-center h-full">
-        <Loader />
+        <LoadingSpinner />
       </div>
     );
   }
