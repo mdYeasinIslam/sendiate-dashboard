@@ -11,7 +11,7 @@ interface ChatListProps {
 
 export default function ChatList({ users, onSelectUser, selectedUserId }: ChatListProps) {  
 
-  console.log("ChatList users:", users);
+  // console.log("ChatList users:", users);
   return (
     <div className="w-78 m-5 mt-0  bg-white rounded-lg border-r p-4 overflow-y-auto">
       <h2 className="font-semibold text-lg mb-4">My Inbox</h2>

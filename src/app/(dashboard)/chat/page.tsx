@@ -26,9 +26,10 @@ const ChatPage = () => {
   const [connectionStatus, setConnectionStatus] = useState("disconnected");
   const [retryCount, setRetryCount] = useState(0);
   const ws = useRef<WebSocket | null>(null);
+  const [messagesLoading, setMessagesLoading] = useState(false);
 
   const WS_URL = "wss://patrkamh.onrender.com/admin-chat";
-   const [loading, setLoading] = useState(true);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     // Simulate data fetching
@@ -220,15 +221,28 @@ const ChatPage = () => {
   }, [currentChatId, sendWebSocketMessage]);
 
 
-  const handleUserSelect = useCallback((user: User) => {
-    setSelectedUser(user);
-    if (user?.chatId) {
-      fetchMessages(user.chatId);
-    } else if (user?.id) {
-      startChat(user.id);
-    }
-    markMessagesAsRead();
-  }, [fetchMessages, markMessagesAsRead, startChat]);
+  const handleUserSelect = useCallback(
+    async (user: User) => {
+      setSelectedUser(user);
+      setMessagesLoading(true); // Start loader
+
+      try {
+        if (user?.chatId) {
+          await fetchMessages(user.chatId); // Assuming fetchMessages is async
+        } else if (user?.id) {
+          await startChat(user.id); // Assuming startChat handles message initialization
+        }
+
+        markMessagesAsRead();
+      } catch (error) {
+        console.error("Error loading chat:", error);
+      } finally {
+        setMessagesLoading(false); // Stop loader
+      }
+    },
+    [fetchMessages, markMessagesAsRead, startChat]
+  );
+
 
   useEffect(() => {
     connectWebSocket();
@@ -236,13 +250,21 @@ const ChatPage = () => {
       ws.current?.close();
     };
   }, [connectWebSocket]);
-if (loading || users.length === 0) {
-  return (
-    <div className="flex items-center justify-center h-full">
-      <Loader/>
-    </div>
-  );
-}
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader />
+      </div>
+    );
+  }
+  if (users.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader />
+      </div>
+    );
+  }
+
   return (
     <div className="flex h-full">
       <ChatList
@@ -252,19 +274,35 @@ if (loading || users.length === 0) {
       />
       <div className="flex flex-col flex-grow border-l border-gray-200">
         {selectedUser ? (
-          <>
-            <ChatWindow selectedUser={selectedUser} messages={messages} loggedInUserId={typeof window !== "undefined" ? (localStorage.getItem("userId") || "") : ""} />
-            <MessageInput
-              onSend={handleSend}
-              disabled={connectionStatus !== "connected"}
-            />
-          </>
+          messagesLoading ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2" />
+              Loading messages...
+            </div>
+          ) : (
+            <>
+              <ChatWindow
+                selectedUser={selectedUser}
+                messages={messages}
+                loggedInUserId={
+                  typeof window !== "undefined"
+                    ? localStorage.getItem("userId") || ""
+                    : ""
+                }
+              />
+              <MessageInput
+                onSend={handleSend}
+                disabled={connectionStatus !== "connected"}
+              />
+            </>
+          )
         ) : (
           <div className="flex items-center justify-center h-full text-gray-500">
             Select a user to start chatting
           </div>
         )}
       </div>
+
     </div>
   );
 };
