@@ -24,7 +24,7 @@ const NotificationForm = () => {
     // console.log(data)
     const notificationData = data?.data ||[]
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
-
+console.log(notificationData)
 // console.log(selectedUsers)
       const [title, setTitle] = useState<string>("")
       const [message, setMessage] = useState<string>("")

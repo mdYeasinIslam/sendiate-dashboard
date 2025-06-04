@@ -6,8 +6,6 @@ import {
   AreaChart,
   Area,
   XAxis,
-  YAxis,
-  CartesianGrid,
   Tooltip,
   ResponsiveContainer,
 } from "recharts";
@@ -22,16 +20,18 @@ import { useAppDispatch } from "@/redux/hooks";
 export const PerformanceChart = () => { 
   const dispatch = useAppDispatch()
 
-  const [selectedYear, setSelectedYear] = useState("2025");
+  const [selectedYear, setSelectedYear] = useState('2025');
 
 
   const { data, error, isLoading } = useGetDashboardStatsQuery(parseInt(selectedYear)) as { data?: DashboardStatsResponse; error?: unknown; isLoading: boolean };
  
 
   const chatData = data?.data?.performanceData as PerformanceType[] 
+  // console.log(data)
   useEffect(() => {
     if (data?.data) {
-      const { performanceData, totalSender, totalCourier,totalCash,totalFee, year } = data?.data;
+      const { performanceData, totalSender, totalCourier, totalCash, totalFee, year } = data?.data;
+      // setSelectedYear(year)
       // Provide default values if any are undefined
       dispatch(setDashboardStats({
         performanceData: performanceData ?? [],
@@ -49,7 +49,7 @@ export const PerformanceChart = () => {
   return (
     <div className="w-full p-4 rounded-lg shadow bg-white">
       <div className="flex items-center justify-between mb-4">
-        <h2 className="text-xl font-semibold">Performance</h2>
+        <h2 className="text-3xl font-semibold">Performance</h2>
         <select
           className=" px-3 py-1 rounded shadow-sm"
           value={selectedYear}
@@ -69,13 +69,14 @@ export const PerformanceChart = () => {
           >
             <defs>
               <linearGradient id="colorSender" x1="0" y1="0" x2="0" y2="1">
-                <stop offset="5%" stopColor="#4ade80" stopOpacity={0.8} />
-                <stop offset="95%" stopColor="#4ade80" stopOpacity={0} />
+                <stop offset="5%" stopColor="#4ade80" stopOpacity={0.9} />
+                <stop offset="95%" stopColor="#4ade80" stopOpacity={0.2} />
               </linearGradient>
             </defs>
-            <XAxis dataKey="month" />
-            <YAxis />
-            <CartesianGrid strokeDasharray="3 3" />
+            <XAxis  dataKey="date" />
+            {/* <YAxis /> */}
+            
+            {/* <CartesianGrid strokeDasharray="3 3" /> */}
             <Tooltip content={<CustomTooltip />} />
             <Area
               type="monotone"
@@ -92,16 +93,17 @@ export const PerformanceChart = () => {
 };
 
 
-const CustomTooltip = ({ active, payload, label }: TooltipProps<number, string>) => {
+const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white shadow px-3 py-2 rounded text-sm">
-        <p className="font-semibold">{label} 2025</p>
-        <p>Sender: {data.sender}</p>
-        <p>Courier: {data.courier}</p>
-        <p>Fees: ${data.fees}</p>
-        <p>Total: {data.total}</p>
+      <div className="bg-white shadow w-[150px] px-3 py-2 rounded text-sm">
+        <p className="font-semibold">{data?.date} 2025</p>
+        <p className="flex justify-between items-center"><span>Sender: </span> <span>{data.sender}</span></p>
+        <p className="flex justify-between items-center"> <span>Courier: </span> <span>{data.courier}</span> </p>
+        <p className="flex justify-between items-center"> <span>Fees:  </span> <span>${data.fees}</span> </p>
+        <p className="flex justify-between items-center"> <span>Cancel: </span> <span>{data?.cancelled}</span> </p>
+       
       </div>
     );
   }

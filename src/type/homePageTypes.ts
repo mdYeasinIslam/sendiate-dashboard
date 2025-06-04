@@ -4,6 +4,7 @@ export type PerformanceType = {
   courier: number;
   fees: number;
   total: number;
+  cancelled: number;
 };
 export type DashboardStatsResponse = {
   data?: {
