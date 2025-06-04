@@ -106,7 +106,7 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                 </TableCell>
                 <TableCell className="py-3 px-2 ">
                     <Link href={`/courier/${user.id} `}>
-                    <button className=" cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium cursor-pointer" >
+                    <button className=" cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium " >
                         View Details
                     </button>
                     </Link>
