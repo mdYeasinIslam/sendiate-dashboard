@@ -14,7 +14,7 @@ type FeedbackStatsResponse = {
     data: FeedbackType[] 
 };
 export default function FeedbackDashboard() {
-  const [role,setRole] = useState('Sender')
+  const [role,setRole] = useState('')
     const [pageForPagination,setPageForPagination] =useState(1)
     const {data, error, isLoading} = useGetFeedbackStatsQuery({page:pageForPagination,limit:10, userRole: role }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
     

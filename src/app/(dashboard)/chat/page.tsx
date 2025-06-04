@@ -3,116 +3,308 @@
 import ChatList from "@/components/DashboardComponent/Chat/ChatList";
 import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
 import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
-import PageWrapper from "@/components/PageWrapper";
 import { Message, User } from "@/type/chatPage";
-import { useState } from "react";
+import { Loader } from "lucide-react";
+import { useState, useEffect, useRef, useCallback } from "react";
+
+interface WebSocketMessage {
+  event: string;
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  data?: any;
+  message?: string;
+  token?: string;
+}
 
 
 
-const dummyUsers: User[] = [
-  {
-    id: "1",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "2",
-    name: "Abel's Delivery Service",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    lastMessage: "Can you pick up my parcel?",
-  },
-  {
-    id: "33",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "3",
-    name: "Abel's Delivery Service",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    lastMessage: "Can you pick up my parcel?",
-  },
-  {
-    id: "4",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "5",
-    name: "Abel's Delivery Service",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    lastMessage: "Can you pick up my parcel?",
-  },
-  {
-    id: "6",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "7",
-    name: "Abel's Delivery Service",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    lastMessage: "Can you pick up my parcel?",
-  },
-  {
-    id: "8",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "9",
-    name: "Abel's Delivery Service",
-    avatar: "https://i.pravatar.cc/150?img=2",
-    lastMessage: "Can you pick up my parcel?",
-  },
-  {
-    id: "10",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-  {
-    id: "11",
-    name: "Alex Parera",
-    avatar: "https://i.pravatar.cc/150?img=1",
-    lastMessage: "Let me know when you're free",
-  },
-];
-
-export default function ChatPage() {
+const ChatPage = () => {
   const [selectedUser, setSelectedUser] = useState<User | null>(null);
   const [messages, setMessages] = useState<Message[]>([]);
+  const [users, setUsers] = useState<User[]>([]);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [currentChatId, setCurrentChatId] = useState<string | null>(null);
+  const [connectionStatus, setConnectionStatus] = useState("disconnected");
+  const [retryCount, setRetryCount] = useState(0);
+  const ws = useRef<WebSocket | null>(null);
+  const [messagesLoading, setMessagesLoading] = useState(false);
 
-  const handleSend = (text: string) => {
-    const newMessage: Message = {
-      senderId: "me",
-      text,
-      timestamp: Date.now(),
+  const WS_URL = "wss://patrkamh.onrender.com/admin-chat";
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    // Simulate data fetching
+    setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+  }, []);
+  // Reconnect with exponential backoff
+  const reconnect = useCallback(() => {
+    const delay = Math.min(1000 * Math.pow(2, retryCount), 30000);
+    setTimeout(() => {
+      // console.log(`Attempting to reconnect (attempt ${retryCount + 1})`);
+      connectWebSocket();
+    }, delay);
+  }, [retryCount]);
+
+  const authenticate = useCallback((token: string) => {
+    if (ws.current?.readyState === WebSocket.OPEN) {
+      const authPayload: WebSocketMessage = {
+        event: "authenticate",
+        token: token
+      };
+      ws.current.send(JSON.stringify(authPayload));
+    }
+  }, []);
+
+  const handleWebSocketMessage = useCallback((message: WebSocketMessage) => {
+    // console.log("Received message:", message);
+    switch (message.event) {
+      case "authenticated":
+        setIsAuthenticated(true);
+        setConnectionStatus("connected");
+        setRetryCount(0);
+        fetchAllConversations();
+        break;
+      case "allConversations":
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const formattedUsers = message.data?.map((conv: any) => ({
+          id: conv.userId,
+          name: conv.user?.fullName || "Unknown User",
+          avatar: conv.user?.profileImage || "",
+          lastMessage: conv.messages[0]?.message || "No messages yet",
+          chatId: conv.id,
+          unreadCount: conv.unreadCount || 0
+        })) || [];
+        setUsers(formattedUsers);
+        break;
+      case "chatStarted":
+      case "messages":
+        setCurrentChatId(message.data?.id || null);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        const formattedMessages = message.data?.messages?.map((msg: any) => ({
+          id: msg.id,
+          senderId: msg.senderId,
+          text: msg.message,
+          images: msg.images || [],
+          timestamp: new Date(msg.createdAt).getTime(),
+          isRead: msg.isRead,
+          sender: msg.sender || {
+            id: msg.senderId,
+            fullName: "Unknown",
+            email: "",
+            profileImage: ""
+          }
+        })) || [];
+        setMessages(formattedMessages);
+        break;
+      case "messageSent":
+        const newMessage = {
+          id: message.data?.id,
+          senderId: message.data?.senderId,
+          text: message.data?.message,
+          images: message.data?.images || [],
+          timestamp: new Date(message.data?.createdAt).getTime(),
+          isRead: message.data?.isRead,
+          sender: message.data?.sender || {
+            id: message.data?.senderId,
+            fullName: "Unknown",
+            email: "",
+            profileImage: ""
+          }
+        };
+        setMessages(prev => [...prev, newMessage]);
+        break;
+      case "error":
+        console.error("WebSocket error:", message.message);
+        break;
+      default:
+        console.log("Unhandled WebSocket message:", message);
+    }
+  }, []);
+
+  const connectWebSocket = useCallback(() => {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      // console.error("No authentication token found");
+      return;
+    }
+
+    try {
+      setConnectionStatus("connecting");
+      ws.current = new WebSocket(WS_URL);
+
+      ws.current.onopen = () => {
+        console.log("WebSocket connected");
+        authenticate(token);
+      };
+
+      ws.current.onmessage = (event) => {
+        try {
+          const message: WebSocketMessage = JSON.parse(event.data);
+          handleWebSocketMessage(message);
+        } catch (error) {
+          console.error("Error parsing WebSocket message:", error);
+        }
+      };
+
+      ws.current.onclose = () => {
+        console.log("WebSocket disconnected");
+        setConnectionStatus("disconnected");
+        if (isAuthenticated) {
+          reconnect();
+          setRetryCount(prev => prev + 1);
+        }
+      };
+
+      ws.current.onerror = (error) => {
+        console.error("WebSocket error:", error);
+        setConnectionStatus("error");
+      };
+    } catch (error) {
+      console.error("WebSocket connection error:", error);
+      reconnect();
+    }
+  }, [authenticate, handleWebSocketMessage, isAuthenticated, reconnect]);
+
+  const sendWebSocketMessage = useCallback((message: object) => {
+    if (ws.current?.readyState === WebSocket.OPEN) {
+      try {
+        ws.current.send(JSON.stringify(message));
+        return true;
+      } catch (error) {
+        console.error("Error sending message:", error);
+        return false;
+      }
+    } else {
+      console.warn("Cannot send message - WebSocket not ready");
+      return false;
+    }
+  }, []);
+
+  const fetchAllConversations = useCallback(() => {
+    sendWebSocketMessage({ event: "fetchAllConversations" });
+  }, [sendWebSocketMessage]);
+
+  const startChat = useCallback((userId: string) => {
+    sendWebSocketMessage({
+      event: "startChat",
+      targetUserId: userId
+    });
+  }, [sendWebSocketMessage]);
+
+  const fetchMessages = useCallback((chatId: string) => {
+    sendWebSocketMessage({
+      event: "fetchMessages",
+      chatId: chatId
+    });
+  }, [sendWebSocketMessage]);
+
+  const handleSend = useCallback((text: string, images: string[] = []) => {
+    if (!currentChatId) return;
+    const success = sendWebSocketMessage({
+      event: "sendMessage",
+      chatId: currentChatId,
+      message: text,
+      images: images
+    });
+    if (success) {
+      markMessagesAsRead();
+    }
+  }, [currentChatId, sendWebSocketMessage]);
+
+  const markMessagesAsRead = useCallback(() => {
+    if (!currentChatId) return;
+    sendWebSocketMessage({
+      event: "markMessagesAsRead",
+      chatId: currentChatId
+    });
+  }, [currentChatId, sendWebSocketMessage]);
+
+
+  const handleUserSelect = useCallback(
+    async (user: User) => {
+      setSelectedUser(user);
+      setMessagesLoading(true); // Start loader
+
+      try {
+        if (user?.chatId) {
+          await fetchMessages(user.chatId); // Assuming fetchMessages is async
+        } else if (user?.id) {
+          await startChat(user.id); // Assuming startChat handles message initialization
+        }
+
+        markMessagesAsRead();
+      } catch (error) {
+        console.error("Error loading chat:", error);
+      } finally {
+        setMessagesLoading(false); // Stop loader
+      }
+    },
+    [fetchMessages, markMessagesAsRead, startChat]
+  );
+
+
+  useEffect(() => {
+    connectWebSocket();
+    return () => {
+      ws.current?.close();
     };
-    setMessages([...messages, newMessage]);
-  };
-
+  }, [connectWebSocket]);
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader />
+      </div>
+    );
+  }
+  if (users.length === 0) {
+    return (
+      <div className="flex items-center justify-center h-full">
+        <Loader />
+      </div>
+    );
+  }
 
   return (
-    <div className="bg-gray-100 h-screen">
-      <PageWrapper title="Chat" />
-
-      <div className="flex ">
-        <ChatList
-          users={dummyUsers}
-          selectedUserId={selectedUser?.id ?? null}
-          onSelectUser={setSelectedUser}
-        />
-        <div className="flex flex-col  md:flex-1">
-          <ChatWindow selectedUser={selectedUser} messages={messages} />
-          {selectedUser && <MessageInput onSend={handleSend} />}
-        </div>
+    <div className="flex h-full">
+      <ChatList
+        users={users}
+        onSelectUser={handleUserSelect}
+        selectedUserId={selectedUser?.id || null}
+      />
+      <div className="flex flex-col flex-grow border-l border-gray-200">
+        {selectedUser ? (
+          messagesLoading ? (
+            <div className="flex flex-col items-center justify-center h-full text-gray-500">
+              <div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2" />
+              Loading messages...
+            </div>
+          ) : (
+            <>
+              <ChatWindow
+                selectedUser={selectedUser}
+                messages={messages}
+                loggedInUserId={
+                  typeof window !== "undefined"
+                    ? localStorage.getItem("userId") || ""
+                    : ""
+                }
+              />
+              <MessageInput
+                onSend={handleSend}
+                disabled={connectionStatus !== "connected"}
+              />
+            </>
+          )
+        ) : (
+          <div className="flex items-center justify-center h-full text-gray-500">
+            Select a user to start chatting
+          </div>
+        )}
       </div>
+
     </div>
   );
-}
+};
+
+export default ChatPage;

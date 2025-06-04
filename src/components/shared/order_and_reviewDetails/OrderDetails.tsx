@@ -1,4 +1,5 @@
 import { OrderAndReviewDetails } from '@/type/SenderPagesType'
+import { UserRound } from 'lucide-react';
 import Image from 'next/image'
 import React from 'react'
 
@@ -35,12 +36,20 @@ const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from:
             </div>
             {/* Review Details */}
             <div className="flex-1 ">
-                <div className="flex items-center gap-2 mb-2">
-                    <Image 
-                        src={details?.courier?.profileImage || 'https://randomuser.me/api/portraits'  }
-                        alt={'Reviwer image'}
-                        width={28} height={28}
-                        className="w-7 h-7 rounded-full object-cover" />
+                    <div className="flex items-center gap-2 mb-2">
+                        {
+                            details?.courier?.profileImage ? (
+                                
+                                <Image 
+                                    src={details?.courier?.profileImage}
+                                    alt={'Reviwer image'}
+                                    width={28} height={28}
+                                    className="w-7 h-7 rounded-full object-cover" />
+                            ):
+                                (
+                            <UserRound  className='w-6 h-6 border rounded-full'/>
+                                )
+                        }
                         {
                         from === 'SenderPage' ? <span className="font-medium">{details?.sender?.fullName}</span> :  <span className="font-medium">{details?.courier?.fullName}</span>
                         }

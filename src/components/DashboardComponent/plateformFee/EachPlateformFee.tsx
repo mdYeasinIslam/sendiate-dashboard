@@ -113,7 +113,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                           focus:outline-none 
                           focus:ring-2 
                           focus:ring-blue-500 
-                          ${isEditOpen && editItem === vehicle.id ? "bg-white border border-black" : "bg-gray-300"}
+                          ${isEditOpen && editItem === vehicle.id ? "bg-white border border-black cursor-pointer" : "bg-gray-300"}
                         `}
                         readOnly={isEditOpen && editItem === vehicle.id ? false : true}
                         style={{
@@ -128,7 +128,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                             <select
                               value={feeType? feeType:vehicle?.feeType}
                               onChange={(e) => setFeeType(e.target.value as "PERCENTAGE" | "FIXED")} // Add your handler here if you want to update feeType
-                              className={`px-2 py-2 rounded text-black text-sm appearance-none focus:outline-none ${isEditOpen && editItem === vehicle.id ? 'bg-gwhite border-1 border-black' : 'bg-gray-300'}`}
+                              className={`px-2 py-2 rounded text-black text-sm appearance-none focus:outline-none  ${isEditOpen && editItem === vehicle.id ? 'bg-gwhite border-1 border-black cursor-pointer' : 'bg-gray-300'}`}
                               style={{ width: '115px' }}
                               disabled={isEditOpen && editItem === vehicle.id ? false : true}
                             >
@@ -152,14 +152,14 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                     {isEditOpen && editItem === vehicle.id? (
                        <Button
                      onClick={() => handleSaveEdit?.(vehicle,vehicleFee,feeType)}
-                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
+                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20 cursor-pointer"
                    >
                     Save
                    </Button>
                    ) : (
                           <Button
                      onClick={() => handleEditClick(vehicle)}
-                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
+                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20 cursor-pointer"
                    >
                     Edit
                    </Button>
@@ -171,14 +171,14 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                        <Button
                      onClick={() => handleSaveUpdatedPrices?.(vehicle, maxPrice, minPrice)}
                      
-                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
+                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20 cursor-pointer"
                    >
                     Save
                    </Button>
                    ) : (
                           <Button
                      onClick={() => handleEditClick(vehicle)}
-                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
+                     className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20 cursor-pointer"
                    >
                     Change
                    </Button>

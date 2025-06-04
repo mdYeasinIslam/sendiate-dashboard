@@ -21,7 +21,7 @@ export const transactionApi = createApi({
 
     endpoints: (build) => ({
 
-        getTransactionStats: build.query<unknown, { page: number, limit: number,paymentMethod:string}>({
+        getTransactionStats: build.query<unknown, { page: number, limit: number,paymentMethod?:string}>({
             query: ({page,limit,paymentMethod}) => ({
                 url: `/payments/transactions`,
                 params: { 

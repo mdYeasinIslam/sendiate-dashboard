@@ -33,7 +33,7 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                         <div className="py-3 px-4  text-right">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
                                         {/* <MoreVertical className="h-4 w-4" /> */}
                                         <SlidersHorizontal className="h-6 w-6 text-green-700" />
                                     </Button>
@@ -41,11 +41,15 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                                 <DropdownMenuContent align="end">
                                     <DropdownMenuLabel>Payment Method</DropdownMenuLabel>
                                     <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={() => setPaymentMethod("CASH")} className="">
+                                    <DropdownMenuItem onClick={() => setPaymentMethod("")} className="cursor-pointer">
+                                        {/* <Download className="mr-2 h-4 w-4" /> */}
+                                        <span>ALL</span>
+                                    </DropdownMenuItem>
+                                    <DropdownMenuItem onClick={() => setPaymentMethod("CASH")} className="cursor-pointer">
                                         {/* <Download className="mr-2 h-4 w-4" /> */}
                                         <span>CASH</span>
                                     </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => setPaymentMethod("CARD")} className="">
+                                    <DropdownMenuItem onClick={() => setPaymentMethod("CARD")} className="cursor-pointer">
                                         {/* <Trash className="mr-2 h-4 w-4" /> */}
                                         <span>CARD</span>
                                     </DropdownMenuItem>
@@ -68,7 +72,7 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                                     : ""}
                             </td>
                             <td className="py-5 px-4 text-sm text-gray-700 text-left">{data.paymentMethod}</td>
-                            <td className="py-5 px-4 text-sm text-gray-700 text-left">$ {data?.courierFee ? data?.courierFee?.toFixed(2) : 'N/A'}</td>
+                            <td className="py-5 px-4 text-sm text-gray-700 text-left">{data?.courierFee ?"$ "+ data?.courierFee?.toFixed(2) : 'N/A'}</td>
                             <td className="py-5 px-4 text-sm text-gray-700 text-left">{data?.isPlatformFeeRelease ? 'Released' : 'Not-Released'}</td>
                             <td className="py-5 px-4 text-sm text-gray-700 text-left">{data?.isCourierFeeRelease ? 'Released' : 'Not-Released'}</td>
                         </tr>

@@ -32,7 +32,7 @@ const Sender = () => {
     }, [senderData,reRender,tableData]);
     
    const handleUpdateStatus = async(id:string,status:string,sender:SenderType) => {
-        console.log(status)
+        // console.log(status)
         if (sender.status === status) {
           return 0
         }

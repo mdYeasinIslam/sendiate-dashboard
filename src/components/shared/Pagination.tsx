@@ -5,13 +5,12 @@ type PaginationProps = {
 };
 
 export function Pagination({ currentPage, totalPages, setPageForPagination }: PaginationProps) {
-  console.log(totalPages)
   return (
     <div className="flex justify-center items-center gap-2 mt-6">
       <button
         onClick={() => setPageForPagination(currentPage - 1)}
         disabled={currentPage === 1}
-        className="px-2 py-1 rounded hover:bg-gray-100 text-gray-500"
+        className="px-2 py-1 rounded hover:bg-gray-100 text-gray-500 cursor-pointer"
       >
         &lt;
       </button>
@@ -21,10 +20,10 @@ export function Pagination({ currentPage, totalPages, setPageForPagination }: Pa
           <button
             key={page}
             onClick={() => setPageForPagination(page)}
-            className={`w-8 h-8 rounded-full ${
+            className={`w-8 h-8 rounded-full  ${
               page === currentPage
                 ? "bg-green-100 text-green-600 font-semibold"
-                : "hover:bg-gray-100 text-gray-500"
+                : "hover:bg-gray-100 text-gray-500 cursor-pointer"
             }`}
           >
             {page}
@@ -34,7 +33,7 @@ export function Pagination({ currentPage, totalPages, setPageForPagination }: Pa
       <button
         onClick={() => setPageForPagination(currentPage + 1)}
         disabled={currentPage === totalPages}
-        className="px-2 py-1 rounded hover:bg-gray-100 text-gray-500"
+        className="px-2 py-1 rounded hover:bg-gray-100 text-gray-500 cursor-pointer"
       >
         &gt;
       </button>
