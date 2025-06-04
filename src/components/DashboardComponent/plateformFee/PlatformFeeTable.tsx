@@ -15,7 +15,7 @@ type VehicleStatsResponse = {
 };
 
 export default function PlatformFeeTable() { 
-  const { data, error, isLoading} = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+  const { data, error, isLoading} = useGetVehiclePageApiQuery({limit:10}) as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
   const [updateVehicle] = useUpdateVehicleMutation()
 
   const platformFeeData = data?.data || [];
@@ -24,7 +24,8 @@ export default function PlatformFeeTable() {
   const [vehiclePricing, setVehiclePricing] = useState<VehicleFeeType[]>(platformFeeData || []);
   const [isEditOpen, setIsEditOpen] = useState(false)
   const [editItem, setEditItem] = useState<string>('')
-  const [reRender,setReRender]=useState(false)
+  const [reRender, setReRender] = useState(false)
+  
   // monitor if platformFeeData is update then re-render the component
   useEffect(() => {
     if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
@@ -45,13 +46,13 @@ export default function PlatformFeeTable() {
     }
     const res = await updateVehicle({ id: param.id, body: { fee: vehicleFee, feeType:feeType } })
     if (res?.data?.success) {
-      // setReRender(!reRender)
-      setTimeout(() => {
-        setReRender(prev => !prev)
-        if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
-          setVehiclePricing(platformFeeData)
-        }
-      }, 100);
+      setReRender(!reRender)
+      // setTimeout(() => {
+      //   setReRender(prev => !prev)
+      //   if (platformFeeData.length && JSON.stringify(vehiclePricing) !== JSON.stringify(platformFeeData)) {
+      //     setVehiclePricing(platformFeeData)
+      //   }
+      // }, 100);
       toast.success("Vehicle fee updated successfully")
     }
   }

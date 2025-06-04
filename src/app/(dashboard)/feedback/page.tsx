@@ -11,18 +11,23 @@ import { useState } from "react"
 
 type FeedbackStatsResponse = {
     meta?: { page: number, limit: number, total: number, totalPage: number };
-    data: FeedbackType[]
+    data: FeedbackType[] 
 };
 export default function FeedbackDashboard() {
+  const [role,setRole] = useState('Sender')
     const [pageForPagination,setPageForPagination] =useState(1)
-    const {data, error, isLoading} = useGetFeedbackStatsQuery({ userRole: "Sender" }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
-
+    const {data, error, isLoading} = useGetFeedbackStatsQuery({page:pageForPagination,limit:10, userRole: role }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
+    
     const [feedbackData, setFeedbackData] = useState<FeedbackType[]>([]);
-
+    console.log(data)
       // Update feedbackData when data changes
       if (data?.data && feedbackData !== data.data) {
         setFeedbackData(data.data);
-      }
+  }
+  const handleUserRole = (role:string) => {
+    console.log(role)
+    setRole(role)
+  }
      
       // const { paginatedData, totalPages } = usePaginatedUsers<FeedbackType>(feedbackData, currentPage, itemsPerPage);
      
@@ -32,7 +37,7 @@ export default function FeedbackDashboard() {
       <main className="bg-[#F8F8F8] min-h-screen">
           <PageWrapper title="Feedback"/>
         <section className=" md:px-6 ">
-            <FeedbackTable generateFeedbackData={feedbackData } />
+            <FeedbackTable generateFeedbackData={feedbackData } handleUserRole={handleUserRole} />
               <Pagination
                   currentPage={pageForPagination}
                   totalPages={data?.meta?.totalPage || 1}

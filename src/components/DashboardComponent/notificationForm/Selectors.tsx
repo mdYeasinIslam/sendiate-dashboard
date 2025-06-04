@@ -45,7 +45,7 @@ export default function UserSelector({ notificationData, selectedUsers, setSelec
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[40vw] p-0" align="start">
-                    <div className="max-h-[60vh] overflow-y-auto">
+                    <div className="max-h-[55vh] overflow-y-auto">
                         {/* Select All Option */}
                         <div onClick={handleSelectAll} className="flex items-center space-x-3 p-3 hover:bg-muted/50 border-b">
                             <Checkbox

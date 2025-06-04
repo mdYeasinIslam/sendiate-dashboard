@@ -98,11 +98,11 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                       <input
                         type="text"
                         name="vehicleFee"
-                        defaultValue={ isEditOpen ? vehicleFee : vehicle?.fee}
+                        defaultValue={isEditOpen ? vehicleFee : vehicle?.fee}
                         onChange={(e) => onChangeInput(e.target.value, vehicle?.feeType)}
                         className={`
-                          ${feeType === "FIXED" && vehicle?.fee >100? "pl-8" : "pl-3"} 
-                          ${feeType === "PERCENTAGE" &&vehicle?.fee >=10 ? "pr-6" : "pr-3"}
+                          ${feeType === "FIXED" && vehicle?.fee > 100 ? "pl-8" : "pl-3"} 
+                          ${feeType === "PERCENTAGE" && vehicle?.fee >= 10 ? "pr-6" : "pr-3"}
                           py-2 
                           min-w-[80px] 
                           max-w-[120px] 
@@ -113,11 +113,12 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
                           focus:outline-none 
                           focus:ring-2 
                           focus:ring-blue-500 
-                          ${isEditOpen&& editItem=== vehicle.id ? "bg-white border border-black" : "bg-gray-300"}
+                          ${isEditOpen && editItem === vehicle.id ? "bg-white border border-black" : "bg-gray-300"}
                         `}
-                          readOnly={isEditOpen && editItem=== vehicle.id ? false : true}
+                        readOnly={isEditOpen && editItem === vehicle.id ? false : true}
                         style={{
-                          width: `${Math.max(80, (vehicleFee?.toString().length || 1) * 12 + (feeType === "FIXED" ? 32 : 24))}px`,
+                          width: `${Math.max(80, (vehicleFee?.toString().length || 1) * 12 + (feeType === "FIXED" ? 32 : 30))}px`,
+                          paddingLeft: feeType === "FIXED" && vehicle?.fee > 100 ? "1.5rem" : "0.75rem", // Ensure a 5px gap for larger values
                         }}
                       />
 

@@ -14,23 +14,35 @@ import {
     DropdownMenuLabel,
     DropdownMenuSeparator,
     DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu"
+} from "@/components/ui/dropdown-menu" 
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import {  Edit, Eye, MoreVertical, Star, Trash } from "lucide-react"
+import {   MoreVertical} from "lucide-react"
 import { CourierUserDetails } from "@/type/courierPageTypes"
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 
+type Prop = {
+    users: CourierUserDetails[]
+    handleUpdateStatus: (id: string, status: string,user:CourierUserDetails) =>void
+        setSearchTerm: React.Dispatch<React.SetStateAction<string>>
+    
+}
+export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) {
+    
 
-export function CourierTable({ users }: { users: CourierUserDetails[] }) {
+    const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const searchTerm = e.target.value.toLowerCase();
+        setSearchTerm(searchTerm)
+    }
   return (
       <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
            <div className="mb-4"> 
                 <input
                     type="text"
-                    placeholder="Search here"
+                  placeholder="Search here"
+                  onChange={(onChangeSearch)}
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200"
                 />
             </div>
@@ -44,14 +56,23 @@ export function CourierTable({ users }: { users: CourierUserDetails[] }) {
                     <TableHead className="py-3 px-2 font-normal">Email</TableHead>
                     <TableHead className="py-3 px-2 font-normal">Courier Name</TableHead>
                       <TableHead className="py-3 px-2 font-normal">Status</TableHead>
-                      <TableHead className="py-3 px-2 font-normal"></TableHead>
+                      <TableHead className="py-3 px-2 font-normal">Details</TableHead>
 
                       <TableHead className="py-3 px-2 font-normal text-right">
-                         
+                         Action
                       </TableHead>
                 </TableRow>
             </TableHeader>
-        <TableBody>
+              <TableBody>
+                   {
+                    users?.length === 0 && (
+                        <TableRow>
+                            <TableCell colSpan={6} className="font-semibold text-xl text-center py-4">
+                                No senders found
+                            </TableCell>
+                        </TableRow>
+                    )
+                }
             {users.map((user,idx) => (
             <TableRow
                 key={ idx}
@@ -61,7 +82,7 @@ export function CourierTable({ users }: { users: CourierUserDetails[] }) {
                 <TableCell className="py-3 px-2">
                         {user.fullName}
                 </TableCell>
-                    <TableCell className="py-3 px-2">{user.phoneNumber}</TableCell>
+                    <TableCell className="py-3 px-2">{user?.phoneNumber ? user?.phoneNumber :'N/A'}</TableCell>
                 <TableCell className="py-3 px-2">{user.email}</TableCell>
                 <TableCell className="py-3 px-2  flex items-center gap-2">
                     <Image
@@ -97,27 +118,21 @@ export function CourierTable({ users }: { users: CourierUserDetails[] }) {
                                     <MoreVertical className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end">
-                                <DropdownMenuLabel>Actions</DropdownMenuLabel>
+                            <DropdownMenuContent align="end" className="font-semibold">
+                                <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
-                                <DropdownMenuItem >
-                                    {/* <DropdownMenuItem onClick={() => handleStarItem(entry.id)}> */}
-                                    <Star className={`mr-2 h-4 w-4`} />
-                                    {/* <span>{entry.starred ? "Unstar" : "Star"}</span> */}
+                                
+                                <DropdownMenuItem onClick={()=>handleUpdateStatus(user?.id,'ACTIVE',user)}>
+                                    <span className="hover:text-green-600">ACTIVE</span>
                                 </DropdownMenuItem>
                                 <DropdownMenuItem>
-                                    <Eye className="mr-2 h-4 w-4" />
-                                    <span>View Details</span>
+                                    <span onClick={()=>handleUpdateStatus(user?.id,'INACTIVE',user)} className="hover:text-gray-600">INACTIVE</span>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
-                                    <Edit className="mr-2 h-4 w-4" />
-                                    <span>Edit</span>
-                                </DropdownMenuItem>
-                                <DropdownMenuSeparator />
-                                <DropdownMenuItem className="text-red-600">
+                                
+                                <DropdownMenuItem onClick={()=>handleUpdateStatus(user?.id,'BLOCKED',user)} className="hover:text-red-600">
                                     {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
-                                    <Trash className="mr-2 h-4 w-4" />
-                                    <span>Delete</span>
+                                    
+                                    <span>BLOCKED</span>
                                 </DropdownMenuItem>
                             </DropdownMenuContent>
                         </DropdownMenu>

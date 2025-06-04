@@ -12,7 +12,7 @@ type VehicleStatsResponse = {
     data: VehicleType[]
 };
 const Page = () => {
-    const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+    const { data, error, isLoading } = useGetVehiclePageApiQuery({limit:10}) as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
     
     const vehicles = data?.data || [];
   

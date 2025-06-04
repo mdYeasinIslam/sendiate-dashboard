@@ -71,7 +71,7 @@ const NotificationForm = () => {
       return <div className="text-center py-10">No vehicle data available</div>
     }
   return (
-   <div className="w-full    rounded-lg shadow-sm px-5 md:p-6 border border-gray-100">
+   <div className="w-full bg-white   rounded-lg shadow-sm px-5 md:p-6 border border-gray-100">
         <h2 className="text-xl font-semibold text-gray-800 mb-6 px-5">Make Notification</h2>
 
         <form onSubmit={handleSubmit} className="space-y-5 px-5">

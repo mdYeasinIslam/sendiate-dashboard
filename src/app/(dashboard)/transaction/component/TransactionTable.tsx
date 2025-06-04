@@ -28,8 +28,9 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                         <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left">Payment Method</th>
                         <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left">Courier Charge</th>
                         <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left">PlatformFee Release</th>
-                        <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left">CourierFee Release</th>
-                        <th className="py-3 px-4  text-right">
+                        <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left flex items-center justify-between">
+                            <span>CourierFee Release</span>
+                        <div className="py-3 px-4  text-right">
                             <DropdownMenu>
                                 <DropdownMenuTrigger asChild>
                                     <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
@@ -50,6 +51,7 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                                     </DropdownMenuItem>
                                 </DropdownMenuContent>
                             </DropdownMenu>
+                        </div>
                         </th>
                     </tr>
                 </thead>

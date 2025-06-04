@@ -13,7 +13,7 @@ type VehicleStatsResponse = {
 };
 const PriceTable = () => {
     
-    const { data, error, isLoading } = useGetVehiclePageApiQuery() as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+    const { data, error, isLoading } = useGetVehiclePageApiQuery({limit:1000}) as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
       const [updateVehicle] = useUpdateVehicleMutation()
   
     const vehiclesPriceData = data?.data || [];
@@ -65,7 +65,7 @@ const PriceTable = () => {
       return <div className="text-center py-10">No vehicle rates available</div>
     }
   return (
-     <div className="rounded-md ">
+     <div className="rounded-md bg-[#ffffff] p-5">
         <Table>
           <TableHeader>
             <TableRow className="">
@@ -86,87 +86,7 @@ const PriceTable = () => {
                 handleSaveUpdatedPrices={handleSaveUpdatedPrices}
                 page={'PricePage'}
             />
-              // <TableRow key={index} className=''>
-              //   <TableCell className="font-medium">{vehicle.name}</TableCell>
-              //   {/* <TableCell>
-              //     <div className="flex items-center  gap-5">
-              //       <div className="flex items-center">
-              //         <span className="text-gray-500 text-sm mr-1">Min</span>
-              //         <span className="font-medium bg-[#EBFBEF] p-2">{formatCurrency(vehicle.baseFare.min)}</span>
-              //       </div>
-              //       <div className="flex items-center">
-              //         <span className="text-gray-500 text-sm mr-1 ">Max</span>
-              //         <span className="font-medium bg-[#EBFBEF]  p-2">{formatCurrency(vehicle.baseFare.max)}</span>
-              //       </div>
-              //     </div>
-              //   </TableCell> */}
-              //   <TableCell>
-              //     <div className="flex items-center  gap-5">
-              //       <div className="flex items-center">
-              //         <span className="text-gray-500 text-sm mr-1">Min</span>
-              //          <div className="relative ">
-              //             <span className={`absolute   top-1/2 -translate-y-1/2 text-gray-500 ${vehicle?.feeType === 'FIXED' ? 'right-3' : 'left-3'}`}>   {
-              //               vehicle?.feeType !== 'FIXED' ?
-              //                 <span className="w-full ">$</span>
-              //                 :
-              //                 <span className="w-full ">%</span>
-              //             }</span>
-              //             <input
-              //               type="text"
-              //               name='vehicleFee'
-              //               // onChange={(e)=> onChangeInput(e?.target?.value)}
-              //               className={` pl-5 pr-0 py-2 w-[70px] rounded-md  text-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${isEditOpen && editItem=== vehicle.id ? 'bg-white border-1 border-black' : 'bg-[#EBFBEF'} `}
-              //               readOnly={isEditOpen && editItem=== vehicle.id ? false : true}
-              //               defaultValue={vehicle?.fee}
-              //             />
-              //           </div>
-              //       </div>
-              //       <div className="flex items-center ">
-              //         <span className="text-gray-500 text-sm mr-1">Max</span>
-              //          <div className="relative ">
-              //             <span className={`absolute   top-1/2 -translate-y-1/2 text-gray-500 ${vehicle?.feeType === 'FIXED' ? 'right-3' : 'left-3'}`}>   {
-              //               vehicle?.feeType !== 'FIXED' ?
-              //                 <span className="w-full ">$</span>
-              //                 :
-              //                 <span className="w-full ">%</span>
-              //             }</span>
-              //             <input
-              //               type="text"
-              //               name='vehicleFee'
-              //               // onChange={(e)=> onChangeInput(e?.target?.value)}
-              //               className={` pl-5 pr-0 py-2 w-[70px] rounded-md  text-black focus:outline-none focus:ring-2 focus:ring-blue-500 ${isEditOpen && editItem=== vehicle.id ? 'bg-white border-1 border-black' : 'bg-[#EBFBEF'} `}
-              //               readOnly={isEditOpen && editItem=== vehicle.id ? false : true}
-              //               defaultValue={vehicle?.fee}
-              //             />
-              //           </div>
-              //       </div>
-              //     </div>
-              //   </TableCell>
-              //   <TableCell className="text-right">
-              //     {/* <Button
-              //       className="bg-green-500 hover:bg-green-600 text-black"
-              //       onClick={() => handleChangeRate(rate.id)}
-              //     >
-              //       Change
-              //     </Button> */}
-              //      {isEditOpen && editItem === vehicle.id ? (
-              //           <Button
-              //           onClick={() => handleSaveEdit(vehicle,vehicleFee)}
-              //           className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
-              //         >
-              //           Save
-              //         </Button>
-              //         ) : (
-              //                 <Button
-              //           onClick={() => handleEditClick(vehicle)}
-              //           className="bg-green-500 hover:bg-green-600 text-white w-10 md:w-20"
-              //         >
-              //           Change
-              //         </Button>
-              //       )} 
-                                    
-              //   </TableCell>
-              // </TableRow>
+             
             ))}
           </TableBody>
         </Table>

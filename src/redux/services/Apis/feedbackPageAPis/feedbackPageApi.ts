@@ -15,16 +15,20 @@ export const feedbackPageApi = createApi({
                     headers.set('Authorization', `${token}`);
                 }
             }
-            return headers;
+            return headers; 
         },
     }),
 
     endpoints: (build) => ({
 
-        getFeedbackStats: build.query<unknown, { userRole: string }>({
-            query: ({ userRole }) => ({
+        getFeedbackStats: build.query<unknown, {page:number,limit:number, userRole: string }>({
+            query: ({page,limit, userRole }) => ({
                 url: `/feedback/all`,
-                params: { userRole }
+                params: {
+                    page: String(page),
+                    limit: String(limit),
+                    userRole
+                }
             })
         }),
 

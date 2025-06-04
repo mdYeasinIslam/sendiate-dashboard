@@ -21,12 +21,13 @@ export const senderPageApi = createApi({
   tagTypes: ["Sender"],
 
   endpoints: (build) => ({
-    getSenderStats: build.query<unknown, { page: number; limit: number }>({
-      query: ({ page, limit }) => ({
+    getSenderStats: build.query<unknown, { page: number; limit: number,searchTerm:string }>({
+      query: ({ page, limit,searchTerm }) => ({
         url: `/users/senders`,
         params: {
           page: String(page),
           limit: String(limit),
+          searchTerm
         },
       }),
       providesTags: ["Sender"],

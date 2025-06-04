@@ -27,10 +27,11 @@ import {  MoreVertical} from "lucide-react";
 
 type Prop = {
     senders: SenderType[]
-    handleUpdateStatus: (id: string, status: string,sender:SenderType) =>void
+    handleUpdateStatus: (id: string, status: string, sender: SenderType) => void
+    setSearchTerm: React.Dispatch<React.SetStateAction<string>>
 }
 
-const Table = ({ senders,handleUpdateStatus }: Prop) => {
+const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
   console.log(senders)
     
@@ -41,12 +42,13 @@ const Table = ({ senders,handleUpdateStatus }: Prop) => {
 
     const onChangeSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
         const searchTerm = e.target.value.toLowerCase();
-        const filtered = senders.filter((sender) =>
-            sender.fullName.toLowerCase().includes(searchTerm) ||
-            sender.email.toLowerCase().includes(searchTerm) ||
-            (sender.phoneNumber && sender.phoneNumber.toLowerCase().includes(searchTerm))
-        );
-        setFilterSenders(filtered);
+        setSearchTerm(searchTerm)
+        // const filtered = senders.filter((sender) =>
+        //     sender.fullName.toLowerCase().includes(searchTerm) ||
+        //     sender.email.toLowerCase().includes(searchTerm) ||
+        //     (sender.phoneNumber && sender.phoneNumber.toLowerCase().includes(searchTerm))
+        // );
+        // setFilterSenders(filtered);
     };
 
     return (
@@ -62,6 +64,7 @@ const Table = ({ senders,handleUpdateStatus }: Prop) => {
             </div>
             {/* Table */}
             <div className="overflow-x-auto w-full">
+                
                 <UITable className="min-w-full text-sm">
                     <TableHeader>
                         <TableRow className="text-left border-b text-gray-500 ">
@@ -75,6 +78,8 @@ const Table = ({ senders,handleUpdateStatus }: Prop) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
+                        
+   
                         {
                             filterSenders?.length === 0 && (
                                 <TableRow>

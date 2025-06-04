@@ -16,13 +16,20 @@ import Image from "next/image"
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 
-const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackType[]}) => {
+
+type Prop = {
+  generateFeedbackData:FeedbackType[]
+  handleUserRole: (role: string) => void
+}
+
+const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
      const [feedbackData, setFeedbackData] = useState<FeedbackType[]>(generateFeedbackData)
      // Sync with new props if generateFeedbackData changes
        useEffect(() => {
           setFeedbackData(generateFeedbackData);
         }, [generateFeedbackData]);
-
+        console.log(generateFeedbackData)
+        
       // const handleStarItem = (id: number) => {
       //   setFeedbackData((prev) => prev.map((item) => (item.id === id ? { ...item, starred: !item.starred } : item)))
       // }
@@ -40,8 +47,9 @@ const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackType
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Name</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Email</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Phone</th>
-            <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Feedback</th>
-            <th className="py-3 px-4  text-right">
+            <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm flex items-center justify-between"><span>Feedback</span>
+            
+            <div className="py-3 px-4  text-right">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
                   <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
@@ -52,20 +60,28 @@ const FeedbackTable = ({generateFeedbackData}:{generateFeedbackData:FeedbackType
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Role</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem className="">
-                    {/* <Download className="mr-2 h-4 w-4" /> */}
-                    <span>Sender</span>
+                  <DropdownMenuItem onClick={()=>handleUserRole("Sender")} className="">
+                  
+                    <span >Sender</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem  className="">
-                    {/* <Trash className="mr-2 h-4 w-4" /> */}
-                    <span>Receiver</span>
+                  <DropdownMenuItem onClick={()=>handleUserRole("Courier")} className="">
+                   
+                    <span >Courier</span>
                   </DropdownMenuItem>
                 </DropdownMenuContent>
               </DropdownMenu>
+            </div>
             </th>
           </tr>
         </thead>
         <tbody>
+          {
+            feedbackData?.length ===0 && <tr>
+                                    <th colSpan={6} className="font-semibold text-xl text-center py-4">
+                                        No feedback found
+                                    </th>
+                                </tr>
+          }
           {feedbackData?.map((entry,idx) => (
               <tr
               key={idx}

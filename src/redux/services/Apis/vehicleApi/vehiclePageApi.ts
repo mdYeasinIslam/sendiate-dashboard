@@ -19,9 +19,13 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
         
     }),
     endpoints: (build) => ({
-        getVehiclePageApi: build.query<unknown, void>({
-                query: () => `/vehicle`
-        }),
+        getVehiclePageApi: build.query<unknown, {limit:number}>({
+            query: (limit) => ({
+                url: `/vehicle`,
+                query: {
+                    limit: String(limit)
+                }
+})        }),
         getVehicleById: build.query<unknown, string>({
                 query: (id) => `/vehicle/${id}`
         }),

@@ -7,10 +7,10 @@ import NotificationForm from "@/components/DashboardComponent/notificationForm/N
 export default function NotificationDashboard() {
     
     return (
-      <section className="bg-[#F8F8F8]">
+      <section className="bg-[#F8F8F8] h-full">
                 <PageWrapper title="Notification"/>
     
-       <main>
+       <main className="px-8">
             <NotificationForm />
        </main>
       </section>

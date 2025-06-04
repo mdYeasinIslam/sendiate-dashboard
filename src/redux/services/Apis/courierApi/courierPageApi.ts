@@ -24,12 +24,13 @@ export const courierPageApi = createApi({
   tagTypes: ["Courier"],
 
   endpoints: (build) => ({
-    getCourierStats: build.query<unknown, { page: number; limit: number }>({
-      query: ({ page, limit }) => ({
+    getCourierStats: build.query<unknown, { page: number; limit: number,searchTerm:string }>({
+      query: ({ page, limit,searchTerm }) => ({
         url: `/users/couriers`,
         params: {
           page: String(page),
           limit: String(limit),
+          searchTerm
         },
       }),
       providesTags: ["Courier"],
