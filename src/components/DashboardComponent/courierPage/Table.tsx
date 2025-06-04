@@ -78,7 +78,7 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                 key={ idx}
                 className="hover:bg-gray-50"
             >
-                    <TableCell className="py-3 px-2">{ idx}</TableCell>
+                    <TableCell className="py-3 px-2">{ idx +1}</TableCell>
                 <TableCell className="py-3 px-2">
                         {user.fullName}
                 </TableCell>
@@ -106,7 +106,7 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                 </TableCell>
                 <TableCell className="py-3 px-2">
                     <Link href={`/courier/${user.id}`}>
-                    <button className="bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
+                    <button className=" cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
                         View Details
                     </button>
                     </Link>

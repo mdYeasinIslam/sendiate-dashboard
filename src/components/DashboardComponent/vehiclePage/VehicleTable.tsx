@@ -22,7 +22,7 @@ export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
             key={vehicle.id}
             className={`grid grid-cols-5 p-4 border-b border-gray-200 ${index % 2 === 0 ? "bg-white" : "bg-gray-50"}`}
           >
-            <div className="px-2 flex items-center text-sm">{index}</div>
+            <div className="px-2 flex items-center text-sm">{index + 1}</div>
             <div className="px-2">
               <div className="w-20 h-14 relative">
                 <Image

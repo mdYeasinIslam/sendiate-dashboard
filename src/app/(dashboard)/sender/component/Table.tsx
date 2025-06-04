@@ -33,7 +33,7 @@ type Prop = {
 
 const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
     const [filterSenders, setFilterSenders] = React.useState<SenderType[]>(senders);
-  console.log(senders)
+//   console.log(senders)
     
     React.useEffect(() => {
         setFilterSenders(senders);
@@ -78,8 +78,8 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                         </TableRow>
                     </TableHeader>
                     <TableBody>
-                        
-   
+                       
+
                         {
                             filterSenders?.length === 0 && (
                                 <TableRow>
@@ -92,10 +92,10 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                        
                         {filterSenders.map((sender, idx) => (
                             <TableRow
-                                key={sender.id + idx}
+                                key={sender?.id + idx}
                                 className="  hover:bg-gray-50"
                             >
-                                <TableCell className="py-3 px-2">{idx}</TableCell>
+                                <TableCell className="py-3 px-2">{idx+1}</TableCell>
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
                                     <Image
                                         alt={sender.fullName}
@@ -121,7 +121,7 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                                 </TableCell>
                                 <TableCell className="py-3 px-2">
                                     <Link href={`/sender/${sender.id}`}>
-                                    <button className="bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
+                                    <button className="cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
                                         View Details
                                     </button>
                                     </Link>
@@ -129,8 +129,8 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                                 <TableCell className="py-3 px-2 text-right">
                                     <DropdownMenu>
                                         <DropdownMenuTrigger asChild>
-                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
-                                                <MoreVertical className="h-4 w-4" />
+                                            <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
+                                                <MoreVertical className="h-4 w-4  " />
                                             </Button>
                                         </DropdownMenuTrigger>
                                         <DropdownMenuContent align="end" className="font-semibold">

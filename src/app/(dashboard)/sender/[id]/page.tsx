@@ -8,6 +8,7 @@ import { SenderDetailsType } from '@/type/SenderPagesType';
 import LoadingSpinner from '@/app/loading';
 import OrderDetails from '@/components/shared/order_and_reviewDetails/OrderDetails';
 import { useParams } from 'next/navigation';
+import { UserRound } from 'lucide-react';
 
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
@@ -30,9 +31,9 @@ const Page = () => {
     
     return (
         <>
-            <PageWrapper title='Sender Details'/>
-            <section className='px-6 '>
-                <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white">
+            <PageWrapper title='Sender Details '/>
+            <section className='px-6  h-full'>
+                <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white  h-full">
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-6 border-b">
                         {/* <button className="text-green-600 text-xl rounded-full p-1 hover:bg-gray-100">
@@ -45,11 +46,19 @@ const Page = () => {
                     <div className="flex flex-col md:flex-row md:justify-between gap-8 border-b pb-6">
                         <div className="flex-1 flex flex-col  items-start text-lg">
                             <figure className='flex items-center gap-2'>
-                                <Image
-                                    src={senderData?.profileImage || logo}
-                                    alt={senderData?.fullName}
-                                    width={48} height={48}
-                                    className="w-6 h-6 rounded-full object-cover" />
+                                {
+                                    senderData?.profileImage ? (
+                                        
+                                        <Image
+                                            src={senderData?.profileImage}
+                                            alt={senderData?.fullName}
+                                            width={48} height={48}
+                                            className="w-6 h-6 rounded-full object-cover" />
+                                    ):
+                                        (
+                                            <UserRound  className='w-6 h-6 border rounded-full'/>
+                                        )
+                                }
                                
                                 <figcaption className=" ">{senderData?.fullName?.split(' ')[0] || senderData?.fullName} Courier</figcaption>
 
@@ -81,10 +90,10 @@ const Page = () => {
 
                     {/* Order and Review Details */}
 
-                    <div className="grid grid-cols-1 justify-between text-lg">
+                    <div className="grid grid-cols-1 justify-between text-lg h-[50vh] ">
                         {orderData?.length === 0 ? 
                         
-                        <div className="text-center text-gray-500 mt-6">No orders details found for this sender.</div>
+                        <div className=" text-gray-500 mt-6 flex justify-center items-center"><span>No orders details found for this sender.</span></div>
                             :
                             <>
                                 {
