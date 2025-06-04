@@ -48,12 +48,12 @@ const PriceTable = () => {
 // Handle updated vehicle fee save to the database
   const handleSaveUpdatedPrices =async (param: VehicleFeeType, maxPricePerKm: number,minPricePerKm:number) => {
     setIsEditOpen(false)
-    console.log(param,maxPricePerKm,minPricePerKm)
+    // console.log(param,maxPricePerKm,minPricePerKm)
     if (param?.maxPricePerKm === maxPricePerKm && param?.minPricePerKm ===minPricePerKm) {
       return 0
     }
     const res = await updateVehicle({ id: param.id, body: { maxPricePerKm:maxPricePerKm, minPricePerKm:minPricePerKm } })
-    console.log(res)
+    // console.log(res)
     if (res?.data?.success) {
       toast.success("Vehicle fee updated successfully")
     }

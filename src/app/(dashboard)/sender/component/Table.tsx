@@ -121,7 +121,7 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                                 </TableCell>
                                 <TableCell className="py-3 px-2">
                                     <Link href={`/sender/${sender.id}`}>
-                                    <button className="cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
+                                    <button className="cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium cursor-pointer">
                                         View Details
                                     </button>
                                     </Link>
@@ -137,14 +137,14 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                                             <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                                             <DropdownMenuSeparator />
                                             
-                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'ACTIVE',sender)}>
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'ACTIVE',sender)} className="cursor-pointer">
                                                 <span className="hover:text-green-600">ACTIVE</span>
                                             </DropdownMenuItem>
                                             <DropdownMenuItem>
-                                                <span onClick={()=>handleUpdateStatus(sender?.id,'INACTIVE',sender)} className="hover:text-gray-600">INACTIVE</span>
+                                                <span onClick={()=>handleUpdateStatus(sender?.id,'INACTIVE',sender)} className="hover:text-gray-600 cursor-pointer">INACTIVE</span>
                                             </DropdownMenuItem>
                                           
-                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'BLOCKED',sender)} className="hover:text-red-600">
+                                            <DropdownMenuItem onClick={()=>handleUpdateStatus(sender?.id,'BLOCKED',sender)} className="hover:text-red-600 cursor-pointer">
                                                 {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
                                                 
                                                 <span>BLOCKED</span>

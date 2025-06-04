@@ -49,10 +49,10 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Phone</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm flex items-center justify-between"><span>Feedback</span>
             
-            <div className="py-3 px-4  text-right">
+            <div className="py-3 px-4  text-right ">
               <DropdownMenu>
                 <DropdownMenuTrigger asChild>
-                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                  <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
                     {/* <MoreVertical className="h-4 w-4" /> */}
                     <SlidersHorizontal  className="h-6 w-6 text-green-700" />
                   </Button>
@@ -60,11 +60,15 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
                 <DropdownMenuContent align="end">
                   <DropdownMenuLabel>Role</DropdownMenuLabel>
                   <DropdownMenuSeparator />
-                  <DropdownMenuItem onClick={()=>handleUserRole("Sender")} className="">
+                  <DropdownMenuItem onClick={()=>handleUserRole("")} className="cursor-pointer">
+                  
+                    <span >All</span>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem onClick={()=>handleUserRole("Sender")} className="cursor-pointer">
                   
                     <span >Sender</span>
                   </DropdownMenuItem>
-                  <DropdownMenuItem onClick={()=>handleUserRole("Courier")} className="">
+                  <DropdownMenuItem onClick={()=>handleUserRole("Courier")} className="cursor-pointer">
                    
                     <span >Courier</span>
                   </DropdownMenuItem>

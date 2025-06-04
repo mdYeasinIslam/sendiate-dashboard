@@ -115,7 +115,7 @@ console.log(notificationData)
             <Button
             type="submit"
             disabled={isSubmitting}
-            className="w-full h-12 bg-green-500 hover:bg-green-600 text-black font-medium rounded-md transition-colors"
+            className="cursor-pointer w-full h-12 bg-green-500 hover:bg-green-600 text-black font-medium rounded-md transition-colors"
             >
             {isSubmitting ? "Sending..." : "Make Notification"}
             </Button>

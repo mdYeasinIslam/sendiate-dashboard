@@ -104,9 +104,9 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                         {user.status}
                     </span>
                 </TableCell>
-                <TableCell className="py-3 px-2">
-                    <Link href={`/courier/${user.id}`}>
-                    <button className=" cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium">
+                <TableCell className="py-3 px-2 ">
+                    <Link href={`/courier/${user.id} `}>
+                    <button className=" cursor-pointer bg-green-500 hover:bg-green-600 text-black px-4 py-1 rounded-full text-xs font-medium cursor-pointer" >
                         View Details
                     </button>
                     </Link>
@@ -114,22 +114,22 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                     <TableCell className="py-3 px-2 text-right">
                         <DropdownMenu>
                             <DropdownMenuTrigger asChild>
-                                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500">
+                                <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
                                     <MoreVertical className="h-4 w-4" />
                                 </Button>
                             </DropdownMenuTrigger>
-                            <DropdownMenuContent align="end" className="font-semibold">
+                            <DropdownMenuContent align="end" className="font-semibold ">
                                 <DropdownMenuLabel>Update Status</DropdownMenuLabel>
                                 <DropdownMenuSeparator />
                                 
-                                <DropdownMenuItem onClick={()=>handleUpdateStatus(user?.id,'ACTIVE',user)}>
+                                <DropdownMenuItem onClick={()=>handleUpdateStatus(user?.id,'ACTIVE',user)} className="cursor-pointer">
                                     <span className="hover:text-green-600">ACTIVE</span>
                                 </DropdownMenuItem>
-                                <DropdownMenuItem>
+                                <DropdownMenuItem className="cursor-pointer">
                                     <span onClick={()=>handleUpdateStatus(user?.id,'INACTIVE',user)} className="hover:text-gray-600">INACTIVE</span>
                                 </DropdownMenuItem>
                                 
-                                <DropdownMenuItem onClick={()=>handleUpdateStatus(user?.id,'BLOCKED',user)} className="hover:text-red-600">
+                                <DropdownMenuItem  onClick={()=>handleUpdateStatus(user?.id,'BLOCKED',user)} className="hover:text-red-600 cursor-pointer">
                                     {/* <DropdownMenuItem onClick={() => handleDeleteItem(entry.id)} className="text-red-600"> */}
                                     
                                     <span>BLOCKED</span>

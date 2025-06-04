@@ -21,7 +21,7 @@ export const feedbackPageApi = createApi({
 
     endpoints: (build) => ({
 
-        getFeedbackStats: build.query<unknown, {page:number,limit:number, userRole: string }>({
+        getFeedbackStats: build.query<unknown, {page:number,limit:number, userRole?: string }>({
             query: ({page,limit, userRole }) => ({
                 url: `/feedback/all`,
                 params: {

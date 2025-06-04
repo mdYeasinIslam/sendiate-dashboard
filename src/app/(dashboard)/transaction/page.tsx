@@ -15,7 +15,7 @@ type SenderStatsResponse = {
 const TransactionDashboard = () => {
     
     const [pageForPagination,setPageForPagination] =useState(1)
-    const [paymentMethod, setPaymentMethod] = useState<string>('CARD')
+    const [paymentMethod, setPaymentMethod] = useState<string>('')
     // const [isCourierFeeRelease, setIsCourierFeeRelease] = useState<boolean>(false)
     // const [isPlatformFeeRelease, setIsPlatformFeeRelease] = useState<boolean>(false)
     
@@ -31,11 +31,7 @@ const TransactionDashboard = () => {
         }
     }, [data]);
     // console.log(transactionData)
-        
 
-    // const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);
-    // const itemsPerPage = data?.meta?.limit || 10;
-    // const { paginatedData, totalPages } = usePaginatedUsers<TransactionType>(transactionData, currentPage, itemsPerPage);
      if (isLoading) return <div><LoadingSpinner/></div>;
     if (error) return <div>An error occurred while fetching data.</div>;
 

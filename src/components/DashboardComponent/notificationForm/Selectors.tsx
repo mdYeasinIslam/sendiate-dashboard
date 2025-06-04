@@ -39,13 +39,13 @@ export default function UserSelector({ notificationData, selectedUsers, setSelec
         <div className="w-full">
             <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
                 <DropdownMenuTrigger asChild>
-                    <Button variant="outline" className="w-full justify-between h-10">
+                    <Button variant="outline" className="w-full justify-between h-10 cursor-pointer">
                         <span className="truncate">Select Users</span>
                         <ChevronDown className="h-4 w-4 opacity-50" />
                     </Button>
                 </DropdownMenuTrigger>
                 <DropdownMenuContent className="w-[40vw] p-0" align="start">
-                    <div className="max-h-[55vh] overflow-y-auto">
+                    <div className="max-h-[55vh] overflow-y-auto cursor-pointer">
                         {/* Select All Option */}
                         <div onClick={handleSelectAll} className="flex items-center space-x-3 p-3 hover:bg-muted/50 border-b">
                             <Checkbox
@@ -58,7 +58,8 @@ export default function UserSelector({ notificationData, selectedUsers, setSelec
                                   setSelectedUsers([])
                                 }
                               }}
-                              onClick={(e) => e.stopPropagation()}
+                                onClick={(e) => e.stopPropagation()}
+                                className="cursor-pointer"
                             />
                             <div className="flex items-center space-x-3 flex-1">
                                 <div className="w-10 h-10 rounded-full bg-primary/10 flex items-center justify-center">
@@ -92,6 +93,7 @@ export default function UserSelector({ notificationData, selectedUsers, setSelec
                                       }
                                     }}
                                     onClick={(e) => e.stopPropagation()}
+                                    className="cursor-pointer"
                                 />
                                 <div className="flex items-center space-x-3 flex-1 min-w-0">
                                     <Avatar className="h-10 w-10">
