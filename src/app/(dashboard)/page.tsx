@@ -5,12 +5,6 @@ import { PerformanceChart } from '@/components/DashboardComponent/HomePage/Perfo
 import PageWrapper from '@/components/PageWrapper';
 
 export default function Page() {
-    //  const [selectedYear, setSelectedYear] = useState("2025");
-    
-    
-    //   const { data } = useGetDashboardStatsQuery(parseInt(selectedYear)) as { data?: DashboardStatsResponse; error?: unknown; isLoading: boolean };
-    //  console.log(data)
-    
     return (
         <section className='bg-[#F8F8F8] h-screen  '>
                 <PageWrapper title="Overview" />

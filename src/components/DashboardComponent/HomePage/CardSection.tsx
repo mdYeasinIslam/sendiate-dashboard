@@ -25,7 +25,7 @@ const CardSection = () => {
                     className="flex-1 bg-white rounded-lg p-4 flex flex-col items-start justify-center min-w-[150px]"
                 >
                     <span className="text-gray-600 text-lg font-medium"> {card?.label}</span>
-                    <span className="mt-2 text-2xl md:text-3xl font-semibold text-gray-700">{(totalData?.stats?.totalCash ||totalData?.stats?.totalFee) && "$ "} {card?.value}</span>
+                    <span className="mt-2 text-2xl md:text-3xl font-semibold text-gray-700">{(card?.label =="Total Cash"|| card?.label =='Platform Fees') && "$ "} {card?.value}</span>
                     
                    
                 </div>
