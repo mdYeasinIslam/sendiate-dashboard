@@ -26,10 +26,6 @@ const DasboaredCourierpage = () => {
           setTableData(data.data);
         }
       }, [data?.data]);
-    // Pagination state
-    // const [currentPage, setCurrentPage] = useState(data?.meta?.page || 1);
-    // const itemsPerPage = data?.meta?.limit || 10;
-    // const { paginatedData, totalPages } = usePaginatedUsers<CourierUserDetails>(tableData, currentPage, itemsPerPage);
 
 
     if (isLoading) return <div><LoadingSpinner /></div>

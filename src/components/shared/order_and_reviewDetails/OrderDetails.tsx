@@ -3,7 +3,6 @@ import Image from 'next/image'
 import React from 'react'
 
 const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from: string }) => {
-
     const checkStat = details?.status === 'DELIVERED';
     return (
       <section>

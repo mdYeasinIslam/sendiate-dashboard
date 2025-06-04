@@ -6,9 +6,10 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
 import UserSelector from './Selectors'
-import { useGetUsersQuery } from '@/redux/services/Apis/notification/notificationApi'
+import { useGetUsersQuery, useSendNotificationMutation } from '@/redux/services/Apis/notification/notificationApi'
 import { UserType } from '@/type/notificationPage'
 import LoadingSpinner from '@/app/loading'
+import { toast } from 'sonner'
 
 
 type NotificationStatsType = {
@@ -18,12 +19,13 @@ type NotificationStatsType = {
 
 const NotificationForm = () => {
 
-    const { data, error, isLoading } = useGetUsersQuery({limit:10000})  as { data?: NotificationStatsType, error?: unknown, isLoading: boolean };
+  const { data, error, isLoading } = useGetUsersQuery({ limit: 10000 }) as { data?: NotificationStatsType, error?: unknown, isLoading: boolean };
+  const [sendNotification] = useSendNotificationMutation()
     // console.log(data)
     const notificationData = data?.data ||[]
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
 
-
+// console.log(selectedUsers)
       const [title, setTitle] = useState<string>("")
       const [message, setMessage] = useState<string>("")
       const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -32,7 +34,7 @@ const NotificationForm = () => {
         e.preventDefault()
     
         if (!title.trim() || !message.trim()) {
-          alert("Please fill in all fields")
+          toast.error("Please fill in all fields")
           return
         }
     
@@ -41,19 +43,19 @@ const NotificationForm = () => {
         // Simulate API call
         try {
           // In a real app, you would send the data to your API
-          console.log({
-            selectedUsers,
-            title,
-            message,
-          })
-          
+        
           // Simulate success
-          setTimeout(() => {
-            setIsSubmitting(false)
-            setTitle("")
-            setMessage("")
-            alert("Notification sent successfully!")
-          }, 1000)
+        const res =await  sendNotification({ userIds: selectedUsers, title, body: message })
+          console.log(res)
+          if (res?.data?.success) {
+            
+            setTimeout(() => {
+              setIsSubmitting(false)
+              setTitle("")
+              setMessage("")
+              toast.success("Notification sent successfully!")
+            }, 1000)
+          }
         } catch (error) {
           console.error("Error sending notification:", error)
           setIsSubmitting(false)
@@ -74,25 +76,26 @@ const NotificationForm = () => {
 
         <form onSubmit={handleSubmit} className="space-y-5 px-5">
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div className="space-y-2">
-                <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
-                Send To
-                </label>
-            <UserSelector notificationData={notificationData} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
-            </div>
+              <div className="space-y-2">
+                  <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
+                  Send To
+                  </label>
+              <UserSelector notificationData={notificationData} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
+              </div>
 
-            <div className="space-y-2">
-                <label htmlFor="title" className="block text-sm font-medium text-gray-700">
-                Title
-                </label>
-                <Input
-                id="title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                placeholder="Write title..."
-                className="w-full h-10 border border-gray-300 rounded-md"
-                />
-            </div>
+              <div className="space-y-2">
+                  <label htmlFor="title" className="block text-sm font-medium text-gray-700">
+                  Title
+                  </label>
+                  <Input
+                  id="title"
+                  value={title}
+                  onChange={(e) => setTitle(e.target.value)}
+              placeholder="Write title..."
+              required
+                  className="w-full h-10 border border-gray-300 rounded-md"
+                  />
+              </div>
             </div>
 
             <div className="space-y-2">
@@ -103,8 +106,9 @@ const NotificationForm = () => {
                 id="message"
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
-                placeholder="Write here..."
-                className="w-full min-h-[120px] border border-gray-300 rounded-md"
+            placeholder="Write here..."
+            required
+                className="w-full min-h-[50vh] border border-gray-300 rounded-md"
             />
             </div>
 

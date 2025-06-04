@@ -12,42 +12,6 @@ import OrderDetails from '@/components/shared/order_and_reviewDetails/OrderDetai
 // Use the image URL directly as a string
 const logo = 'https://i.pravatar.cc/150?img=1';
 
-// const user: User = { 
-//     id: 1,
-//     name: "Sarah Gomez",
-//     email: "emma@example.com",
-//     phone: "+1 234 567 8901",
-//     status: "Active",
-//     avatar: "https://randomuser.me/api/portraits/women/1.jpg",
-//     totalRequest: 50,
-//     totalAmountPaid: 2000,
-//     reviewGet: 40,
-//     reviewProvide: 45,
-//     orders: [
-//         {
-//             orderNumber: "U08756685CE",
-//             courierDate: "15 June 2025",
-//             pickUpAddress: "1234 Elm St",
-//             dropOffAddress: "5678 Oak St",
-//             vehicleType: "SUV",
-//             amount: 30,
-//             status: "Delivered",
-//             paymentType: "Cash payment",
-//             deliveryService: {
-//                 name: "Abel’s Delivery Service",
-//                 avatar: "https://randomuser.me/api/portraits/men/32.jpg",
-//                 reviewProvide: {
-//                     text: "Thank you for the smooth delivery!",
-//                     rating: 3,
-//                 },
-//                 reviewGet: {
-//                     text: "Clear instructions and quick communication. Everything was ready on time.",
-//                     rating: 5,
-//                 },
-//             },
-//         },
-//     ],
-// };
 type CourierDetails = {
     data: CourierUserDetails
 };
@@ -100,11 +64,11 @@ const Page = () => {
                         </div>
                         <div className="flex-1  text-black font-semibold text-lg">
                             <div>
-                                <div className="">Total Request:<span className="font-semibold">{stats?.averageRatingReceived}</span>
+                                <div className="">Total Earning:<span className="font-semibold">{stats?.totalEarnings}</span>
                             </div>
                             </div>
                             <div>
-                                <div className="">Total Amount Paid:<span className="font-semibold">${stats?.totalEarnings}</span></div>
+                                <div className="">Total Delivery:<span className="font-semibold">${stats?.totalDeliveries}</span></div>
                                 
                             </div>
                             <div>
