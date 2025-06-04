@@ -11,7 +11,7 @@ import { useParams } from 'next/navigation';
 import { UserRound } from 'lucide-react';
 
 // Use the image URL directly as a string
-const logo = 'https://i.pravatar.cc/150?img=1';
+// const logo = 'https://i.pravatar.cc/150?img=1';
 
 type SenderDetails = {
     data: SenderDetailsType
