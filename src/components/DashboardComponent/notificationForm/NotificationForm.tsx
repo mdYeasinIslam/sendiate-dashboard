@@ -3,17 +3,27 @@ import React from 'react'
 
 import { useState } from "react"
 import { Button } from "@/components/ui/button"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Input } from "@/components/ui/input"
 import { Textarea } from "@/components/ui/textarea"
+import UserSelector from './Selectors'
+import { useGetUsersQuery } from '@/redux/services/Apis/notification/notificationApi'
+import { UserType } from '@/type/notificationPage'
+import LoadingSpinner from '@/app/loading'
 
 
-type RecipientOption = {
-  value: string
-  label: string
-}
-const NotificationForm = ({recipientOptions}:{recipientOptions:RecipientOption[]}) => {
-     const [recipient, setRecipient] = useState<string>("all")
+type NotificationStatsType = {
+    meta?: { page: number, limit: number, total: number, totalPage: number };
+    data: UserType[]
+};
+
+const NotificationForm = () => {
+
+    const { data, error, isLoading } = useGetUsersQuery({limit:10000})  as { data?: NotificationStatsType, error?: unknown, isLoading: boolean };
+    // console.log(data)
+    const notificationData = data?.data ||[]
+  const [selectedUsers, setSelectedUsers] = useState<string[]>([])
+
+
       const [title, setTitle] = useState<string>("")
       const [message, setMessage] = useState<string>("")
       const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
@@ -32,11 +42,11 @@ const NotificationForm = ({recipientOptions}:{recipientOptions:RecipientOption[]
         try {
           // In a real app, you would send the data to your API
           console.log({
-            recipient,
+            selectedUsers,
             title,
             message,
           })
-    
+          
           // Simulate success
           setTimeout(() => {
             setIsSubmitting(false)
@@ -48,7 +58,16 @@ const NotificationForm = ({recipientOptions}:{recipientOptions:RecipientOption[]
           console.error("Error sending notification:", error)
           setIsSubmitting(false)
         }
-      }
+  }
+   if(isLoading) {
+      return <div className="text-center py-10"><LoadingSpinner/></div>  
+    }
+    if (error) {
+      return <div className="text-center py-10 text-red-500">Error loading vehicle data</div>
+    }
+    if (!notificationData || notificationData.length === 0) {
+      return <div className="text-center py-10">No vehicle data available</div>
+    }
   return (
    <div className="w-full    rounded-lg shadow-sm px-5 md:p-6 border border-gray-100">
         <h2 className="text-xl font-semibold text-gray-800 mb-6 px-5">Make Notification</h2>
@@ -59,18 +78,7 @@ const NotificationForm = ({recipientOptions}:{recipientOptions:RecipientOption[]
                 <label htmlFor="recipient" className="block text-sm font-medium text-gray-700">
                 Send To
                 </label>
-                <Select value={recipient} onValueChange={setRecipient}>
-                <SelectTrigger className="w-full h-10 border border-gray-300 rounded-md">
-                    <SelectValue placeholder="Select recipient" />
-                </SelectTrigger>
-                <SelectContent>
-                    {recipientOptions.map((option) => (
-                    <SelectItem key={option.value} value={option.value}>
-                        {option.label}
-                    </SelectItem>
-                    ))}
-                </SelectContent>
-                </Select>
+            <UserSelector notificationData={notificationData} selectedUsers={selectedUsers} setSelectedUsers={setSelectedUsers} />
             </div>
 
             <div className="space-y-2">

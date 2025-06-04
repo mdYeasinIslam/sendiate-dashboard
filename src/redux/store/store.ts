@@ -9,6 +9,7 @@ import { courierPageApi } from '../services/Apis/courierApi/courierPageApi';
 import { vehiclePageApi } from '../services/Apis/vehicleApi/vehiclePageApi';
 import { feedbackPageApi } from '../services/Apis/feedbackPageAPis/feedbackPageApi';
 import { transactionApi } from '../services/Apis/transactionApi/transactionApi';
+import { notificationApi } from '../services/Apis/notification/notificationApi';
 
 export const store = configureStore({
     reducer: {
@@ -19,6 +20,7 @@ export const store = configureStore({
         [vehiclePageApi.reducerPath]: vehiclePageApi.reducer,
         [feedbackPageApi.reducerPath]: feedbackPageApi.reducer,
         [transactionApi.reducerPath]: transactionApi.reducer,
+        [notificationApi?.reducerPath]:notificationApi.reducer,
 
         
         auth: authSlice.reducer,
@@ -33,7 +35,8 @@ export const store = configureStore({
             courierPageApi.middleware,
             vehiclePageApi.middleware,
             feedbackPageApi.middleware,
-            transactionApi.middleware
+            transactionApi.middleware,
+            notificationApi.middleware
 
         )
     
