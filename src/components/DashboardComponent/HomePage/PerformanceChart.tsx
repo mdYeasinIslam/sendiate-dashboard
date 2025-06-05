@@ -101,7 +101,7 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
         <p className="font-semibold">{data?.date} 2025</p>
         <p className="flex justify-between items-center"><span>Sender: </span> <span>{data.sender}</span></p>
         <p className="flex justify-between items-center"> <span>Courier: </span> <span>{data.courier}</span> </p>
-        <p className="flex justify-between items-center"> <span>Fees:  </span> <span>${data.fees}</span> </p>
+        <p className="flex justify-between items-center"> <span>Fees:  </span> <span>${data.fees?.toFixed(2)}</span> </p>
         <p className="flex justify-between items-center"> <span>Cancel: </span> <span>{data?.cancelled}</span> </p>
        
       </div>
