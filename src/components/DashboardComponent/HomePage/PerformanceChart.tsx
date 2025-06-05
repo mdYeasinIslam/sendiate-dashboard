@@ -97,11 +97,11 @@ const CustomTooltip = ({ active, payload }: TooltipProps<number, string>) => {
   if (active && payload && payload.length) {
     const data = payload[0].payload;
     return (
-      <div className="bg-white shadow w-[150px] px-3 py-2 rounded text-sm">
+      <div className="bg-white shadow w-[150px] px-3 py-2 rounded-sm text-sm">
         <p className="font-semibold">{data?.date} 2025</p>
         <p className="flex justify-between items-center"><span>Sender: </span> <span>{data.sender}</span></p>
         <p className="flex justify-between items-center"> <span>Courier: </span> <span>{data.courier}</span> </p>
-        <p className="flex justify-between items-center"> <span>Fees:  </span> <span>${data.fees?.toFixed(2)}</span> </p>
+        <p className="flex justify-between items-center "> <span>Fees:  </span> <span>${data.fees?.toFixed(2)}</span> </p>
         <p className="flex justify-between items-center"> <span>Cancel: </span> <span>{data?.cancelled}</span> </p>
        
       </div>
