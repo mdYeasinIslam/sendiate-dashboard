@@ -181,9 +181,7 @@ const ChatPage = () => {
 			ws.current.onclose = () => {
 				console.log("WebSocket disconnected");
 				setConnectionStatus("disconnected");
-				if (isAuthenticated) {
-					setRetryCount((prev) => prev + 1);
-				}
+			
 			};
 
 			ws.current.onerror = (error) => {
