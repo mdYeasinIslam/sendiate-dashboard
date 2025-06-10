@@ -19,13 +19,13 @@ export default function FeedbackDashboard() {
     const {data, error, isLoading} = useGetFeedbackStatsQuery({page:pageForPagination,limit:10, userRole: role }) as { data?: FeedbackStatsResponse, error?: unknown, isLoading: boolean }
     
     const [feedbackData, setFeedbackData] = useState<FeedbackType[]>([]);
-    console.log(data)
+    // console.log(data)
       // Update feedbackData when data changes
       if (data?.data && feedbackData !== data.data) {
         setFeedbackData(data.data);
   }
   const handleUserRole = (role:string) => {
-    console.log(role)
+    // console.log(role)
     setRole(role)
   }
      

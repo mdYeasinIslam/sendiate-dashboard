@@ -24,7 +24,7 @@ const NotificationForm = () => {
     // console.log(data)
     const notificationData = data?.data ||[]
   const [selectedUsers, setSelectedUsers] = useState<string[]>([])
-console.log(notificationData)
+// console.log(notificationData)
 // console.log(selectedUsers)
       const [title, setTitle] = useState<string>("")
       const [message, setMessage] = useState<string>("")
@@ -46,7 +46,7 @@ console.log(notificationData)
         
           // Simulate success
         const res =await  sendNotification({ userIds: selectedUsers, title, body: message })
-          console.log(res)
+          // console.log(res)
           if (res?.data?.success) {
             
             setTimeout(() => {

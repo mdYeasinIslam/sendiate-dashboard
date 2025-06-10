@@ -10,6 +10,7 @@ import { vehiclePageApi } from '../services/Apis/vehicleApi/vehiclePageApi';
 import { feedbackPageApi } from '../services/Apis/feedbackPageAPis/feedbackPageApi';
 import { transactionApi } from '../services/Apis/transactionApi/transactionApi';
 import { notificationApi } from '../services/Apis/notification/notificationApi';
+import { profileApi } from '../services/Apis/profileApi/profileApi';
 
 export const store = configureStore({
     reducer: {
@@ -21,6 +22,7 @@ export const store = configureStore({
         [feedbackPageApi.reducerPath]: feedbackPageApi.reducer,
         [transactionApi.reducerPath]: transactionApi.reducer,
         [notificationApi?.reducerPath]:notificationApi.reducer,
+        [profileApi?.reducerPath]:profileApi.reducer,
 
         
         auth: authSlice.reducer,
@@ -36,7 +38,8 @@ export const store = configureStore({
             vehiclePageApi.middleware,
             feedbackPageApi.middleware,
             transactionApi.middleware,
-            notificationApi.middleware
+            notificationApi.middleware,
+            profileApi.middleware
 
         )
     

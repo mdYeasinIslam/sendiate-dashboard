@@ -5,7 +5,7 @@ import Image from "next/image"
 import { VehicleType } from "@/type/vehicleType"
 
 export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
-    console.log(vehicles)
+    // console.log(vehicles)
   return (
        <div className="w-full ">
 

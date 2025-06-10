@@ -32,7 +32,7 @@ const DasboaredCourierpage = () => {
       }, [data?.data,reRender]);
 
 const handleUpdateStatus = async(id:string,status:string,sender:CourierUserDetails) => {
-        console.log(status)
+        // console.log(status)
         if (sender.status === status) {
           return 0
         }

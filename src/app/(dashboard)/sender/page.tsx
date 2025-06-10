@@ -45,7 +45,7 @@ const Sender = () => {
           
           setTimeout(() => {
                 if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
-                      console.log('enter ')
+                      // console.log('enter ')
                       setTableData(senderData)
                   }
               }, 100);
