@@ -317,7 +317,7 @@ const ChatPage = () => {
 	}
 
 	return (
-		<section>
+		<section className="h-full">
 			<header>
 				<PageWrapper title="Chat" />
 			</header>
@@ -328,7 +328,7 @@ const ChatPage = () => {
 					onSelectUser={handleUserSelect}
 					selectedUserId={selectedUser?.id || null}
 				/>
-				<div className="flex flex-col flex-grow border-l border-gray-200">
+				<div className="flex flex-col flex-grow border-l bg-white border-gray-200">
 					{selectedUser ? (
 						messagesLoading ? (
 							<div className="flex flex-col items-center justify-center h-full text-gray-500">
