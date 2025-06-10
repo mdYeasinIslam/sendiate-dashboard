@@ -26,7 +26,7 @@ const EachPlateformFee = ({ vehicle, isEditOpen, editItem, handleEditClick, hand
   //PlatformFee page
   const onChangeInput = async (vehicleFee: string,feeType:string) => {
     setVehicleFee(Number(vehicleFee))
-    console.log(feeType)
+    // console.log(feeType)
 
   }
     return (

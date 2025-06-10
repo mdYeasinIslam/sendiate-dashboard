@@ -24,7 +24,7 @@ const Page = () => {
      const { data, error, isLoading } = useGetCourierByIdQuery(id) as { data?: CourierDetails, error?: unknown, isLoading: boolean };
         const courierData = data?.data as CourierUserDetails;
     const orderData = courierData?.parcelsDelivered
-    console.log(courierData)
+    // console.log(courierData)
     const stats = courierData?.stats || {
         totalRequest: 0,
         totalAmountPaid: 0,

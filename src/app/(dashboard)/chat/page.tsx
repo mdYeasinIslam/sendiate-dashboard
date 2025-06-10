@@ -4,6 +4,7 @@ import LoadingSpinner from "@/app/loading";
 import ChatList from "@/components/DashboardComponent/Chat/ChatList";
 import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
 import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
+import PageWrapper from "@/components/PageWrapper";
 import { Message, User } from "@/type/chatPage";
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -14,7 +15,8 @@ interface WebSocketMessage {
 	message?: string;
 	token?: string;
 }
-const WS_URL = "ws://localhost:5001/admin-chat";
+// const WS_URL = `wss://10.0.30.76/admin-chat`;
+const WS_URL = `wss://patrkamh.onrender.com/admin-chat`;
 
 const ChatPage = () => {
 	const [selectedUser, setSelectedUser] = useState<User | null>(null);
@@ -315,43 +317,49 @@ const ChatPage = () => {
 	}
 
 	return (
-		<div className="flex h-full">
-			<ChatList
-				users={users}
-				onSelectUser={handleUserSelect}
-				selectedUserId={selectedUser?.id || null}
-			/>
-			<div className="flex flex-col flex-grow border-l border-gray-200">
-				{selectedUser ? (
-					messagesLoading ? (
-						<div className="flex flex-col items-center justify-center h-full text-gray-500">
-							<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2" />
-							Loading messages...
-						</div>
+		<section>
+			<header>
+				<PageWrapper title="Chat" />
+			</header>
+			<div className="flex h-full">
+
+				<ChatList
+					users={users}
+					onSelectUser={handleUserSelect}
+					selectedUserId={selectedUser?.id || null}
+				/>
+				<div className="flex flex-col flex-grow border-l border-gray-200">
+					{selectedUser ? (
+						messagesLoading ? (
+							<div className="flex flex-col items-center justify-center h-full text-gray-500">
+								<div className="w-6 h-6 border-2 border-blue-500 border-t-transparent rounded-full animate-spin mb-2" />
+								Loading messages...
+							</div>
+						) : (
+							<>
+								<ChatWindow
+									selectedUser={selectedUser}
+									messages={messages}
+									loggedInUserId={
+										typeof window !== "undefined"
+											? localStorage.getItem("userId") || ""
+											: ""
+									}
+								/>
+								<MessageInput
+									onSend={handleSend}
+									disabled={connectionStatus !== "connected"}
+								/>
+							</>
+						)
 					) : (
-						<>
-							<ChatWindow
-								selectedUser={selectedUser}
-								messages={messages}
-								loggedInUserId={
-									typeof window !== "undefined"
-										? localStorage.getItem("userId") || ""
-										: ""
-								}
-							/>
-							<MessageInput
-								onSend={handleSend}
-								disabled={connectionStatus !== "connected"}
-							/>
-						</>
-					)
-				) : (
-					<div className="flex items-center justify-center h-full text-gray-500">
-						Select a user to start chatting
-					</div>
-				)}
+						<div className="flex items-center justify-center h-full text-gray-500">
+							Select a user to start chatting
+						</div>
+					)}
+				</div>
 			</div>
-		</div>
+		</section>
 	);
 };
 

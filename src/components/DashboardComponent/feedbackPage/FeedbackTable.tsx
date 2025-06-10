@@ -28,7 +28,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
        useEffect(() => {
           setFeedbackData(generateFeedbackData);
         }, [generateFeedbackData]);
-        console.log(generateFeedbackData)
+        // console.log(generateFeedbackData)
         
       // const handleStarItem = (id: number) => {
       //   setFeedbackData((prev) => prev.map((item) => (item.id === id ? { ...item, starred: !item.starred } : item)))
