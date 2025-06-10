@@ -101,10 +101,10 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
                   .replace(/(\d{2}) ([A-Za-z]{3}), (\d{4})/, "$2 $1, $3")
                   : ""}
                 </td>
-              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+              <td className=" px-1 lg:px-4 py-2  whitespace-nowrap">
                 {entry?.user?.role}
               </td>
-              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap flex items-center gap-2">
+              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap flex items-center  gap-2">
                 <Image
                     alt={entry.user?.fullName}
                     src={logo}
@@ -118,7 +118,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
                 {entry?.user?.email}
               </td>
               <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
-                { '+0999344343'}
+                { entry?.user?.phoneNumber ? entry?.user?.phoneNumber:'N/A'}
               </td>
               <td className=" px-4 py-2 max-w-xs break-words">
                 {entry?.comments}
