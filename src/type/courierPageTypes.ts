@@ -57,6 +57,8 @@ export type CourierUserDetails = {
         ratingsGiven: number;
         ratingsReceived: number;
         averageRatingReceived: number;
+        pendingPlatformFee:number
+        totalPlatformFee:number
     };
 };
 

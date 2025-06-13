@@ -70,19 +70,19 @@ const Page = () => {
                         </div>
                         <div className="flex-1 text-lg  text-black font-semibold">
                             <div>
-                                <div className="">Total Request:<span className="font-semibold">{senderData?.stats?.totalRequests}</span>
+                                <div className="">Total Request : <span className="font-semibold"> {senderData?.stats?.totalRequests}</span>
                             </div>
                             </div>
                             <div>
-                                <div className="">Total Amount Paid:<span className="font-semibold">${senderData?.stats?.totalAmountPaid}</span></div>
+                                <div className="">Total Amount Paid : <span className="font-semibold">${senderData?.stats?.totalAmountPaid}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Get:<span className="font-semibold">{senderData?.stats?.ratingsReceived}</span></div>
+                                <div className="">Review Get : <span className="font-semibold">{senderData?.stats?.ratingsReceived}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Provide: <span className="font-semibold">{senderData?.stats?.ratingsGiven}</span></div>
+                                <div className="">Review Provide : <span className="font-semibold">{senderData?.stats?.ratingsGiven}</span></div>
                             
                             </div>
                         </div>

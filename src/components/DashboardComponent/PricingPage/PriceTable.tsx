@@ -13,7 +13,7 @@ type VehicleStatsResponse = {
 };
 const PriceTable = () => {
     
-    const { data, error, isLoading } = useGetVehiclePageApiQuery({limit:1000}) as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean };
+    const { data, error, isLoading,refetch } = useGetVehiclePageApiQuery({limit:1000}) as { data?: VehicleStatsResponse, error?: unknown, isLoading: boolean,refetch:()=>void};
       const [updateVehicle] = useUpdateVehicleMutation()
   
     const vehiclesPriceData = data?.data || [];
@@ -21,7 +21,7 @@ const PriceTable = () => {
     // const [editingRate, setEditingRate] = useState<string | null>(null)
     const [isEditOpen, setIsEditOpen] = useState(false)
     const [editItem, setEditItem] = useState<string>('')
-
+    const [loading,setLoading] =useState(false)
 
   useEffect(() => {
     if (vehiclesPriceData.length && JSON.stringify(vehiclePrice) !== JSON.stringify(vehiclesPriceData)) {
@@ -29,34 +29,25 @@ const PriceTable = () => {
     }
   }, [vehiclesPriceData,vehiclePrice])
   
-      // const handleChangeRate = (id: string) => {
-      //   // In a real application, this would open a modal or form to edit the rates
-      //   setEditingRate(id === editingRate ? null : id)
-      //   console.log(`Changing rates for vehicle ID: ${id}`)
-      // }
-    
-      // const formatCurrency = (amount: number) => {
-      //   return `$${amount.toFixed(2).replace(/\.00$/, "")}`
-      // }
-  
-  
   //copy from platfrom tabel
   const handleEditClick = (vehicle: VehicleFeeType) => {
     setEditItem(vehicle.id)
     setIsEditOpen(true)
   }
 // Handle updated vehicle fee save to the database
-  const handleSaveUpdatedPrices =async (param: VehicleFeeType, maxPricePerKm: number,minPricePerKm:number) => {
-    setIsEditOpen(false)
-    // console.log(param,maxPricePerKm,minPricePerKm)
-    if (param?.maxPricePerKm === maxPricePerKm && param?.minPricePerKm ===minPricePerKm) {
-      return 0
-    }
-    const res = await updateVehicle({ id: param.id, body: { maxPricePerKm:maxPricePerKm, minPricePerKm:minPricePerKm } })
-    // console.log(res)
-    if (res?.data?.success) {
-      toast.success("Vehicle fee updated successfully")
-    }
+    const handleSaveUpdatedPrices =async (param: VehicleFeeType, maxPricePerKm: number,minPricePerKm:number) => {
+        setIsEditOpen(false)
+        if (param?.maxPricePerKm === maxPricePerKm && param?.minPricePerKm ===minPricePerKm) {
+          return 0
+        }
+        setLoading(true)
+        const res = await updateVehicle({ id: param.id, body: { maxPricePerKm:maxPricePerKm, minPricePerKm:minPricePerKm } })
+        // console.log(res)
+        if (res?.data?.success) {
+          refetch()
+          toast.success("Vehicle fee updated successfully")
+          setLoading(false)
+        }
   }
   //-----------------------------------
     if (isLoading) return <div className="text-center py-10"><LoadingSpinner/></div>
@@ -65,7 +56,10 @@ const PriceTable = () => {
       return <div className="text-center py-10">No vehicle rates available</div>
     }
   return (
-     <div className="rounded-md bg-[#ffffff] p-5">
+     <div className={`relative rounded-md bg-[#ffffff] p-5 ${loading?'opacity-60':''}`}>
+        {
+          loading && <div className='absolute z-20 top-[0%] left-[45%]'> <LoadingSpinner/></div> 
+        }
         <Table>
           <TableHeader>
             <TableRow className="">

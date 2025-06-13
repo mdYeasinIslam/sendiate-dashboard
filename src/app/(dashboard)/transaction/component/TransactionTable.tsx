@@ -30,32 +30,32 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                         <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left">PlatformFee Release</th>
                         <th className="py-2 px-4 text-sm font-normal text-gray-500 text-left flex items-center justify-between">
                             <span>CourierFee Release</span>
-                        <div className="py-3 px-4  text-right">
-                            <DropdownMenu>
-                                <DropdownMenuTrigger asChild>
-                                    <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
-                                        {/* <MoreVertical className="h-4 w-4" /> */}
-                                        <SlidersHorizontal className="h-6 w-6 text-green-700" />
-                                    </Button>
-                                </DropdownMenuTrigger>
-                                <DropdownMenuContent align="end">
-                                    <DropdownMenuLabel>Payment Method</DropdownMenuLabel>
-                                    <DropdownMenuSeparator />
-                                    <DropdownMenuItem onClick={() => setPaymentMethod("")} className="cursor-pointer">
-                                        {/* <Download className="mr-2 h-4 w-4" /> */}
-                                        <span>ALL</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => setPaymentMethod("CASH")} className="cursor-pointer">
-                                        {/* <Download className="mr-2 h-4 w-4" /> */}
-                                        <span>CASH</span>
-                                    </DropdownMenuItem>
-                                    <DropdownMenuItem onClick={() => setPaymentMethod("CARD")} className="cursor-pointer">
-                                        {/* <Trash className="mr-2 h-4 w-4" /> */}
-                                        <span>CARD</span>
-                                    </DropdownMenuItem>
-                                </DropdownMenuContent>
-                            </DropdownMenu>
-                        </div>
+                            <div className="py-3 px-4  text-right">
+                                <DropdownMenu>
+                                    <DropdownMenuTrigger asChild>
+                                        <Button variant="ghost" size="icon" className="h-8 w-8 text-gray-500 cursor-pointer">
+                                            {/* <MoreVertical className="h-4 w-4" /> */}
+                                            <SlidersHorizontal className="h-6 w-6 text-green-700" />
+                                        </Button>
+                                    </DropdownMenuTrigger>
+                                    <DropdownMenuContent align="end">
+                                        <DropdownMenuLabel>Payment Method</DropdownMenuLabel>
+                                        <DropdownMenuSeparator />
+                                        <DropdownMenuItem onClick={() => setPaymentMethod("")} className="cursor-pointer">
+                                            {/* <Download className="mr-2 h-4 w-4" /> */}
+                                            <span>ALL</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => setPaymentMethod("CASH")} className="cursor-pointer">
+                                            {/* <Download className="mr-2 h-4 w-4" /> */}
+                                            <span>CASH</span>
+                                        </DropdownMenuItem>
+                                        <DropdownMenuItem onClick={() => setPaymentMethod("CARD")} className="cursor-pointer">
+                                            {/* <Trash className="mr-2 h-4 w-4" /> */}
+                                            <span>CARD</span>
+                                        </DropdownMenuItem>
+                                    </DropdownMenuContent>
+                                </DropdownMenu>
+                            </div>
                         </th>
                     </tr>
                 </thead>

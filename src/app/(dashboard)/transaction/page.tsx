@@ -20,11 +20,10 @@ const TransactionDashboard = () => {
     // const [isPlatformFeeRelease, setIsPlatformFeeRelease] = useState<boolean>(false)
     
     const { data, error, isLoading } = useGetTransactionStatsQuery(
-        {page:pageForPagination,limit:10, paymentMethod }
+      {page:pageForPagination,limit:10, paymentMethod }
     ) as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
         
     const [transactionData, setTransactionData] = useState<TransactionType[]>([]);
-
     React.useEffect(() => {
         if (data?.data) {
         setTransactionData(data.data);
@@ -32,7 +31,7 @@ const TransactionDashboard = () => {
     }, [data]);
     // console.log(transactionData)
 
-     if (isLoading) return <div><LoadingSpinner/></div>;
+    if (isLoading) return <div><LoadingSpinner/></div>;
     if (error) return <div>An error occurred while fetching data.</div>;
 
   return (

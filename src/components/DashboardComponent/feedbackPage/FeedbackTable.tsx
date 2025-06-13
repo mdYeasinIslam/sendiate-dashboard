@@ -47,6 +47,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Name</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Email</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Phone</th>
+            <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm">Subject</th>
             <th className="py-3 px-4  text-left font-medium text-gray-600 text-sm flex items-center justify-between"><span>Feedback</span>
             
             <div className="py-3 px-4  text-right ">
@@ -80,11 +81,12 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
         </thead>
         <tbody>
           {
-            feedbackData?.length ===0 && <tr>
-                                    <th colSpan={6} className="font-semibold text-xl text-center py-4">
-                                        No feedback found
-                                    </th>
-                                </tr>
+            feedbackData?.length ===0 && (
+            <tr>
+                <th colSpan={6} className="font-semibold text-xl text-center py-4">
+                    No feedback found
+                </th>
+            </tr>)
           }
           {feedbackData?.map((entry,idx) => (
               <tr
@@ -119,6 +121,10 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
               </td>
               <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
                 { entry?.user?.phoneNumber ? entry?.user?.phoneNumber:'N/A'}
+              </td>
+              
+               <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+                { entry?.subject ? entry?.subject:'N/A'}
               </td>
               <td className=" px-4 py-2 max-w-xs break-words">
                 {entry?.comments}

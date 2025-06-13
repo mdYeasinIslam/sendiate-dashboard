@@ -31,6 +31,7 @@ const Page = () => {
         reviewGet: 0,
         reviewProvide: 0
     };
+    
     if (isLoading) return <div><LoadingSpinner /></div>
     if (error) return <div>An Error occurred</div>
     if (!courierData) return <div>No data found</div>;
@@ -64,21 +65,31 @@ const Page = () => {
                         </div>
                         <div className="flex-1  text-black font-semibold text-lg">
                             <div>
-                                <div className="">Total Earning:<span className="font-semibold">{stats?.totalEarnings}</span>
+                                <div className="">Total Earning : <span className="font-semibold"> ${stats?.totalEarnings}</span>
                             </div>
                             </div>
                             <div>
-                                <div className="">Total Delivery:<span className="font-semibold">${stats?.totalDeliveries}</span></div>
+                                <div className="">Total Delivery : <span className="font-semibold"> ${stats?.totalDeliveries}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Get:<span className="font-semibold">{stats?.ratingsReceived}</span></div>
+                                <div className="">Review Get : <span className="font-semibold">{stats?.ratingsReceived}</span></div>
                                 
                             </div>
                             <div>
-                                <div className="">Review Provide: <span className="font-semibold">{stats?.ratingsGiven}</span></div>
+                                <div className="">Review Provide : <span className="font-semibold">{stats?.ratingsGiven}</span></div>
                             
                             </div>
+                            <div>
+                                <div className="">Total Platform-fee : <span className="font-semibold"> ${stats?.totalPlatformFee}</span></div>
+                            
+                            </div>
+                            <div>
+                                <div className="">Payable Platform-fee : <span className="font-semibold"> ${stats?.pendingPlatformFee}</span></div>
+                            
+                            </div>
+
+
                         </div>
                     </div>
                     {/* Order and Review Details */}

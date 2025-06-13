@@ -19,53 +19,46 @@ const DasboaredCourierpage = () => {
     const [searchTerm,setSearchTerm] = useState('')
   
     // Fetching courier stats
-    const { data, error, isLoading } = useGetCourierStatsQuery({page:pageForPagination,limit:10,searchTerm}) as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean };
+    const { data, error, isLoading,refetch } = useGetCourierStatsQuery({page:pageForPagination,limit:10,searchTerm}) as { data?: SenderStatsResponse, error?: unknown, isLoading: boolean,refetch:()=>void };
   
       const [tableData, setTableData] = useState<CourierUserDetails[]>(data?.data || []);
       const [updateSenderStatus] = useUpdateCourierStatusMutation()
-    const [reRender, setReRender] = React.useState(true)
+    const [reRender, setReRender] = React.useState(false)
   
       React.useEffect(() => {
         if (data?.data) {
           setTableData(data.data);
         }
-      }, [data?.data,reRender]);
+      }, [data?.data]);
 
-const handleUpdateStatus = async(id:string,status:string,sender:CourierUserDetails) => {
-        // console.log(status)
+      const handleUpdateStatus = async(id:string,status:string,sender:CourierUserDetails) => {
         if (sender.status === status) {
           return 0
         }
-
-       
+        setReRender(true)
         const res = await updateSenderStatus({ id, body: { status } })
        
         if (res?.data?.success) {
-            window.location.reload();
             
-                  setReRender(prev => !prev)
-            
-            // setTimeout(() => {
-                  
-            //     if (senderData?.length || JSON.stringify(senderData) !== JSON.stringify(tableData)) {
-            //           console.log('enter ')
-            //           setTableData(senderData)
-            //       }
-            //   }, 100);
-            }
+            refetch()
             toast.success("Sender status updated successfully")
+            setReRender(false)
+          }
+        
     }
   
     if (isLoading) return <div><LoadingSpinner /></div>
     if (error) return <div>An Error occurred</div>
 
   return (
-      <section className='bg-[#F8F8F8] h-full'>
+      <section className=' bg-[#F8F8F8] h-full'>
       <header>
         <PageWrapper title="Courier" />
       </header>
-      <main className='md:px-5'>
-
+      <main className={`relative md:px-5 ${reRender?'opacity-60':''}`}>
+        {
+          reRender && <div className='absolute top-[0%] left-[45%]'> <LoadingSpinner/></div> 
+        }
         <CourierTable users={tableData} handleUpdateStatus={handleUpdateStatus} setSearchTerm={setSearchTerm}/>
         <Pagination
         currentPage={pageForPagination}

@@ -46,7 +46,7 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                     className="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-green-200"
                 />
             </div>
-        <UITable className="bg-white rounded-lg">
+        <UITable className=" rounded-lg">
        
         <TableHeader>
                 <TableRow className="text-left border-b text-gray-500 ">
