@@ -21,7 +21,7 @@ const Profile = () => {
     // console.log(profileData)
     if (isLoading) return <div><LoadingSpinner /></div>
     if (error) return <div>An Error occurred</div>
-    console.log(error)
+    // console.log(error)
 
   return (
       <div>

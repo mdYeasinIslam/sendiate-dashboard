@@ -5,34 +5,36 @@ import React from 'react'
 
 const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from: string }) => {
     const checkStat = details?.status === 'DELIVERED';
+    // console.log(details?.deliveryTime)
     return (
       <section>
             
         <div className="flex flex-col md:flex-row justify-between gap-8 mt-6 text-lg">
             {/* Order Details */}
             <div className="flex-1 text-black font-medium">
-                <div className="mb-2  ">Order Number: <span className="font-normal"> {details?.orderId}</span></div>
+                <div className="mb-2  ">Order Number : <span className="font-normal"> {details?.orderId}</span></div>
                 <div className="mb-2  ">
-                  Courier Date:{" "}
+                  Courier Date : {" "}
                   <span className="font-normal"> 
                     {details?.deliveryTime
-                      ? new Date(details.deliveryTime).toLocaleDateString("en-US", {
+                      ? <span className=' text-black'>
+                      {new Date(details?.deliveryTime).toLocaleDateString("en-US", {
                           day: "2-digit",
                           month: "short",
                           year: "numeric",
-                        })
-                      : ""}
+                        })}</span>
+                      : "N/A"}
                   </span>
                 </div>
-                <div className="mb-2  ">Pick Up Address: <span className="font-normal"> {details?.pickupInfo?.address}</span></div>
-                <div className="mb-2  ">Drop–Off Address: <span className="font-normal"> {checkStat?`${details?.receiverInfo?.address}` : 'N/A'}</span></div>
-                <div className="mb-2  ">Vehicle Type: <span className="font-normal"> {checkStat?`${details?.vehicleType}` : 'N/A'}</span></div>
-                <div className="mb-2  ">Amount: <span className="font-normal"> ${checkStat?`${details?.price}` : 'N/A'}</span></div>
+                <div className="mb-2  ">Pick Up Address : <span className="font-normal"> {details?.pickupInfo?.address}</span></div>
+                <div className="mb-2  ">Drop–Off Address  : <span className="font-normal"> {checkStat?`${details?.receiverInfo?.address}` : 'N/A'}</span></div>
+                <div className="mb-2  ">Vehicle Type : <span className="font-normal"> {checkStat?`${details?.vehicleType}` : 'N/A'}</span></div>
+                <div className="mb-2  ">Amount : <span className="font-normal"> ${checkStat?`${details?.price}` : 'N/A'}</span></div>
                 <div className="mb-2   flex items-center gap-2">
-                    Status: 
+                    Status : 
                     <span className="bg-green-100 text-green-700 px-2 py-0.5 rounded text-xs ">{details?.status}</span>
                 </div>
-                <div className="mb-2  ">Payment Type: <span className="font-normal"> {details?.paymentMethod}</span></div>
+                <div className="mb-2  ">Payment Type : <span className="font-normal"> {details?.paymentMethod}</span></div>
             </div>
             {/* Review Details */}
             <div className="flex-1 ">

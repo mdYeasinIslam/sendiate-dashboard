@@ -10,7 +10,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import {  SlidersHorizontal } from "lucide-react"
+import {  SlidersHorizontal, UserRound } from "lucide-react"
 import { FeedbackType } from "@/type/homePageTypes"
 import Image from "next/image"
 // Use the image URL directly as a string
@@ -93,7 +93,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
               key={idx}
               className="odd:bg-white even:bg-gray-50 hover:bg-gray-100"
             >
-                <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+                <td className=" px-1 lg:px-3 py-2 whitespace-nowrap">
                 {entry?.createdAt
                   ? new Date(entry.createdAt).toLocaleDateString("en-US", {
                     day: "2-digit",
@@ -103,27 +103,33 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
                   .replace(/(\d{2}) ([A-Za-z]{3}), (\d{4})/, "$2 $1, $3")
                   : ""}
                 </td>
-              <td className=" px-1 lg:px-4 py-2  whitespace-nowrap">
+              <td className=" px-1 lg:px-3 py-2  whitespace-nowrap">
                 {entry?.user?.role}
               </td>
-              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap flex items-center  gap-2">
-                <Image
+              <td className=" px-1 lg:px-3 py-2 whitespace-nowrap flex items-center  gap-2">
+                {
+                entry?.user?.profileImage
+                ?
+               ( <Image
                     alt={entry.user?.fullName}
                     src={logo}
                     width={500}
                     height={500}
                     className="w-6 h-6 rounded-full"
-                />
+                />)
+                :(
+                <UserRound className="w-5 h-5"/>)
+                }
                 {entry?.user?.fullName}
               </td>
-              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+              <td className=" px-1 lg:px-3 py-2 whitespace-nowrap">
                 {entry?.user?.email}
               </td>
-              <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+              <td className=" px-1 lg:px-3 py-2 whitespace-nowrap">
                 { entry?.user?.phoneNumber ? entry?.user?.phoneNumber:'N/A'}
               </td>
               
-               <td className=" px-1 lg:px-4 py-2 whitespace-nowrap">
+               <td className=" px-1 lg:px-3 py-2 whitespace-nowrap">
                 { entry?.subject ? entry?.subject:'N/A'}
               </td>
               <td className=" px-4 py-2 max-w-xs break-words">

@@ -32,18 +32,16 @@ const Page = () => {
     return (
         <>
             <PageWrapper title='Sender Details '/>
-            <section className='px-6  h-full'>
-                <div className=" rounded-lg shadow p-6   mx-auto mt-8 bg-white  h-full">
+            <section className='px-10 '>
+                <div className=" rounded-lg p-5  bg-white   mx-auto mt-8   h-full">
                     {/* Header */}
                     <div className="flex items-center gap-3 mb-6 border-b">
-                        {/* <button className="text-green-600 text-xl rounded-full p-1 hover:bg-gray-100">
-                            <svg width="20" height="20" fill="none" stroke="currentColor" strokeWidth="2" viewBox="0 0 24 24"><path d="M15 19l-7-7 7-7"/></svg>
-                        </button> */}
+                       
                        <Button path='/sender'/>
                         <span className="font-medium text-lg">{senderData?.fullName}</span>
                     </div>
                     {/* User Info and Stats */}
-                    <div className="flex flex-col md:flex-row md:justify-between gap-8 border-b pb-6">
+                    <div className=" flex flex-col md:flex-row md:justify-between gap-8 border-b pb-6">
                         <div className="flex-1 flex flex-col  items-start text-lg">
                             <figure className='flex items-center gap-2'>
                                 {
@@ -90,16 +88,16 @@ const Page = () => {
 
                     {/* Order and Review Details */}
 
-                    <div className="grid grid-cols-1 justify-between text-lg h-[50vh] ">
+                    <div className=" bg-white grid grid-cols-1 justify-between text-lg h-full ">
                         {orderData?.length === 0 ? 
                         
                         <div className=" text-gray-500 mt-6 flex justify-center items-center"><span>No orders details found for this sender.</span></div>
                             :
-                            <>
+                            <div className='h-full   bg-white'>
                                 {
                                     orderData?.map((order, idx) => <OrderDetails key={idx} details={order}  from='SenderPage'/>)
                                 }
-                            </>
+                            </div>
                         }
                        
                     </div>

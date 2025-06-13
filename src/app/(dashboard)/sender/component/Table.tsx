@@ -21,9 +21,9 @@ import Link from "next/link";
 import React from "react";
 
 // Use the image URL directly as a string
-const logo = 'https://i.pravatar.cc/150?img=1';
+// const logo = 'https://i.pravatar.cc/150?img=1';
 import { Button } from "@/components/ui/button";
-import {  MoreVertical} from "lucide-react";
+import {  MoreVertical, UserRound} from "lucide-react";
 
 type Prop = {
     senders: SenderType[]
@@ -97,13 +97,18 @@ const Table = ({ senders,handleUpdateStatus,setSearchTerm }: Prop) => {
                             >
                                 <TableCell className="py-3 px-2">{idx+1}</TableCell>
                                 <TableCell className="py-3 px-2 flex items-center gap-2">
+                                   {
+                                    sender?.profileImage?
                                     <Image
                                         alt={sender.fullName}
-                                        src={sender?.profileImage?sender?.profileImage: logo}
+                                        src={sender?.profileImage}
                                         width={500}
                                         height={500}
                                         className="w-6 h-6 rounded-full"
                                     />
+                                    :
+                                    <UserRound/>
+                                   }
                                     {sender.fullName}
                                 </TableCell>
                                 <TableCell className="py-3 px-2">{sender.email}</TableCell>

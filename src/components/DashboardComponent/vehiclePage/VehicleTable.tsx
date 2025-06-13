@@ -3,6 +3,7 @@
 import React from "react"
 import Image from "next/image"
 import { VehicleType } from "@/type/vehicleType"
+import { Car } from "lucide-react"
 
 export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
     // console.log(vehicles)
@@ -25,12 +26,17 @@ export default function VehicleTable({vehicles}:{vehicles:VehicleType[]}) {
             <div className="px-2 flex items-center text-sm">{index + 1}</div>
             <div className="px-2">
               <div className="w-20 h-14 relative">
-                <Image
-                  src={ vehicle?.image || "/images/vehicle.png"}
-                  alt={vehicle.name}
-                  fill
-                  className="object-contain"
-                />
+                {
+                  vehicle?.image ?
+                  <Image
+                    src={ vehicle?.image}
+                    alt={vehicle.name}
+                    fill
+                    className="object-contain"
+                  />
+                  :
+                  <Car className="w-10 h-10"/>
+                }
               </div>
             </div>
             <div className="px-2 flex items-center text-sm font-medium">{vehicle?.name}</div>

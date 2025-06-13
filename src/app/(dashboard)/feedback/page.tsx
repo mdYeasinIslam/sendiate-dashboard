@@ -28,7 +28,7 @@ export default function FeedbackDashboard() {
     // console.log(role)
     setRole(role)
   }
-     console.log(feedbackData)
+     console.log(data)
       // const { paginatedData, totalPages } = usePaginatedUsers<FeedbackType>(feedbackData, currentPage, itemsPerPage);
      
    if (isLoading) return <div><LoadingSpinner/></div>;

@@ -18,10 +18,10 @@ import {
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import {   MoreVertical} from "lucide-react"
+import {   MoreVertical, UserRound} from "lucide-react"
 import { CourierUserDetails } from "@/type/courierPageTypes"
 // Use the image URL directly as a string
-const logo = 'https://i.pravatar.cc/150?img=1';
+// const logo = 'https://i.pravatar.cc/150?img=1';
 
 type Prop = {
     users: CourierUserDetails[]
@@ -36,6 +36,7 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
         const searchTerm = e.target.value.toLowerCase();
         setSearchTerm(searchTerm)
     }
+    // console.log(users)
   return (
       <section className="bg-white  w-full rounded-xl shadow p-3 lg:p-6">
            <div className="mb-4"> 
@@ -85,13 +86,18 @@ export function CourierTable({ users, handleUpdateStatus, setSearchTerm}: Prop) 
                     <TableCell className="py-3 px-2">{user?.phoneNumber ? user?.phoneNumber :'N/A'}</TableCell>
                 <TableCell className="py-3 px-2">{user.email}</TableCell>
                 <TableCell className="py-3 px-2  flex items-center gap-2">
-                    <Image
-                            src={logo}
-                            alt={user.fullName}
-                            width={500}
-                            height={500}
-                        className="w-6 h-6 rounded-full"
-                    />
+                    {
+                        user?.profileImage?
+                        <Image
+                                src={user?.profileImage}
+                                alt={user.fullName}
+                                width={500}
+                                height={500}
+                            className="w-6 h-6 rounded-full"
+                        />
+                        :
+                        <UserRound/>
+                    }
                         {user?.fullName?.split(' ')[0] || user?.fullName} Courier</TableCell>
                 <TableCell className="py-3 px-2">
                     <span

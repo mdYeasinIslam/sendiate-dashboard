@@ -33,5 +33,6 @@ export type DashboardStatsResponse = {
       email: string;
       role: string;
       phoneNumber:string
+      profileImage:string
     };
   };
