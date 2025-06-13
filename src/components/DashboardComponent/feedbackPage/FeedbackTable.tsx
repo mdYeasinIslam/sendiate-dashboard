@@ -14,7 +14,7 @@ import {  SlidersHorizontal, UserRound } from "lucide-react"
 import { FeedbackType } from "@/type/homePageTypes"
 import Image from "next/image"
 // Use the image URL directly as a string
-const logo = 'https://i.pravatar.cc/150?img=1';
+// const logo = 'https://i.pravatar.cc/150?img=1';
 
 
 type Prop = {
@@ -37,6 +37,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
       // const handleDeleteItem = (id: number) => {
       //   setFeedbackData((prev) => prev.filter((item) => item.id !== id))
       // }
+      console.log(feedbackData)
   return (
       <div className="w-full overflow-x-auto bg-white rounded-lg px-2">
       <table className="min-w-full overflow-x-auto border-gray-200 ">
@@ -112,7 +113,7 @@ const FeedbackTable = ({generateFeedbackData,handleUserRole}:Prop) => {
                 ?
                ( <Image
                     alt={entry.user?.fullName}
-                    src={logo}
+                    src={entry?.user?.profileImage}
                     width={500}
                     height={500}
                     className="w-6 h-6 rounded-full"
