@@ -7,6 +7,7 @@ import { useLoginUserMutation } from "@/redux/services/auth/authApi";
 import { setToken } from "@/redux/services/auth/authSlice";
 import {  useRouter } from "next/navigation";
 import { toast } from "sonner";
+import LoadingSpinner from "@/app/loading";
 
 const LoginPage = () => {
     // Importing the useAppDispatch hook to dispatch actions
@@ -19,9 +20,10 @@ const LoginPage = () => {
     const togglePasswordVisibility = () => {
         setShowPassword((prev) => !prev);
     }
-
+    const [loading,setLoading] = useState(false)
     
     const handleSubmit = (e: FormEvent<HTMLFormElement | undefined>) => {
+        setLoading(true)
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
         const email = formData.get("email");
@@ -41,16 +43,18 @@ const LoginPage = () => {
                         localStorage.setItem("token", response?.data?.token);
                         toast.success(response?.message);
                         dispatch(setToken(response?.data?.token));
-                       
+                       setLoading(false)
                         router.push('/');
                     } 
                 })
                 .catch((error) => {
+                    setLoading(false)
                     console.error("Login failed inside:", error);
                     toast.error(error?.data?.message +'inside' || "Login failed inside");
                 });
            
        } catch (error) {
+        setLoading(false)
         console.error("Login failed outside:", error);
        }
     };
@@ -71,8 +75,11 @@ const LoginPage = () => {
                 
                 </figure>
 
+                    {
+                        loading  && <div className="absolute right-[25%] 2xl:right-[33%]"><LoadingSpinner/></div>
+                    }
                 {/* Right Side - Login Form */}
-                <div className="w-full md:flex items-center justify-center ">
+                <div className={`w-full md:flex items-center justify-center ${loading ? 'opacity-50':''}`}>
                     <div className="xl:w-[440px] xl:h-[380px]   rounded-lg space-y-6">
                         <div className="flex flex-col items-center justify-between xl:h-[141px]">
                             <Image

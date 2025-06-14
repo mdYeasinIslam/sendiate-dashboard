@@ -31,6 +31,7 @@ const ChatPage = () => {
 	const [loading, setLoading] = useState(true);
 
 	useEffect(() => {
+		if(!messages && !users) setLoading(false)
 		// Simulate data fetching
 		setTimeout(() => {
 			setLoading(false);
@@ -329,10 +330,11 @@ const ChatPage = () => {
 			</div>
 		);
 	}
-	if (users.length === 0) {
+	if (users?.length === 0) {
 		return (
-			<div className="flex items-center justify-center h-full">
-				<LoadingSpinner />
+			<div className="flex items-center justify-center h-full text-3xl">
+				{/* <LoadingSpinner /> */}
+				No message found!!
 			</div>
 		);
 	}
