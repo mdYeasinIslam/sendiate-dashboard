@@ -8,11 +8,10 @@ export default function NotificationDashboard() {
     
     return (
       <section className="bg-[#F8F8F8] h-full">
-                <PageWrapper title="Notification"/>
-    
-       <main className="px-8">
-            <NotificationForm />
-       </main>
+          <PageWrapper title="Notification"/>
+          <main className="px-8">
+                <NotificationForm />
+          </main>
       </section>
   )
 }

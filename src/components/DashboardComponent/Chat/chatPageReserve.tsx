@@ -64,13 +64,6 @@ const ChatPage = () => {
 				setConnectionStatus("connected");
 
 				fetchAllConversations();
-				
-            setInterval(() => {
-                fetchAllConversations();
-            }, 1000); 
-
-            
-           
 				break;
 			case "allConversations":
 				const formattedUsers =
@@ -255,14 +248,6 @@ const ChatPage = () => {
 		[sendWebSocketMessage]
 	);
 
-	const markMessagesAsRead = useCallback(() => {
-		if (!currentChatId) return;
-		sendWebSocketMessage({
-			event: "markMessagesAsRead",
-			chatId: currentChatId,
-		});
-	}, [currentChatId, sendWebSocketMessage]);
-
 	const handleSend = useCallback(
 		(text: string, images: string[] = []) => {
 			if (!currentChatId) return;
@@ -276,23 +261,17 @@ const ChatPage = () => {
 				markMessagesAsRead();
 			}
 		},
-		[currentChatId, sendWebSocketMessage, markMessagesAsRead]
+		[currentChatId, sendWebSocketMessage]
 	);
-// const handleSend = useCallback(
-// 		(text: string, images: string[] = []) => {
-// 			if (!currentChatId) return;
-// 			const success = sendWebSocketMessage({
-// 				event: "sendMessage",
-// 				chatId: currentChatId,
-// 				message: text,
-// 				images: images,
-// 			});
-// 			if (success) {
-// 				markMessagesAsRead();
-// 			}
-// 		},
-// 		[currentChatId, sendWebSocketMessage,markMessagesAsRead]
-// 	);
+
+	const markMessagesAsRead = useCallback(() => {
+		if (!currentChatId) return;
+		sendWebSocketMessage({
+			event: "markMessagesAsRead",
+			chatId: currentChatId,
+		});
+	}, [currentChatId, sendWebSocketMessage]);
+
 	const handleUserSelect = useCallback(
 		async (user: User) => {
 			setSelectedUser(user);
