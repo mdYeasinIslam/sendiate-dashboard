@@ -5,6 +5,8 @@ import ChatList from "@/components/DashboardComponent/Chat/ChatList";
 import ChatWindow from "@/components/DashboardComponent/Chat/ChatWindo";
 import MessageInput from "@/components/DashboardComponent/Chat/MessageInput";
 import PageWrapper from "@/components/PageWrapper";
+import { useAppDispatch } from "@/redux/hooks";
+import { setCount } from "@/redux/services/slicer/chat/chatSlice";
 import { Message, User } from "@/type/chatPage";
 import { useState, useEffect, useRef, useCallback } from "react";
 
@@ -19,6 +21,7 @@ interface WebSocketMessage {
 const WS_URL = `wss://patrkamh.onrender.com/admin-chat`;
 
 const ChatPage = () => {
+	const dispatch = useAppDispatch()
 	const [selectedUser, setSelectedUser] = useState<User | null>(null);
 	const [messages, setMessages] = useState<Message[]>([]);
 	const [users, setUsers] = useState<User[]>([]);
@@ -29,9 +32,8 @@ const ChatPage = () => {
 	const [messagesLoading, setMessagesLoading] = useState(false);
 
 	const [loading, setLoading] = useState(true);
-
 	useEffect(() => {
-		if(!messages && !users) setLoading(false)
+		if (!messages && !users) return setLoading(false)
 		// Simulate data fetching
 		setTimeout(() => {
 			setLoading(false);
@@ -66,9 +68,9 @@ const ChatPage = () => {
 
 				fetchAllConversations();
 				
-            setInterval(() => {
-                fetchAllConversations();
-            }, 1000); 
+				setInterval(() => {
+				    fetchAllConversations();
+				}, 1000); 
 
             
            
@@ -98,6 +100,10 @@ const ChatPage = () => {
 						unreadCount: conv.unreadCount || 0,
 					})) || [];
 				setUsers(formattedUserss);
+				break;
+			case 'unreadConversationCount':
+				// console.log('Message count',message.data)
+				dispatch(setCount(message?.data?.count))
 				break;
 			case "chatStarted":
 			case "messages":
@@ -234,7 +240,9 @@ const ChatPage = () => {
 
 	const fetchAllConversations = useCallback(() => {
 		sendWebSocketMessage({ event: "fetchAllConversations" });
+		sendWebSocketMessage({ event: "fetchUnreadConversationCount" });
 	}, [sendWebSocketMessage]);
+
 
 	const startChat = useCallback(
 		(userId: string) => {
@@ -323,13 +331,14 @@ const ChatPage = () => {
 			ws.current?.close();
 		};
 	}, [connectWebSocket]);
-	if (loading) {
+	if (loading || messagesLoading || !users?.length) {
 		return (
 			<div className="flex items-center justify-center h-full">
 				<LoadingSpinner />
 			</div>
 		);
 	}
+	console.log(users)
 	if (users?.length === 0) {
 		return (
 			<div className="flex items-center justify-center h-full text-3xl">

@@ -1,4 +1,5 @@
 import dashboardReducer from '@/redux/services/slicer/dashboard/dashboardSlice';
+import chatReducer from '@/redux/services/slicer/chat/chatSlice';
 import  { configureStore} from '@reduxjs/toolkit'
 import { setupListeners } from '@reduxjs/toolkit/query'
 import { authApi } from '../services/auth/authApi'
@@ -11,6 +12,7 @@ import { feedbackPageApi } from '../services/Apis/feedbackPageAPis/feedbackPageA
 import { transactionApi } from '../services/Apis/transactionApi/transactionApi';
 import { notificationApi } from '../services/Apis/notification/notificationApi';
 import { profileApi } from '../services/Apis/profileApi/profileApi';
+import chatSlice from '@/redux/services/slicer/chat/chatSlice';
 
 export const store = configureStore({
     reducer: {
@@ -27,6 +29,8 @@ export const store = configureStore({
         
         auth: authSlice.reducer,
         dashboard: dashboardReducer,
+        chat : chatSlice.reducer
+
     },
 
     middleware: (GetDefaultMiddleware) => 
