@@ -26,6 +26,7 @@ const nextConfig: NextConfig = {
       'avatars.githubusercontent.com',
       'randomuser.me',
       'res.cloudinary.com',
+      'nyc3.digitaloceanspaces.com'
     ],
   },
 };
