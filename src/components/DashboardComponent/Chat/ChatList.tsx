@@ -24,7 +24,7 @@ export default function ChatList({ users, onSelectUser, selectedUserId }: ChatLi
           }`}
         >
           <Image
-            src={user?.avatar || '/default-image.jpg'}
+            src={user?.avatar}
             width={500}
             height={500}
             alt={user?.name}
