@@ -47,11 +47,12 @@ function Sidebar() {
       
                 <span className="">{link.label} </span>
               
+                <span className="absolute right-3 font-bold ">
                  {(link.href === '/chat' && (typeof totalCount?.stats === 'number' && totalCount.stats > 0)) && (
-                  <span className=" inline-block  w-full  text-right font-bold ">
-                    <span className="border border-black rounded-[100%] px-1">{String(totalCount?.stats)}</span>
-                  </span>
+                    <span className="border text-left  border-black rounded-[100%] px-1">{String(totalCount?.stats)}</span>
+                    
                 )}
+                  </span>
                
               </NavLink>
             ))}

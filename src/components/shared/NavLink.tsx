@@ -13,7 +13,7 @@ function NavLink({ href, children, icon }: NavLinkProps) {
   return (
     <Link
       href={href}
-      className={`flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-300 ease-linear text-[16px] font-normal leading-[24px] "
+      className={`relative flex items-center gap-2 rounded-lg px-3 py-2 text-sm transition-colors duration-300 ease-linear text-[16px] font-normal leading-[24px] "
  ${
    pathname === href || pathname.includes(href+'/')
      ? "bg-[#C2F3CD]  text-black rounded font-semibold"
