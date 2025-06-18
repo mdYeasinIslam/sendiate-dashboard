@@ -30,7 +30,7 @@ export default function ChatList({ users, onSelectUser, selectedUserId }: ChatLi
             alt={user?.name}
             className="w-10 h-10 rounded-full" />
           <div className="flex-1">
-            <p className={` ${user?.adminId == user?.senderId ?' ':`${user?.isRead ?'':'font-bold'}`}`}>{user?.name}</p>
+            <p className={`font-medium  ${user?.adminId == user?.senderId ?'':`${user?.isRead ?'':'font-bold'}`}`}>{user?.name}</p>
             <p className={`text-sm text-gray-500 truncate ${user?.adminId == user?.senderId ?' ':`${user?.isRead ?'':'font-bold'}`}`}>{user?.lastMessage}</p>
           </div>
         </div>
