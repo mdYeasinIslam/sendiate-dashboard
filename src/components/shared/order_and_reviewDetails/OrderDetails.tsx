@@ -1,11 +1,15 @@
 import { OrderAndReviewDetails } from '@/type/SenderPagesType'
-import { UserRound } from 'lucide-react';
+import { UserIcon } from 'lucide-react';
 import Image from 'next/image'
 import React from 'react'
 
 const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from: string }) => {
     const checkStat = details?.status === 'DELIVERED';
     // console.log(details?.deliveryTime)
+    // console.log(details)
+    const senderImage =details?.sender?.profileImage;
+    const courierImage =details?.courier?.profileImage;
+
     return (
       <section>
             
@@ -40,21 +44,31 @@ const OrderDetails = ({ details, from }: { details: OrderAndReviewDetails, from:
             <div className="flex-1 ">
                     <div className="flex items-center gap-2 mb-2">
                         {
-                            details?.courier?.profileImage ? (
-                                
-                                <Image 
-                                    src={details?.courier?.profileImage}
+                            from ==='SenderPage' &&(
+                                courierImage ?
+                                 <Image 
+                                    src={courierImage}
                                     alt={'Reviwer image'}
                                     width={28} height={28}
                                     className="w-7 h-7 rounded-full object-cover" />
-                            ):
-                                (
-                            <UserRound  className='w-6 h-6 border rounded-full'/>
-                                )
+                                    :
+                                    <UserIcon/>
+                            )
                         }
                         {
-                        from === 'SenderPage' ? <span className="font-medium">{details?.sender?.fullName}</span> :  <span className="font-medium">{details?.courier?.fullName}</span>
+                            from ==='CourierPage' &&(
+                                senderImage ?
+                                 <Image 
+                                    src={senderImage}
+                                    alt={'Reviwer image'}
+                                    width={28} height={28}
+                                    className="w-7 h-7 rounded-full object-cover" />
+                                    :
+                                    <UserIcon/>
+                            )
                         }
+                        { from === 'SenderPage' && <span className="font-medium">{details?.courier?.displayName}</span>  }
+                         { from ==='CourierPage' && <span className="font-medium">{details?.sender?.fullName}</span>}
                    
                 </div>
                 {

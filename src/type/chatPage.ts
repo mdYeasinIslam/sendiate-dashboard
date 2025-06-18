@@ -5,6 +5,9 @@ export type User = {
   lastMessage: string;
   unreadCount: number;
   chatId?: string;
+  isRead:boolean
+  adminId:string
+  senderId:string
 };
 
 export type Message = {

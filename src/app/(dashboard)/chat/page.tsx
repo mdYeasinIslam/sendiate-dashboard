@@ -76,6 +76,7 @@ const ChatPage = () => {
            
 				break;
 			case "allConversations":
+				console.log(message, "message form formated user")
 				const formattedUsers =
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					message.data?.map((conv: any) => ({
@@ -84,11 +85,15 @@ const ChatPage = () => {
 						avatar: conv.user?.profileImage || "",
 						lastMessage: conv.messages[0]?.message || "No messages yet",
 						chatId: conv.id,
+						isRead: conv.isRead,
+						adminId:conv.adminId,
+						senderId:conv.senderId,
 						unreadCount: conv.unreadCount || 0,
 					})) || [];
 				setUsers(formattedUsers);
 				break;
 			case "fetchAllConversations":
+
 				const formattedUserss =
 					// eslint-disable-next-line @typescript-eslint/no-explicit-any
 					message.data?.map((conv: any) => ({
@@ -254,6 +259,21 @@ const ChatPage = () => {
 		[sendWebSocketMessage]
 	);
 
+
+
+	const markMessagesAsRead = useCallback(() => {
+		if (!currentChatId) return;
+		sendWebSocketMessage({
+			event: "markMessagesAsRead",
+			chatId: currentChatId,
+		});
+	}, [currentChatId, sendWebSocketMessage]);
+
+	useEffect(() => {
+		markMessagesAsRead();
+		console.log(messages, "from useeffect")
+	}, [messages]);
+
 	const fetchMessages = useCallback(
 		(chatId: string) => {
 			sendWebSocketMessage({
@@ -263,14 +283,6 @@ const ChatPage = () => {
 		},
 		[sendWebSocketMessage]
 	);
-
-	const markMessagesAsRead = useCallback(() => {
-		if (!currentChatId) return;
-		sendWebSocketMessage({
-			event: "markMessagesAsRead",
-			chatId: currentChatId,
-		});
-	}, [currentChatId, sendWebSocketMessage]);
 
 	const handleSend = useCallback(
 		(text: string, images: string[] = []) => {
@@ -338,7 +350,7 @@ const ChatPage = () => {
 			</div>
 		);
 	}
-	console.log(users)
+	// console.log(users)
 	if (users?.length === 0) {
 		return (
 			<div className="flex items-center justify-center h-full text-3xl">
@@ -347,7 +359,7 @@ const ChatPage = () => {
 			</div>
 		);
 	}
-
+	console.log('Messages', messages)
 	return (
 		<section className="h-full">
 			<header>
@@ -356,6 +368,7 @@ const ChatPage = () => {
 			<div className="flex h-full">
 
 				<ChatList
+					messages={messages}
 					users={users}
 					onSelectUser={handleUserSelect}
 					selectedUserId={selectedUser?.id || null}

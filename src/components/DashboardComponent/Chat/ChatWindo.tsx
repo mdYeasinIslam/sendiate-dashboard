@@ -28,7 +28,7 @@ export default function ChatWindow({
 	const messagesEndRef = useRef<HTMLDivElement>(null);
 	const messagesContainerRef = useRef<HTMLDivElement>(null);
 	const [initialLoad, setInitialLoad] = useState(true);
-
+	// console.log('Message group',messageGroups)
 	const scrollToBottom = useCallback((behavior: ScrollBehavior = "smooth") => {
 		if (messagesContainerRef.current) {
 			messagesContainerRef.current.scrollTo({
@@ -119,9 +119,9 @@ export default function ChatWindow({
 	const renderMessage = (msg: Message) => {
 		const isSender = msg.senderId === selectedUser.id;
 
-		console.log({ msgid: msg.senderId, selectUserId: selectedUser.id });
+		// console.log({ msgid: msg.senderId, selectUserId: selectedUser.id });
 
-		console.log({ isSender });
+		// console.log({ isSender });
 
 		return (
 			<div

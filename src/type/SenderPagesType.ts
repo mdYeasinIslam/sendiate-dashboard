@@ -55,6 +55,7 @@ export type SenderDetailsType = {
 export type SenderInfo = {
     id: string;
     fullName: string;
+    displayName:string;
     email: string;
     phoneNumber: string;
     profileImage: string | null;
