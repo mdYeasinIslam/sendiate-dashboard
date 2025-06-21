@@ -122,7 +122,7 @@ export default function ChatWindow({
 		// console.log({ msgid: msg.senderId, selectUserId: selectedUser.id });
 
 		// console.log({ isSender });
-
+		console.log(msg, 'render massage')
 		return (
 			<div
 				key={msg.id}
@@ -133,7 +133,24 @@ export default function ChatWindow({
 						isSender ? "bg-gray-100 text-gray-800" : "bg-green-500 text-white"
 					}`}
 				>
-					<p className="whitespace-pre-wrap break-words">{msg.text}</p>
+					{
+						(msg?.text?.length > 0 && !msg.images)  && <p className="whitespace-pre-wrap break-words">{msg.text}</p>
+					}
+					<div>
+						{
+							msg?.images?.map((img,idx)=><Image
+								key={idx}
+								src={img} 
+								alt="Message Image"
+								width={500}
+								height={500}
+								className="w-20 h-20"
+							/>) 
+							
+						}
+
+					</div>
+
 					<div
 						className={`text-right text-xs mt-1 ${
 							isSender ? "text-gray-500" : "text-blue-200"

@@ -18,6 +18,7 @@ interface WebSocketMessage {
 	token?: string;
 }
 // const WS_URL = `wss://10.0.30.76/admin-chat`;
+// const WS_URL = `wss://patrkamh.onrender.com/admin-chat`;
 const WS_URL = `wss://api.sendiate.code-commando.com/admin-chat`;
 
 const ChatPage = () => {
@@ -67,13 +68,13 @@ const ChatPage = () => {
 				setConnectionStatus("connected");
 
 				fetchAllConversations();
-				
-				setInterval(() => {
-				    fetchAllConversations();
-				}, 1000); 
 
-            
-           
+				setInterval(() => {
+					fetchAllConversations();
+				}, 1000);
+
+
+
 				break;
 			case "allConversations":
 				console.log(message, "message form formated user")
@@ -83,13 +84,15 @@ const ChatPage = () => {
 						id: conv.userId,
 						name: conv.user?.fullName || "Unknown User",
 						avatar: conv.user?.profileImage || "",
-						lastMessage: conv.messages[0]?.message || "No messages yet",
+						// lastMessage: conv.messages[0]?.message || "No messages yet",
+						lastMessage: conv.lastMessage,
 						chatId: conv.id,
 						isRead: conv.isRead,
-						adminId:conv.adminId,
-						senderId:conv.senderId,
+						adminId: conv.adminId,
+						senderId: conv.senderId,
 						unreadCount: conv.unreadCount || 0,
 					})) || [];
+				console.log(formattedUsers, "jf")
 				setUsers(formattedUsers);
 				break;
 			case "fetchAllConversations":
@@ -100,7 +103,8 @@ const ChatPage = () => {
 						id: conv.userId,
 						name: conv.user?.fullName || "Unknown User",
 						avatar: conv.user?.profileImage || "",
-						lastMessage: conv.messages[0]?.message || "No messages yet",
+						// lastMessage: conv.messages[0]?.message || "No messages yet",
+						lastMessage: conv.lastMessage,
 						chatId: conv.id,
 						unreadCount: conv.unreadCount || 0,
 					})) || [];
@@ -202,7 +206,7 @@ const ChatPage = () => {
 			ws.current.onclose = () => {
 				console.log("WebSocket disconnected");
 				setConnectionStatus("disconnected");
-			
+
 			};
 
 			ws.current.onerror = (error) => {
@@ -299,21 +303,21 @@ const ChatPage = () => {
 		},
 		[currentChatId, sendWebSocketMessage, markMessagesAsRead]
 	);
-// const handleSend = useCallback(
-// 		(text: string, images: string[] = []) => {
-// 			if (!currentChatId) return;
-// 			const success = sendWebSocketMessage({
-// 				event: "sendMessage",
-// 				chatId: currentChatId,
-// 				message: text,
-// 				images: images,
-// 			});
-// 			if (success) {
-// 				markMessagesAsRead();
-// 			}
-// 		},
-// 		[currentChatId, sendWebSocketMessage,markMessagesAsRead]
-// 	);
+	// const handleSend = useCallback(
+	// 		(text: string, images: string[] = []) => {
+	// 			if (!currentChatId) return;
+	// 			const success = sendWebSocketMessage({
+	// 				event: "sendMessage",
+	// 				chatId: currentChatId,
+	// 				message: text,
+	// 				images: images,
+	// 			});
+	// 			if (success) {
+	// 				markMessagesAsRead();
+	// 			}
+	// 		},
+	// 		[currentChatId, sendWebSocketMessage,markMessagesAsRead]
+	// 	);
 	const handleUserSelect = useCallback(
 		async (user: User) => {
 			setSelectedUser(user);

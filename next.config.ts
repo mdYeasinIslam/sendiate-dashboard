@@ -24,6 +24,11 @@ const nextConfig: NextConfig = {
         hostname: 'tor1.digitaloceanspaces.com',  // Add this line for the new domain
         pathname: '/**', // You can adjust the pathname as needed
       },
+      {
+        protocol: 'https',
+        hostname: 'upload.wikimedia.org',  // Add this line for the new domain
+        pathname: '/**', // You can adjust the pathname as needed
+      },
     ],
     domains: [
       'i.pravatar.cc',
@@ -33,7 +38,8 @@ const nextConfig: NextConfig = {
       'randomuser.me',
       'res.cloudinary.com',
       'nyc3.digitaloceanspaces.com',
-      'tor1.digitaloceanspaces.com'
+      'tor1.digitaloceanspaces.com',
+      'upload.wikimedia.org'
     ],
   },
 };
