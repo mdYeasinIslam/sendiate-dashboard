@@ -3,7 +3,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
  export const vehiclePageApi = createApi({
     reducerPath: 'vehiclePageApi',
     baseQuery: fetchBaseQuery({
-         baseUrl:'https://patrkamh.onrender.com/api/v1',
+        baseUrl: 'https://api.sendiate.code-commando.com/api/v1',
         // baseUrl: 'http://10.0.30.91:5001/api/v1',
         // baseUrl:`${process.env.NEXT_PUBLIC_API_URL_LOCAL}`,
         

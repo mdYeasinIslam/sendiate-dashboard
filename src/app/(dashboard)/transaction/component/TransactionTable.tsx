@@ -60,6 +60,15 @@ const TransactionTable = ({ transactionData, setPaymentMethod }: Prop) => {
                     </tr>
                 </thead>
                 <tbody>
+                     {
+                        transactionData?.length === 0 && (
+                            <tr>
+                                <td colSpan={6} className="font-semibold text-xl text-center py-4">
+                                    No transaction found
+                                </td>
+                            </tr>
+                        )
+                    }
                     {transactionData.map((data, idx) => (
                         <tr key={idx} className=" last:border-b-0 ">
                             <td className="py-5 px-4 text-left text-sm text-gray-700">

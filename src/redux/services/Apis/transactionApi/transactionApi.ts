@@ -5,7 +5,7 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 export const transactionApi = createApi({
     reducerPath: 'transactionApi',
     baseQuery: fetchBaseQuery({
-        baseUrl: "https://patrkamh.onrender.com/api/v1",
+        baseUrl: "https://api.sendiate.code-commando.com/api/v1",
 
         prepareHeaders: (headers) => {
             if (typeof window !== 'undefined') {

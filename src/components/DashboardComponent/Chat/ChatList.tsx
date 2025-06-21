@@ -23,7 +23,7 @@ export default function ChatList({ users, onSelectUser, selectedUserId }: ChatLi
             selectedUserId === user.id ? "bg-gray-100" : "hover:bg-gray-50"
           }`}
         >
-          <Image
+         <Image
             src={user?.avatar}
             width={500}
             height={500}

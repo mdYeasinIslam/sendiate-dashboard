@@ -18,7 +18,7 @@ interface WebSocketMessage {
 	token?: string;
 }
 // const WS_URL = `wss://10.0.30.76/admin-chat`;
-const WS_URL = `wss://patrkamh.onrender.com/admin-chat`;
+const WS_URL = `wss://api.sendiate.code-commando.com/admin-chat`;
 
 const ChatPage = () => {
 	const dispatch = useAppDispatch()
